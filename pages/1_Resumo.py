@@ -13,7 +13,7 @@ def buscar_arquivo_da_escala(nome_escala: str, pasta: str = "scales") -> Path:
     for path in Path(pasta).glob("*.json"):
         with open(path, "r", encoding="utf-8") as f:
             escala = json.load(f)
-            if escala.get("nome", "").strip().lower() == nome_escala.strip().lower():
+            if escala.get("name", "").strip().lower() == nome_escala.strip().lower():
                 return path
     return None
 
@@ -50,7 +50,7 @@ else:
         for norma_path in path_data.glob("*.json"):
             with open(norma_path, "r", encoding="utf-8") as f:
                 norma = json.load(f)
-                if norma.get("nome", "").lower() == escala_escolhida.lower():
+                if norma.get("name", "").lower() == escala_escolhida.lower():
                     referencia = norma.get("referencia", norma_path.stem)
                     normas_opcoes[referencia] = norma
 

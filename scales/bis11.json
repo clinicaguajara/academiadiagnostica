@@ -1,12 +1,13 @@
 {
-  "nome": "BIS-11",
+  "name": "BIS-11",
   "respostas": [
     "Raramente ou nunca",
-    "Às vezes",
-    "Frequentemente",
+    "De vez em quando",
+    "Com frequência",
     "Sempre ou quase sempre"
-  ],
-  "itens_reversos": [0, 6, 7, 8, 9, 11, 12, 14, 19, 29],
+  ], 
+
+  "itens_reversos": [0, 6, 7, 8, 9, 11, 12, 14, 19, 28, 29],
   "fatores": {
     "Impulsividade Atencional": [4, 8, 10, 19, 27],
     "Instabilidade Cognitiva": [5, 23, 25],

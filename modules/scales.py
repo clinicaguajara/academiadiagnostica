@@ -1,9 +1,14 @@
-# modules/scales.py
 
-import streamlit as st
+# --- Necessary imports ---
+
+import io
 import json
+import streamlit as st
+import pandas as pd
 
 from pathlib import Path
+
+# --- Functions definition ---
 
 def render_scale_form(scale_path: str):
     """
@@ -25,29 +30,29 @@ def render_scale_form(scale_path: str):
         st.session_state.__setitem__(): Método do objeto SessionStateProxy | instanciado por st.session_state.
     """
 
-    # --- Leitura do arquivo da escala ---
+    # Reading scale's archive.
     with open(scale_path, "r", encoding="utf-8") as f:
-        escala = json.load(f)
+        scale = json.load(f)
 
-    nome = escala.get("nome", "Escala Sem Nome")
-    itens = escala.get("itens", [])
-    opcoes = escala.get("respostas", [])
-
-    if not itens or not opcoes:
+    name = scale.get("name", "Escala Sem Nome")
+    itens = scale.get("itens", [])
+    options = scale.get("respostas", [])
+    
+    if not itens or not options:
         st.error("Erro: Itens ou respostas não definidos no arquivo da escala.")
         return
 
     # --- Renderização do formulário ---
-    with st.form(f"form_{nome}"):
-        st.subheader(f"Escala: {nome}")
+    with st.form(f"form_{name}"):
+        st.subheader(f"Escala: {name}")
         respostas = {}
 
         for i, item in enumerate(itens):
             respostas[str(i)] = st.selectbox(
                 f"{i+1}. {item}",
                 # options=[""] + opcoes,  # "" representa "não respondido"
-                options = opcoes,
-                key=f"{nome}_{i}"
+                options = options,
+                key=f"{name}_{i}"
             )
         placeholder = st.empty()
         
@@ -62,7 +67,7 @@ def render_scale_form(scale_path: str):
             if "escalas_respondidas" not in st.session_state:
                 st.session_state["escalas_respondidas"] = {}
             
-            st.session_state["escalas_respondidas"][nome] = respostas
+            st.session_state["escalas_respondidas"][name] = respostas
             placeholder.success("✅ Escala enviada com sucesso!")
 
 
@@ -76,7 +81,7 @@ def render_scale_selector(scales_dir: str = "scales"):
     
     Calls:
         Path.glob(): Busca arquivos no diretório | instanciado por Path.
-        json.load(): Carrega cada escala para obter o nome | built-in.
+        json.load(): Carrega cada escala para obter o name | built-in.
         st.selectbox(): Select box interativo | instanciado por st.
         render_scale_form(): Renderiza o formulário da escala selecionada | definida em modules/scales.py.
     """
@@ -96,9 +101,9 @@ def render_scale_selector(scales_dir: str = "scales"):
         try:
             with open(arquivo, "r", encoding="utf-8") as f:
                 dados = json.load(f)
-                nome = dados.get("nome", arquivo.stem)
-                lista_nomes.append(nome)
-                mapa_nome_para_arquivo[nome] = arquivo
+                name = dados.get("name", arquivo.stem)
+                lista_nomes.append(name)
+                mapa_nome_para_arquivo[name] = arquivo
         except Exception as e:
             st.error(f"Erro ao ler {arquivo.name}: {e}")
 
@@ -189,13 +194,13 @@ def render_results_with_reference(nome_escala: str, escala_json: dict, normas_op
 
     # --- Seletor de referência (norma) ---
     referencia_nomes = [
-        norma.get("reference_label", nome)
-        for nome, norma in normas_opcoes.items()
+        norma.get("reference_label", name)
+        for name, norma in normas_opcoes.items()
     ]
 
     mapa_label_para_nome = {
-        norma.get("reference_label", nome): nome
-        for nome, norma in normas_opcoes.items()
+        norma.get("reference_label", name): name
+        for name, norma in normas_opcoes.items()
     }
 
     ref_label_escolhida = st.selectbox("Escolha a referência normativa:", referencia_nomes)
@@ -272,10 +277,38 @@ def render_results_with_reference(nome_escala: str, escala_json: dict, normas_op
         linhas.append(linha)
 
     # --- Exibição ---
-    st.subheader(f"🧮 Resultado – {escala_json.get('nome', nome_escala)}")
-    st.caption(f"Correção baseada em: **{ref_label_escolhida}** (modo: `{modo}`)")
+    st.subheader(f"🧮 Resultado – {escala_json.get('name', nome_escala)}")
+    st.caption(f"Correção baseada em: **{ref_label_escolhida}** | Modo de correção: `{modo}`)")
 
     st.table(linhas)
+
+    # --- Exibição das médias e DPs de cada fator em tabela ---
+    st.subheader("**Média e Desvio-Padrão por Fator:**")
+
+    # pega o bloco do grupo selecionado
+    group_block = norma.get("normative_data", {}).get(selected_group, {})
+    fatores_stats = group_block.get("fatores", {})
+
+    # monta as linhas da tabela
+    rows = []
+    for fator_key, stats in fatores_stats.items():
+        label = factor_tags.get(fator_key, fator_key.replace("_", " ").title())
+        media = stats.get("media")
+        dp    = stats.get("dp")
+        if media is not None and dp is not None:
+            rows.append({
+                "Fator": label,
+                "Média": f"{media:.2f}",
+                "DP": f"{dp:.2f}"
+            })
+
+    # exibe como tabela
+    st.table(rows)
+
+    # Resumo dos itens
+    render_response_summary(nome_escala, escala_json)
+
+
 
 
 
@@ -329,3 +362,23 @@ def search_percentile(pontuacao: int, normative_data: str, normas: dict, fator: 
         if pontuacao <= p:
             return perc
     return 99.9
+
+def render_response_summary(nome_escala: str, escala_json: dict):
+    """
+    Exibe um resumo das respostas, em um expander e com botão para download em PDF.
+    """
+    respostas = st.session_state.get("escalas_respondidas", {}).get(nome_escala)
+    if not respostas:
+        st.warning("📭 Nenhuma resposta encontrada para essa escala.")
+        return
+
+    itens = escala_json.get("itens", [])
+    rows = [(int(idx_str)+1, itens[int(idx_str)], resp)
+            for idx_str, resp in respostas.items()]
+
+    with st.expander("📝 Resumo das Respostas", expanded=True):
+        st.markdown("**Itens e Respostas:**")
+        for num, texto, resp in rows:
+            st.write(f"**{num}.** {texto}  \n> **Resposta:** `{resp}`")
+
+

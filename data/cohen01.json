@@ -1,5 +1,5 @@
 {
-  "nome": "AQ-50",
+  "name": "AQ-50",
   "reference_label": "Alves et al. (2022) com método de correção original",
   "reference_citation": "Alves, A. L. C., Jardim de Paula, J., Marques de Miranda, D., & Romano-Silva, M. A. (2022). The Autism Spectrum Quotient in a sample of Brazilian adults: analyses of normative data and performance. Dementia & Neuropsychologia, 16(2), 244–248. https://doi.org/10.1590/1980-5764-DN-2021-0081",
   "modo_correcao": "binario",
@@ -7,12 +7,14 @@
     "masculino": {
       "alvo": "total",
       "pontuacoes": [5, 10, 14, 16, 18, 20, 22, 24, 27, 30, 34],
-      "percentis":   [5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 95]
+      "percentis":   [5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 95],
+      "fatores" : []
     },
     "feminino": {
       "alvo": "total",
       "pontuacoes": [5, 7, 11, 13, 15, 17, 19, 21, 23, 27, 30],
-      "percentis":   [5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 95]
+      "percentis":   [5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 95],
+      "fatores": []
     }
   }
 }
