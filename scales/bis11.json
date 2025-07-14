@@ -1,0 +1,50 @@
+{
+  "nome": "BIS-11",
+  "respostas": [
+    "Raramente ou nunca",
+    "Às vezes",
+    "Frequentemente",
+    "Sempre ou quase sempre"
+  ],
+  "itens_reversos": [0, 6, 7, 8, 9, 11, 12, 14, 19, 29],
+  "fatores": {
+    "Impulsividade Atencional": [4, 8, 10, 19, 27],
+    "Instabilidade Cognitiva": [5, 23, 25],
+    "Impulsividade Motora": [1, 2, 3, 16, 18, 21],
+    "Perseverança": [15, 20, 22],
+    "Complexidade Cognitiva": [9, 14, 17, 26, 28],
+    "Autocontrole": [0, 6, 7, 11, 12, 13, 29]
+    },
+  "itens": [
+    "Eu planejo tarefas cuidadosamente.",
+    "Eu faço coisas sem pensar.",
+    "Eu tomo decisões rapidamente.",
+    "Eu sou despreocupado (confio na sorte, 'desencanado').",
+    "Eu não presto atenção.",
+    "Eu tenho pensamentos que se atropelam.",
+    "Eu planejo viagens com bastante antecedência.",
+    "Eu tenho autocontrole.",
+    "Eu me concentro facilmente.",
+    "Eu economizo (poupo) regularmente.",
+    "Eu fico me contorcendo na cadeira em peças de teatro ou palestras.",
+    "Eu penso nas coisas com cuidado.",
+    "Eu faço planos para me manter no emprego (eu cuido para não perder meu emprego).",
+    "Eu falo coisas sem pensar.",
+    "Eu gosto de pensar em problemas complexos.",
+    "Eu troco de emprego.",
+    "Eu ajo por impulso.",
+    "Eu fico entediado com facilidade quando estou resolvendo problemas mentalmente.",
+    "Eu ajo no 'calor' do momento.",
+    "Eu mantenho a linha de raciocínio ('não perco o fio da meada').",
+    "Eu troco de casa (residência).",
+    "Eu compro coisas por impulso.",
+    "Eu só consigo pensar em uma coisa de cada vez.",
+    "Eu troco de interesses e passatempos ('hobby').",
+    "Eu gasto ou compro a prestação mais do que ganho.",
+    "Enquanto estou pensando em uma coisa, é comum que outras ideias me venham à cabeça ou ao mesmo tempo.",
+    "Eu tenho mais interesse no presente do que no futuro.",
+    "Eu me sinto inquieto em palestras ou aulas.",
+    "Eu gosto de jogos e desafios mentais.",
+    "Eu me preparo para o futuro."
+  ]
+}

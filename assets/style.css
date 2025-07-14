@@ -1,0 +1,47 @@
+/* style.css */
+
+/* GLOBAL CONFIG */
+body {
+    background-color: #1D2B53;
+    color: #FFFFFF;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* CUSTOM BUTTONS */
+button {
+    background-color: #3AB6FF !important;
+    color: #FFFFFF !important;
+    border-radius: 8px;
+    padding: 0.6em 1.2em;
+    border: none;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background-color: #2196F3 !important;
+}
+
+/* CUSTOM EXPANDERS */
+details summary {
+    background-color: #3AB6FF;
+    color: #FFFFFF;
+    font-weight: 600;
+    padding: 0.5em;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+details {
+    background-color: #2B3C6F;
+    border: 1px solid #3AB6FF;
+    border-radius: 5px;
+    margin-top: 10px;
+    padding: 0.5em;
+}
+
+/* CAPTIONS */
+.stCaption {
+    color: #FFA726 !important;
+    font-weight: 600;
+}

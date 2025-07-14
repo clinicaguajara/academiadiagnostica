@@ -1,0 +1,21 @@
+{
+  "nome": "PID-5 (Ansiedade)",
+  "respostas": [
+    "Muito falso ou frequentemente falso",
+    "Algumas vezes ou um pouco falso",
+    "Algumas vezes ou pouco verdadeiro",
+    "Muito verdadeiro ou frequentemente verdadeiro"
+  ],
+  "itens_reversos": [3],
+  "itens": [
+    "Eu fico preocupado (a) com coisas pequenas.",
+    "Eu me preocupo com quase tudo.",
+    "Eu tenho medo de entrar em pânico e enlouquecer.",
+    "Eu não fico nervoso (a) com muita facilidade.",
+    "Eu me preocupo com o que pode dar errado.",
+    "Estou quase sempre nervoso (a).",
+    "Eu fico nervoso (a) com as menores coisas.",
+    "Eu fico nervoso (a) facilmente.",
+    "Eu tenho ataques de pânico repentinos."
+  ]
+}

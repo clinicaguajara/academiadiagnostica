@@ -1,0 +1,67 @@
+{
+  "nome": "BIS-11",
+  "reference_label": "Malloy-Diniz et al. (2015)",
+  "reference_citation": "Malloy-Diniz, L. F., Paula, J. J. de, Vasconcelos, A. G., Almondes, K. M. de, Pessoa, R., Faria, L., Coutinho, G., Costa, D. S., Duran, V., Coutinho, T. V., Corrêa, H., Fuentes, D., Abreu, N., & Mattos, P. (2015). Normative data of the Barratt Impulsiveness Scale 11 (BIS-11) for Brazilian adults. Brazilian Journal of Psychiatry, 37(3), 245–248. https://doi.org/10.1590/1516-4446-2014-1599",
+  "modo_correcao": "ordinal_1based",
+  "normative_data": {
+    "bis11_malloy": {
+      "alvo": [
+        "Impulsividade Atencional",
+        "Instabilidade Cognitiva",
+        "Impulsividade Motora",
+        "Perseverança",
+        "Complexidade Cognitiva",
+        "Autocontrole",
+        "Total"
+      ],
+      "pontuacoes": {
+        "Impulsividade Atencional": [5, 6, 7, 8, 8, 9, 9, 9, 10, 10, 10, 11, 11, 11, 12, 12, 13, 13, 14, 16, 18],
+        "Instabilidade Cognitiva": [3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7, 8, 8, 8, 9, 10, 12],
+        "Impulsividade Motora": [7, 8, 9, 9, 10, 10, 11, 11, 12, 12, 12, 13, 13, 14, 14, 15, 15, 16, 18, 20, 23],
+        "Perseverança": [4, 4, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 9, 9, 10, 12],
+        "Complexidade Cognitiva": [6, 8, 9, 9, 10, 10, 11, 11, 11, 12, 12, 12, 13, 13, 13, 14, 14, 15, 15, 16, 18],
+        "Autocontrole": [6, 8, 9, 10, 10, 11, 12, 12, 13, 13, 13, 14, 14, 15, 15, 16, 16, 17, 18, 19, 22],
+        "total": [40, 47, 50, 52, 53, 55, 56, 58, 59, 60, 62, 63, 64, 65, 67, 68, 70, 72, 76, 80, 90]
+      },
+      "percentis": {
+        "Impulsividade Atencional": [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 99],
+        "Instabilidade Cognitiva": [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 99],
+        "Impulsividade Motora": [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 99],
+        "Perseverança": [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 99],
+        "Complexidade Cognitiva": [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 99],
+        "Autocontrole": [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 99],
+        "total": [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 99]
+      },
+      "fatores": {
+        "Impulsividade Atencional": {
+          "media": 10.42,
+          "dp": 2.76
+        },
+        "Instabilidade Cognitiva": {
+          "media": 6.40,
+          "dp": 1.92
+        },
+        "Impulsividade Motora": {
+          "media": 12.75,
+          "dp": 3.48
+        },
+        "Perseverança": {
+          "media": 6.79,
+          "dp": 1.75
+        },
+        "Complexidade Cognitiva": {
+          "media": 12.14,
+          "dp": 2.53
+        },
+        "Autocontrole": {
+          "media": 13.43,
+          "dp": 3.41
+        },
+        "Total": {
+          "media": 61.92,
+          "dp": 10.29
+        }
+      }
+    }
+  }
+}

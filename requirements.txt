@@ -1,0 +1,18 @@
+# --- CORE ---
+streamlit>=1.33.0
+pandas>=2.2.0
+numpy>=1.26.0
+
+# --- STATISTICS ---
+scipy>=1.12.0
+statsmodels>=0.14.0
+scikit-learn>=1.4.0
+pingouin>=0.5.4 # Testes estatísticos prontos, útil para psicometria
+
+# --- VISUALIZAÇÃO ---
+matplotlib>=3.8.0
+seaborn>=0.13.0
+plotly>=5.20.0
+
+# --- OUTROS ÚTEIS ---
+openpyxl>=3.1.2 # Leitura de arquivos Excel

@@ -1,0 +1,20 @@
+{
+  "nome": "PID-5 (Anedonia)",
+  "respostas": [
+    "Muito falso ou frequentemente falso",
+    "Algumas vezes ou um pouco falso",
+    "Algumas vezes ou pouco verdadeiro",
+    "Muito verdadeiro ou frequentemente verdadeiro"
+  ],
+  "itens_reversos": [3, 5],
+  "itens": [
+    "Eu não tenho tanto prazer nas coisas com os outros parecem ter.",
+    "Nada parece me interessar muito.",
+    "Eu quase nunca aproveito a vida.",
+    "Eu sou uma pessoa com muita energia.",
+    "Eu quase nunca me sinto feliz com as minhas atividades do dia a dia.",
+    "Eu realmente vivo a vida plenamente.",
+    "Nada parece me fazer sentir bem.",
+    "Eu raramente me entusiasmo com alguma coisa."
+  ]
+}

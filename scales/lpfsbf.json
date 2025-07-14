@@ -1,0 +1,32 @@
+{
+  "nome": "LPFS-BF",
+  "respostas": [
+    "Muito falsa ou frequentemente falsa",
+    "Às vezes falsa ou um pouco falsa",
+    "Às vezes verdadeira ou um pouco verdadeira",
+    "Muito verdadeira ou frequentemente verdadeira"
+  ],
+  "intens_reversos": [],
+  "fatores": {
+    "Self": [0,1,2,3,4,5],
+    "Interpessoal": [6,7,8,9,10,11],
+    "Identidade": [0,1,2],
+    "Autodirecionamento": [3,4,5],
+    "Empatia": [6,7,8],
+    "Intimidade": [9,10,11]
+  },
+  "itens": [
+    "Eu frequentemente não sei quem sou.",
+    "Eu frequentemente tenho pensamentos muito negativos sobre mim mesmo.",
+    "Minhas emoções mudam sem que eu tenha controle sobre elas.",
+    "Eu não tenho ideia de onde quero chegar em minha vida.",
+    "Eu frequentemente não entendo meus próprios pensamentos e sentimentos.",
+    "Eu frequentemente faço exigências irrealistas para mim mesmo.",
+    "Eu frequentemente tenho dificuldade de entender os pensamentos e sentimentos dos outros.",
+    "Eu frequentemente tenho dificuldade de tolerar quando os outros discordam de mim.",
+    "Eu frequentemente não entendo totalmente por que meu comportamento tem um determinado efeito sobre os outros.",
+    "Meus relacionamentos e amizades nunca duram por muito tempo.",
+    "Eu frequentemente me sinto inseguro quando minhas relações se tornam mais íntimas.",
+    "Eu frequentemente não consigo cooperar com os outros de modo que seja satisfatório tanto para mim quanto para os outros."
+  ]
+}
