@@ -4,17 +4,27 @@
   "reference_citation": "Alves, A. L. C., Jardim de Paula, J., Marques de Miranda, D., & Romano-Silva, M. A. (2022). The Autism Spectrum Quotient in a sample of Brazilian adults: analyses of normative data and performance. Dementia & Neuropsychologia, 16(2), 244–248. https://doi.org/10.1590/1980-5764-DN-2021-0081",
   "modo_correcao": "ordinal_1based",
   "normative_data": {
-    "masculino": {
+    "masculino_alves22": {
       "alvo": "total",
       "pontuacoes": [40, 44, 47, 50, 52, 54],
       "percentis":  [5, 10, 20, 30, 40, 50],
-      "fatores": []
+      "fatores": {
+        "total": {
+          "media": 62,
+          "dp": 12
+        }
+      }
     },
-    "feminino": {
+    "feminino_alves22": {
       "alvo": "total",
       "pontuacoes": [38, 41, 44, 46, 48, 50],
       "percentis":  [5, 10, 20, 30, 40, 50],
-      "fatores": []
+      "fatores": {
+        "total": {
+          "media": 54,
+          "dp": 13
+        }
+      }
     }
   }
 }

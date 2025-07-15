@@ -11,7 +11,7 @@ body {
 button {
     background-color: #3AB6FF !important;
     color: #FFFFFF !important;
-    border-radius: 8px;
+    border-radius: 8px !important;
     padding: 0.6em 1.2em;
     border: none;
     font-weight: bold;
@@ -22,26 +22,73 @@ button:hover {
     background-color: #2196F3 !important;
 }
 
-/* CUSTOM EXPANDERS */
-details summary {
-    background-color: #3AB6FF;
-    color: #FFFFFF;
-    font-weight: 600;
-    padding: 0.5em;
-    border-radius: 5px;
-    cursor: pointer;
+/* ==========================================================
+   STREAMLIT EXPANDERS AZUL NOTURNO / CABEÇALHO (FECHADO)
+   ==========================================================
+   ⚪ Texto: white
+   🟦 Fundo: #1E3D59
+   🟦 Borda: #007366
+   🟫 Glow:  #4F4A47
+   ========================================================== */
+div[data-testid="stExpander"] > details:not([open]) > summary {
+  color: white !important;
+  background-color: #1E3D59 !important;
+  border: 2px solid #007366 !important;
+  border-radius: 8px !important;
+  padding: 10px 20px !important;
+  transition: transform 0.4s ease-in-out, background-color 0.4s ease-in-out !important;
+  cursor: pointer !important;
+  overflow: hidden !important;
+  text-align: left !important;
 }
 
-details {
-    background-color: #2B3C6F;
-    border: 1px solid #3AB6FF;
-    border-radius: 5px;
-    margin-top: 10px;
-    padding: 0.5em;
+/* HOVER: azul claro */
+div[data-testid="stExpander"] > details:not([open]) > summary:hover {
+   transform: scale(1.03) !important;
+   background-color: #3AB6FF !important;
+   box-shadow: 0px 4px 8px #4F4A47 !important;
 }
 
-/* CAPTIONS */
-.stCaption {
-    color: #FFA726 !important;
-    font-weight: 600;
+/* ATIVO */
+div[data-testid="stExpander"] > details:not([open]) > summary:active {
+   transform: scale(1) !important;
+}
+
+/* ícone (setinha) no hover */
+div[data-testid="stExpander"] > details:not([open]) > summary:hover svg {
+  fill: white !important;
+}
+
+
+/* ==========================================================
+   STREAMLIT EXPANDERS AZUL NOTURNO / CABEÇALHO (ABERTO)
+   ==========================================================
+   ⚪ Texto: white
+   🟦 Fundo: #1E3D59
+   🟦 Borda superior/lateral: #007366
+   ========================================================== */
+div[data-testid="stExpander"] > details[open] > summary {
+  color: white !important;
+  background-color: #1E3D59 !important;
+  border-top:    2px solid #007366 !important;
+  border-left:   2px solid #007366 !important;
+  border-right:  2px solid #007366 !important;
+  border-radius: 8px 8px 0 0 !important;
+  padding:       10px 20px !important;
+  cursor:        pointer !important;
+  text-align:    left !important;
+}
+
+/* ==========================================================
+   STREAMLIT EXPANDERS AZUL NOTURNO / CORPO (ABERTO)
+   ==========================================================
+   🟦 Borda: #007366
+   ========================================================== */
+div[data-testid="stExpander"] > details[open] > *:not(summary) {
+  border: 2px solid #007366 !important;
+  border-top: none !important;
+  border-radius: 0 0 8px 8px !important;
+  padding: 10px 20px !important;
+  transition: background-color 0.4s ease-in-out !important;
+  overflow: hidden !important;
 }

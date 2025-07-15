@@ -4,7 +4,9 @@ import streamlit as st
 from pathlib import Path
 
 def inject_custom_css():
-    css_path = Path("assets/style.css")  # ou onde estiver
+    css_path = Path("assets/style.css")
     if css_path.exists():
-        with open(css_path) as f:
-            st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+        # forçar UTF-8 para não dar UnicodeDecodeError no Windows
+        with open(css_path, encoding="utf-8") as f:
+            css = f.read()
+        st.markdown(f"<style>{css}</style>", unsafe_allow_html=True)

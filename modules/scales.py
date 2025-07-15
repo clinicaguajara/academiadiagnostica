@@ -221,13 +221,13 @@ def render_results_with_reference(nome_escala: str, escala_json: dict, normas_op
         "total_pid5" : "Amostra total (N = 1210); entre 15 e 73 anos",
         "clinico_pid5" : "Grupo clínico (N = 554); entre 15 e 63 anos",
         "comunitario_pid5" : "Grupo comunitário (N = 656); entre 15 e 73 anos",
-        "bis11_malloy" : "Amostra única (N = 3,053); entre 18 e 84 anos.",
-        "masculino": "Homens",
-        "feminino": "Mulheres",
-        "amostra1_diagnostico_sim": "Amostra 1 (N = 415); entre 18 e 86 anos com tratamento psiquiátrico",
-        "amostra1_diagnostico_nao": "Amostra 1 (N = 415); entre 18 e 86 anos sem tratamento psiquiátrico",
-        "amostra2_diagnostico_sim": "Amostra 2 (N = 1011); entre 18 e 67 anos com tratamento psiquiátrico",
-        "amostra2_diagnostico_nao": "Amostra 2 (N = 1011); entre 18 e 67 anos sem tratamento psiquiátrico",
+        "bis11_malloy" : "Amostra total (N = 3,053); entre 18 e 84 anos.",
+        "masculino_alves22": "Homens (N = 91); maior de 18 anos.",
+        "feminino_alves22": "Mulheres (N = 294); maior de 18 anos",
+        "amostra1_diagnostico_sim": "Amostra 1 com tratamento psiquiátrico (N = 415); entre 18 e 86 anos.",
+        "amostra1_diagnostico_nao": "Amostra 1 sem tratamento psiquiátrico (N = 415); entre 18 e 86 anos.",
+        "amostra2_diagnostico_sim": "Amostra 2 com tratamento psiquiátrico (N = 1011); entre 18 e 67 anos.",
+        "amostra2_diagnostico_nao": "Amostra 2 sem tratamento psiquiátrico (N = 1011); entre 18 e 67 anos.",
     }
 
     # Garante que só as chaves existentes serão mostradas
@@ -283,7 +283,7 @@ def render_results_with_reference(nome_escala: str, escala_json: dict, normas_op
     st.table(linhas)
 
     # --- Exibição das médias e DPs de cada fator em tabela ---
-    st.subheader("**Média e Desvio-Padrão por Fator:**")
+    st.markdown("**Média e Desvio-Padrão por Fator:**")
 
     # pega o bloco do grupo selecionado
     group_block = norma.get("normative_data", {}).get(selected_group, {})
@@ -376,7 +376,7 @@ def render_response_summary(nome_escala: str, escala_json: dict):
     rows = [(int(idx_str)+1, itens[int(idx_str)], resp)
             for idx_str, resp in respostas.items()]
 
-    with st.expander("📝 Resumo das Respostas", expanded=True):
+    with st.expander("📝 Resumo das Respostas"):
         st.markdown("**Itens e Respostas:**")
         for num, texto, resp in rows:
             st.write(f"**{num}.** {texto}  \n> **Resposta:** `{resp}`")
