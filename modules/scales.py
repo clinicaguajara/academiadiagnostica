@@ -1,12 +1,13 @@
 
 # --- Necessary imports ---
 
-import io
 import json
 import streamlit as st
 import pandas as pd
 
 from pathlib import Path
+from utils.design import inject_custom_css
+
 
 # --- Functions definition ---
 
@@ -187,8 +188,8 @@ def render_results_with_reference(nome_escala: str, escala_json: dict, normas_op
         Tabela com pontuação por fator e percentil estimado.
     """
 
-    respostas = st.session_state.get("escalas_respondidas", {}).get(nome_escala)
-    if not respostas:
+    download = st.session_state.get("escalas_respondidas", {}).get(nome_escala)
+    if not download:
         st.warning("📭 Nenhuma resposta encontrada para essa escala.")
         return
 
@@ -248,7 +249,7 @@ def render_results_with_reference(nome_escala: str, escala_json: dict, normas_op
 
 
     # --- Corrige os resultados com o modo indicado ---
-    result = corretion(respostas, escala_json, modo=modo)
+    result = corretion(download, escala_json, modo=modo)
 
     # --- Apelidos para exibição amigável ---
     factor_tags = {
@@ -278,9 +279,16 @@ def render_results_with_reference(nome_escala: str, escala_json: dict, normas_op
 
     # --- Exibição ---
     st.subheader(f"🧮 Resultado – {escala_json.get('name', nome_escala)}")
-    st.caption(f"Correção baseada em: **{ref_label_escolhida}** | Modo de correção: `{modo}`)")
+    st.caption(f"Correção baseada em: **{ref_label_escolhida}** | Modo de correção: `{modo}`")
 
     st.table(linhas)
+
+    # botão para baixar a tabela de resultados
+    download_csv_table(
+        rows=linhas,
+        label="Baixar resultados (CSV)",
+        file_name=f"{nome_escala}_resultados.csv",
+    )
 
     # --- Exibição das médias e DPs de cada fator em tabela ---
     st.markdown("**Média e Desvio-Padrão por Fator:**")
@@ -307,8 +315,6 @@ def render_results_with_reference(nome_escala: str, escala_json: dict, normas_op
 
     # Resumo dos itens
     render_response_summary(nome_escala, escala_json)
-
-
 
 
 
@@ -363,6 +369,7 @@ def search_percentile(pontuacao: int, normative_data: str, normas: dict, fator: 
             return perc
     return 99.9
 
+
 def render_response_summary(nome_escala: str, escala_json: dict):
     """
     Exibe um resumo das respostas, em um expander e com botão para download em PDF.
@@ -380,5 +387,56 @@ def render_response_summary(nome_escala: str, escala_json: dict):
         st.markdown("**Itens e Respostas:**")
         for num, texto, resp in rows:
             st.write(f"**{num}.** {texto}  \n> **Resposta:** `{resp}`")
+       
+        download = st.session_state["escalas_respondidas"][nome_escala]
+        resume = {
+            "itens": [
+                {
+                    "num": int(idx_str) + 1,
+                    "texto": escala_json["itens"][int(idx_str)],
+                    "resposta": resp
+                }
+                for idx_str, resp in download.items()
+            ]
+        }
+        # botão para baixar o resumo em JSON
+        download_json(
+            data=resume,
+            label="Baixar resumo de respostas (JSON)",
+            file_name=f"{nome_escala}_resumo.json"
+        )
 
 
+def download_csv_table(rows: list[dict], label: str, file_name: str):
+    """
+    Gera um botão de download de CSV para uma lista de dicionários.
+    
+    Args:
+        rows: lista de dicionários (cada dict vira uma linha).
+        label: texto do botão.
+        file_name: nome do arquivo (ex: "resultados.csv").
+    """
+    df = pd.DataFrame(rows)
+    csv_bytes = df.to_csv(index=False).encode("utf-8")
+    st.download_button(
+        label=label,
+        data=csv_bytes,
+        file_name=file_name,
+        mime="text/csv",
+        use_container_width=True,
+        key="download_percentil"
+    )
+
+def download_json(data: dict, label: str, file_name: str):
+    """
+    Gera um botão de download de JSON para um dict qualquer.
+    """
+    json_bytes = json.dumps(data, ensure_ascii=False, indent=2).encode("utf-8")
+    st.download_button(
+        label=label,
+        data=json_bytes,
+        file_name=file_name,
+        mime="application/json",
+        use_container_width=True,
+        key="download_responses"
+    )

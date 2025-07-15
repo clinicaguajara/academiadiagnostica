@@ -6,8 +6,20 @@ import streamlit as st
 
 from pathlib        import Path
 from modules.scales import render_results_with_reference
+from utils.design   import inject_custom_css
 
 # --- FUNÇÕES ---
+
+
+# --- CONFIGURAÇÕES DA PÁGINA ---
+
+st.set_page_config(
+    page_title="Relatórios",
+    page_icon="📝",
+    layout="centered"
+)
+
+inject_custom_css()
 
 def buscar_arquivo_da_escala(nome_escala: str, pasta: str = "scales") -> Path:
     for path in Path(pasta).glob("*.json"):
