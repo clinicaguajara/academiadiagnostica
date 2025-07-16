@@ -1,0 +1,16 @@
+{
+    "name": "PID-5 (Submissão)",
+    "respostas": [
+      "Muito falso ou frequentemente falso",
+      "Algumas vezes ou um pouco falso",
+      "Algumas vezes ou pouco verdadeiro",
+      "Muito verdadeiro ou frequentemente verdadeiro"
+    ],
+    "itens_reversos": [],
+    "itens": [
+      "Eu mudo o que faço dependendo do que os outros querem.",
+      "Eu geralmente faço o que os outros acham que eu deveria fazer.",
+      "Eu faço o que as outras pessoas me dizem para fazer.",
+      "Eu tento fazer o que os outros querem que eu faça."
+    ]
+  }

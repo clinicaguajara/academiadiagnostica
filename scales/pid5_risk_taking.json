@@ -1,0 +1,26 @@
+{
+  "name": "PID-5 (Exposição a Riscos)",
+  "respostas": [
+    "Muito falso ou frequentemente falso",
+    "Algumas vezes ou um pouco falso",
+    "Algumas vezes ou pouco verdadeiro",
+    "Muito verdadeiro ou frequentemente verdadeiro"
+  ],
+  "itens_reversos": [1, 2, 7, 8, 11, 13],
+   "itens": [
+      "As pessoas me descreveriam como imprudente.",
+      "Eu evito situações de risco.",
+      "Eu evito esportes e atividades arriscadas.",
+      "Eu não tenho limites quando se trata de fazer coisas perigosas.",
+      "Eu faço muitas coisas que os outros consideram arriscadas.",
+      "Eu gosto de correr riscos.",
+      "Quando quero fazer algo, eu não deixo que a possibilidade de que isso seja arriscado me impeça de fazê-lo.",
+      "Eu evito qualquer coisa que pode ser minimamente perigosa.",
+      "Eu prefiro agir com cuidado em vez de correr riscos desnecessários.",
+      "Eu não me importo de me arriscar de vez em quando.",
+      "Eu faço o que eu quero independente do quão perigoso possa ser.",
+      "Eu nunca me arrisco.",
+      "Eu não penso que posso me machucar quando estou fazendo coisas que podem ser perigosas.",
+      "Eu odeio correr riscos."
+    ]
+}

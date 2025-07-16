@@ -1,0 +1,22 @@
+{
+    "name": "PID-5 (Retraimento)",
+    "respostas": [
+      "Muito falso ou frequentemente falso",
+      "Algumas vezes ou um pouco falso",
+      "Algumas vezes ou pouco verdadeiro",
+      "Muito verdadeiro ou frequentemente verdadeiro"
+    ],
+    "itens_reversos": [],
+    "itens": [
+      "Eu prefiro não ficar muito perto das pessoas.",
+      "Eu me fecho em mim mesmo (a).",
+      "Eu desvio do meu caminho para evitar qualquer tipo de atividade em grupo.",
+      "Eu mantenho distância das pessoas.",
+      "Eu não gosto de gastar o tempo com os outros.",
+      "Eu não tenho interesse em fazer amigos.",
+      "Eu falo o mínimo possível ao lidar com os outros.",
+      "Eu não gosto de ficar muito perto das pessoas.",
+      "Eu não lido com as pessoas, a não ser que eu precise.",
+      "Eu evito eventos sociais."
+    ]
+  }

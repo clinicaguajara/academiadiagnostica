@@ -1,0 +1,22 @@
+{
+  "name": "PID-5 (Hostilidade)",
+  "respostas": [
+    "Muito falso ou frequentemente falso",
+    "Algumas vezes ou um pouco falso",
+    "Algumas vezes ou pouco verdadeiro",
+    "Muito verdadeiro ou frequentemente verdadeiro"
+  ],
+  "itens_reversos": [],
+  "itens": [
+    "Eu explodo com as pessoas quando elas fazem pequenas coisas que me irritam.",             
+    "Posso ser mau quando preciso.",                                                           
+    "Eu fico irritado (a) facilmente.",                                                         
+    "Eu me ofendo quando me dizem o que fazer, mesmo quando é um superior/chefe.",              
+    "Eu tenho um pavio muito curto.",                                                          
+    "Eu sempre me certifico de dar o troco nas pessoas que me prejudicaram.",                 
+    "Eu fico irritado (a) facilmente por qualquer tipo de coisa.",                              
+    "Eu geralmente sou bem hostil.",                                                            
+    "Eu fico com muita raiva quando as pessoas me insultam, mesmo que seja algo pequeno.",      
+    "Eu sou desagradável e grosso (a) com qualquer um que mereça."                               
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "name": "PID-5 (Busca de Atenção)",
+  "respostas": [
+    "Muito falso ou frequentemente falso",
+    "Algumas vezes ou um pouco falso",
+    "Algumas vezes ou pouco verdadeiro",
+    "Muito verdadeiro ou frequentemente verdadeiro"
+  ],
+  "itens_reversos": [],
+  "itens": [
+      "Eu faço coisas para ter certeza que as pessoas me notam.",
+      "Eu faço coisas simplesmente para que as pessoas me admirem.",
+      "Eu adoro chamar a atenção de outras pessoas.",
+      "Eu gosto de me destacar em uma multidão.",
+      "Meu comportamento é frequentemente ousado e chama atenção das pessoas.",
+      "Eu gosto de ser uma pessoa que chama atenção.",
+      "Eu preciso muito de atenção.",
+      "Eu gosto de chamar atenção para mim."
+    ]
+}

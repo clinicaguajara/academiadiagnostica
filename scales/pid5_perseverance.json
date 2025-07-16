@@ -1,0 +1,21 @@
+ {
+    "name": "PID-5 (Perseverança)",
+    "respostas": [
+      "Muito falso ou frequentemente falso",
+      "Algumas vezes ou um pouco falso",
+      "Algumas vezes ou pouco verdadeiro",
+      "Muito verdadeiro ou frequentemente verdadeiro"
+    ],
+    "itens_reversos": [],
+    "itens": [
+      "É difícil para mim parar uma atividade, mesmo quando já é a hora de parar.",
+      "Eu já perdi coisas por estar ocupado (a) tentando fazer algo de maneira extremamente correta.",
+      "Eu continuo fazendo as coisas do mesmo jeito, mesmo quando não está dando certo.",
+      "É difícil para mim mudar de uma atividade para outra.",
+      "Eu tenho dificuldades de mudar o jeito de fazer alguma coisa mesmo quando não está dando certo.",
+      "Eu fico fixado (a) em certas coisas e não posso parar.",
+      "Eu fico muito preso (a) às coisas.",
+      "Eu fico preso (a) a um jeito de fazer as coisas, mesmo quando está claro que não vai dar certo.",
+      "Eu me sinto forçado (a) a continuar com as coisas mesmo quando isso faz pouco sentido."
+    ]
+  }

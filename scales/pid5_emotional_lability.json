@@ -1,0 +1,19 @@
+{
+    "name": "PID-5 (Labilidade Emocional)",
+    "respostas": [
+      "Muito falso ou frequentemente falso",
+      "Algumas vezes ou um pouco falso",
+      "Algumas vezes ou pouco verdadeiro",
+      "Muito verdadeiro ou frequentemente verdadeiro"
+    ],
+    "itens_reversos": [],
+    "itens": [
+      "Minhas emoções às vezes mudam sem nenhum bom motivo.",
+      "Eu tenho reações emocionais muito mais fortes do que a maioria das pessoas.",
+      "Eu sou uma pessoa muito emotiva.",
+      "Eu me emociono facilmente, muitas vezes por pequenas razões.",
+      "Eu nunca sei para onde irão minhas emoções de um momento para o outro.",
+      "Eu me emociono com qualquer coisa pequena.",
+      "Minhas emoções são imprevisíveis."
+    ]
+  }

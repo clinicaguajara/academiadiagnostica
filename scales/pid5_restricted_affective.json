@@ -1,0 +1,19 @@
+{
+  "name": "PID-5 (Afetividade Restrita)",
+  "respostas": [
+    "Muito falso ou frequentemente falso",
+    "Algumas vezes ou um pouco falso",
+    "Algumas vezes ou pouco verdadeiro",
+    "Muito verdadeiro ou frequentemente verdadeiro"
+  ],
+  "itens_reversos": [],
+  "itens": [
+      "Quando se trata de minhas emoções, as pessoas dizem que eu sou muito “frio (a) ”.",
+      "Eu não tenho reações emocionais muito duradouras às coisas.",
+      "Eu não fico emocionado (a).",
+      "Eu não demonstro fortes emoções.",
+      "As pessoas me dizem que é difícil saber o que eu estou sentindo.",
+      "Eu nunca demonstro minhas emoções para os outros.",
+      "Eu não reajo muito a coisas que parecem deixar os outros emocionados."
+    ]
+}

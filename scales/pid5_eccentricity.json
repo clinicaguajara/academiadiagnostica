@@ -1,0 +1,25 @@
+{
+  "name": "PID-5 (Excentricidade)",
+  "respostas": [
+    "Muito falso ou frequentemente falso",
+    "Algumas vezes ou um pouco falso",
+    "Algumas vezes ou pouco verdadeiro",
+    "Muito verdadeiro ou frequentemente verdadeiro"
+  ],
+  "itens_reversos": [],
+  "itens": [
+      "Eu frequentemente tenho ideias que são muito estranhas para explicar para alguém.",
+      "Eu frequentemente falo coisas que os outros acham esquisitas ou estranhas.",
+      "As outras pessoas parecem achar que meu comportamento é estranho.",
+      "Pessoas me disseram que eu penso sobre as coisas de um jeito muito estranho.",
+      "Meus pensamentos frequentemente vão em direções estranhas ou incomuns.",
+      "Meus pensamentos frequentemente não fazem sentido para os outros.",
+      "As pessoas frequentemente me olham como se eu tivesse falado algo realmente estranho.",
+      "Os outros parecem pensar que eu sou bastante estranho (a) ou incomum.",
+      "Meus pensamentos são estranhos ou imprevisíveis.",
+      "Eu penso sobre as coisas de maneira estranha, que não faz sentido para a maioria das pessoas.",
+      "Já me disseram mais de uma vez que eu tenho vários comportamentos ou hábitos estranhos.",
+      "Eu tenho vários hábitos que as outras pessoas acham excêntricos ou estranhos.",
+      "Eu frequentemente tenho pensamentos que fazem sentido para mim, mas que outras pessoas dizem que são estranhos."
+    ]
+}

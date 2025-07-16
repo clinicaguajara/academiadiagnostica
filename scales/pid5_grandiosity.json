@@ -1,0 +1,18 @@
+{
+  "name": "PID-5 (Grandiosidade)",
+  "respostas": [
+    "Muito falso ou frequentemente falso",
+    "Algumas vezes ou um pouco falso",
+    "Algumas vezes ou pouco verdadeiro",
+    "Muito verdadeiro ou frequentemente verdadeiro"
+  ],
+  "itens_reversos": [],
+  "itens": [
+    "Para ser honesto (a), eu simplesmente sou mais importante do que as outras pessoas.",  
+    "Eu tenho qualidades excepcionais que poucos possuem.",                                  
+    "Eu sou melhor do que a maioria das pessoas.",                                           
+    "Eu já conquistei muito mais coisas do que a maioria das pessoas que eu conheço.",      
+    "Eu mereço tratamento especial.",                                                       
+    "Eu frequentemente tenho que lidar com pessoas que são menos importantes que eu."       
+  ]
+}

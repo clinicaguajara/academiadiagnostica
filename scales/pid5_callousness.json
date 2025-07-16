@@ -1,0 +1,28 @@
+{
+    "name": "PID-5 (Insensibilidade)",
+    "respostas": [
+      "Muito falso ou frequentemente falso",
+      "Algumas vezes ou um pouco falso",
+      "Algumas vezes ou pouco verdadeiro",
+      "Muito verdadeiro ou frequentemente verdadeiro"
+    ],
+    "itens_reversos": [
+      6
+    ],
+    "itens": [
+      "Eu frequentemente me envolvo em brigas físicas.",
+      "Ser grosseiro e hostil é parte de quem eu sou.",
+      "Eu realmente não me importo se faço outras pessoas sofrerem.",
+      "Realmente não me incomoda ver outras pessoas sofrendo.",
+      "Eu não me importo com os sentimentos das outras pessoas.",
+      "Você precisa de passar por cima de algumas pessoas para conseguir o que quer na vida.",
+      "Eu nunca prejudicaria outra pessoa.",
+      "Eu não me importo se as minhas ações fazem os outros sofrerem.",
+      "Não me parece grande coisa se eu ferir os sentimentos das outras pessoas.",
+      "Eu não me importo com os problemas das outras pessoas.",
+      "Eu às vezes bato nas pessoas para lembrá-las de quem está no comando.",
+      "Eu gosto de fazer as pessoas no comando parecerem estúpidas.",
+      "Eu não vejo sentido em me sentir culpado (a) por coisas que eu fiz e magoaram outras pessoas.",
+      "Na maior parte do tempo eu não vejo sentido em ser amigável."
+    ]
+  }

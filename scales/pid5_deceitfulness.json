@@ -1,0 +1,22 @@
+{
+  "name": "PID-5 (Desonestidade)",
+  "respostas": [
+    "Muito falso ou frequentemente falso",
+    "Algumas vezes ou um pouco falso",
+    "Algumas vezes ou pouco verdadeiro",
+    "Muito verdadeiro ou frequentemente verdadeiro"
+  ],
+  "itens_reversos": [6],
+  "itens": [
+    "Eu invento histórias sobre coisas que aconteceram que são totalmente falsas.",
+    "Eu frequentemente invento coisas sobre mim para tentar conseguir o que eu quero.",
+    "As pessoas não percebem que eu estou elogiando-as para conseguir algo.",
+    "Eu posso ser malandro (a) para conseguir o que eu quero.",
+    "Às vezes você precisa exagerar para seguir adiante.",
+    "Eu não hesito em trapacear se isso me levar adiante.",
+    "Eu tento dizer a verdade mesmo quando é difícil.",
+    "Eu uso as pessoas para conseguir o que eu quero.",
+    "Mentir é fácil para mim.",
+    "Eu faltarei com a verdade se isso for vantajoso para mim."
+  ]
+}

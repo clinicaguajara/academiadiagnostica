@@ -1,0 +1,19 @@
+{
+    "name": "PID-5 (Impulsividade)",
+    "respostas": [
+      "Muito falso ou frequentemente falso",
+      "Algumas vezes ou um pouco falso",
+      "Algumas vezes ou pouco verdadeiro",
+      "Muito verdadeiro ou frequentemente verdadeiro"
+    ],
+    "itens_reversos": [4
+    ],
+    "itens": [
+      "Eu sinto que ajo totalmente por impulso.",
+      "Eu geralmente faço coisas por impulso sem pensar no que poderia acontecer como resultado",
+      "Mesmo sabendo que não é o melhor, eu não consigo para de tomar decisões precipitadas.",
+      "Eu sempre faço as coisas no calor do momento.",
+      "Eu geralmente penso antes de agir.",
+      "Eu sou muito impulsivo (a)."
+    ]
+  }

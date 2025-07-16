@@ -1,0 +1,21 @@
+ {
+    "name": "PID-5 (Irresponsabilidade)",
+    "respostas": [
+      "Muito falso ou frequentemente falso",
+      "Algumas vezes ou um pouco falso",
+      "Algumas vezes ou pouco verdadeiro",
+      "Muito verdadeiro ou frequentemente verdadeiro"
+    ],
+    "itens_reversos": [
+      6
+    ],
+    "itens": [
+      "Os outros me veem como irresponsável.",
+      "Eu frequentemente sou muito descuidado (a) com as minhas coisas e com as coisas dos outros.",
+      "Eu faço promessas que não pretendo manter.",
+      "Eu frequentemente esqueço de pagar as minhas contas.",
+      "Eu já fugi para evitar responsabilidades.",
+      "Eu simplesmente falto a compromissos ou reuniões se eu não estou a fim de ir.",
+      "Eu cumpro meus compromissos."
+    ]
+  }

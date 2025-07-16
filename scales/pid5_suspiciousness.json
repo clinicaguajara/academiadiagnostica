@@ -1,0 +1,19 @@
+{
+  "name": "PID-5 (Desconfiança)",
+  "respostas": [
+    "Muito falso ou frequentemente falso",
+    "Algumas vezes ou um pouco falso",
+    "Algumas vezes ou pouco verdadeiro",
+    "Muito verdadeiro ou frequentemente verdadeiro"
+  ],
+  "itens_reversos": [3, 5],
+  "itens": [
+    "Muitas pessoas por aí querem me pegar.",
+    "Os outros se aproveitariam de mim se pudessem.",
+    "Eu estou sempre atento em relação às pessoas que tentam me enganar ou me prejudicar.",
+    "As pessoas são geralmente confiáveis.",
+    "Parece que eu sou sendo sempre tratado (a) injustamente pelas outras pessoas.",
+    "Eu raramente sinto que as pessoas que eu conheço estão tentando se aproveitar de mim.",
+    "Eu suspeito que mesmo os que se dizem meus 'amigos' me traem muito."
+  ]
+}

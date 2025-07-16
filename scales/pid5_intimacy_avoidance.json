@@ -1,0 +1,18 @@
+{
+  "name": "PID-5 (Evitação de Intimidade)",
+  "respostas": [
+    "Muito falso ou frequentemente falso",
+    "Algumas vezes ou um pouco falso",
+    "Algumas vezes ou pouco verdadeiro",
+    "Muito verdadeiro ou frequentemente verdadeiro"
+  ],
+  "itens_reversos": [1],
+  "itens": [
+      "Eu prefiro manter romances fora da minha vida.",
+      "Eu gosto de estar apaixonado (a).",
+      "Eu termino relacionamentos se eles começam a ficar muito íntimos.",
+      "Eu simplesmente não me interesso muito em ter relações sexuais.",
+      "Eu evito relacionamentos amorosos.",
+      "Eu prefiro ficar sozinho (a) do que ter um (a) parceiro (a) romântico (a)."
+    ]
+}

@@ -1,0 +1,24 @@
+{
+  "name": "PID-5 (Desregulação Cognitiva e Perceptiva)",
+  "respostas": [
+    "Muito falso ou frequentemente falso",
+    "Algumas vezes ou um pouco falso",
+    "Algumas vezes ou pouco verdadeiro",
+    "Muito verdadeiro ou frequentemente verdadeiro"
+  ],
+  "itens_reversos": [],
+  "itens": [
+    "Eu posso ter dificuldades em distinguir sonhos e realidade.",
+    "De vez em quando eu tenho uma sensação estranha de que partes do meu corpo parecem mortas ou não são parte de mim.",
+    "As pessoas frequentemente falam que eu fiz coisas das quais não me lembro.",
+    "É estranho, mas às vezes objetos comuns parecem ter uma forma diferente do habitual.",
+    "Eu frequentemente vejo imagens vívidas como sonhos quando estou adormecendo ou acordando.",
+    "Às vezes quando eu olho para um objeto conhecido, é como se eu estivesse vendo-o pela primeira vez.",
+    "Eu frequentemente não consigo controlar o que penso.",
+    "Às vezes eu me sinto “controlado (a)” por pensamentos que pertencem a outra pessoa.",
+    "Às vezes eu acho que alguém está retirando pensamentos da minha cabeça.",
+    "Eu tenho períodos em que me sinto desconectado do mundo e de mim mesmo (a).",
+    "Eu frequentemente “fico desligado (a)” e de repente volto a mim e percebo que passou bastante tempo.",
+    "As coisas ao meu redor frequentemente parecem irreais ou mais reais do que o habitual."
+  ]
+}

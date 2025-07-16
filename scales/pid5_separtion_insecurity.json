@@ -1,0 +1,19 @@
+{
+    "name": "PID-5 (Insegurança de Separação)",
+    "respostas": [
+      "Muito falso ou frequentemente falso",
+      "Algumas vezes ou um pouco falso",
+      "Algumas vezes ou pouco verdadeiro",
+      "Muito verdadeiro ou frequentemente verdadeiro"
+    ],
+    "itens_reversos": [],
+    "itens": [
+      "Eu tenho pavor de ficar sem alguém para me amar.",
+      "Eu me preocupo muito em ficar sozinho (a).",
+      "Eu prefiro estar em um relacionamento ruim do que estar sozinho (a).",
+      "Eu não suporto ser deixado (a) sozinho (a), mesmo por algumas horas.",
+      "Eu tenho medo de ficar sozinho (a) na vida mais do que qualquer outra coisa.",
+      "Eu farei qualquer coisa para impedir que alguém me abandone.",
+      "Eu nunca quero ficar sozinho (a)."
+    ]
+  }

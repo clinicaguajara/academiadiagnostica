@@ -1,0 +1,26 @@
+{
+    "name": "PID-5 (Tendência à Depressão)",
+    "respostas": [
+      "Muito falso ou frequentemente falso",
+      "Algumas vezes ou um pouco falso",
+      "Algumas vezes ou pouco verdadeiro",
+      "Muito verdadeiro ou frequentemente verdadeiro"
+    ],
+    "itens_reversos": [],
+    "itens": [
+      "Eu frequentemente sinto que nada que faço realmente importa.",
+      "Eu sou muito insatisfeito (a) comigo mesmo (a).",
+      "O futuro parece realmente sem esperanças para mim.",
+      "O mundo seria melhor se eu estivesse morto (a).",
+      "Eu sou muito envergonhado (a) pelas diferentes maneiras que eu decepcionei as pessoas.",
+      "Eu frequentemente me sinto como um (a) fracassado (a).",
+      "Eu falo muito sobre suicídio.",
+      "Eu sou uma pessoa inútil.",
+      "A vida parece muito sombria para mim.",
+      "Tudo parece sem sentido para mim.",
+      "Eu frequentemente me sinto simplesmente péssimo (a).",
+      "Eu não tenho nenhum valor como pessoa.",
+      "Eu sei que vou cometer suicídio mais cedo ou mais tarde.",
+      "Eu me sinto culpado (a) na maior parte do tempo."
+    ]
+  }
