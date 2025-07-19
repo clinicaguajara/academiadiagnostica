@@ -1,0 +1,41 @@
+{
+  "name": "PID-5 (Manipulação)",
+  "reference_label": "Oliveira et al., (2021)",
+  "reference_citation": "Oliveira, S. E. S. de ., Bandeira, D. R., Primi, R., & Krueger, R. F.. (2021). Psychometric Properties of the Personality Inventory for DSM-5 (PID-5) in Brazilian Samples. Psico-usf, 26(spe), 109–124. https://doi.org/10.1590/1413-8271202126nesp11",
+  "modo_correcao": "ordinal",
+  "normative_data": {
+    "comunitario_pid5": {
+      "alvo": "total",
+      "pontuacoes": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+      "percentis": [15.5, 24.4, 35.5, 48.1, 60.8, 72.5, 82.1, 89.3, 94.1, 97.0, 98.6, 99.4, 99.8, 99.9, 100.0, 100.0],
+      "fatores": {
+        "total": {
+          "media": 3.15,
+          "dp": 3.1
+        }
+      }
+    },
+    "clinico_pid5": {
+      "alvo": "total",
+      "pontuacoes": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+      "percentis": [14.6, 21.7, 30.4, 40.4, 51.1, 61.7, 71.5, 79.9, 86.6, 91.6, 95.0, 97.3, 98.6, 99.3, 99.7, 99.9],
+      "fatores": {
+        "total": {
+          "media": 3.9,
+          "dp": 3.7
+        }
+      }
+    },
+    "total_pid5": {
+      "alvo": "total",
+      "pontuacoes": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+      "percentis": [15.2, 23.1, 33.0, 44.2, 55.8, 67.0, 76.9, 84.8, 90.7, 94.7, 97.2, 98.6, 99.4, 99.7, 99.9, 100.0],
+      "fatores": {
+        "total": {
+          "media": 3.5,
+          "dp": 3.4
+        }
+      }
+    }
+  }
+}

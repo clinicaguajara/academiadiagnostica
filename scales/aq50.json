@@ -1,10 +1,10 @@
 {
   "name": "AQ-50",
   "respostas": [
-    "Concordo totalmente",
-    "Concordo ligeiramente",
+    "Discordo totalmente",
     "Discordo ligeiramente",
-    "Discordo totalmente"
+    "Concordo ligeiramente",
+    "Concordo totalmente"
   ],
   "itens_reversos": [2, 7, 9, 10, 13, 14, 16, 23, 24, 26, 27, 28, 29, 30, 31, 33, 35, 36, 37, 39, 43, 46, 47, 48, 49],
   "fatores": {
