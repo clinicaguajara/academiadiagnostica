@@ -1,28 +1,29 @@
-# pages/1_Resumo.py
-from __future__ import annotations
+# pages/3_Resultados.py
+
+# =========================================
+# Necessary imports and utilities
+# =========================================
+
+from __future__     import annotations
 
 import unicodedata
 import json
-from pathlib import Path
-from typing import Any, Dict, List, Tuple, Optional
-from utils.design   import inject_custom_css
-
 import pandas as pd
 import streamlit as st
 
-# --- Correções / cálculo ---
-from modules.corrections import (
+from pathlib        import Path
+from typing         import Any, Dict, List, Tuple, Optional
+
+from utils.global_variables import BLANK
+from utils.design           import inject_custom_css
+from modules.corrections    import (
     score_pid5_facets,
     summarize_with_norms,
     build_classification_table,
 )
 
-from utils.global_variables import BLANK
-
-inject_custom_css()
-
 # =========================================
-# Utilidades
+# Normalization
 # =========================================
 
 def _normalize_answers(answers_raw: Dict[Any, Any]) -> Dict[int, Any]:
@@ -41,6 +42,10 @@ def _norm_str(s: str) -> str:
     s = " ".join(s.split())
     s = "".join(ch for ch in unicodedata.normalize("NFD", s) if unicodedata.category(ch) != "Mn")
     return s
+
+# =========================================
+# Data management
+# =========================================
 
 def _find_scale_json_candidates(
     display_label: str,
@@ -79,7 +84,6 @@ def _find_scale_json_candidates(
     matches.sort(key=lambda t: (t[2] or "").lower())
     return matches
 
-
 def _select_norm_group_from_facets(scale_ref: Dict[str, Any]) -> tuple[str, str]:
     """
     Detecta grupos varrendo facets.*.norms e retorna (norm_key, norm_label).
@@ -109,7 +113,7 @@ def _select_norm_group_from_facets(scale_ref: Dict[str, Any]) -> tuple[str, str]
     if groups:
         labels = [pretty.get(k, k) for k in groups]
         idx = st.radio(
-            "Selecione o grupo normativo:",
+            "Selecione o grupo normativo",
             options=list(range(len(groups))),
             format_func=lambda i: labels[i],
             horizontal=True,
@@ -119,7 +123,7 @@ def _select_norm_group_from_facets(scale_ref: Dict[str, Any]) -> tuple[str, str]
 
     fallback = [("clinico", "Clínico"), ("comunitario", "Comunitário"), ("total", "Total")]
     idx = st.radio(
-        "Selecione o grupo normativo:",
+        "Selecione o grupo normativo",
         options=list(range(len(fallback))),
         format_func=lambda i: fallback[i][1],
         horizontal=True,
@@ -128,10 +132,12 @@ def _select_norm_group_from_facets(scale_ref: Dict[str, Any]) -> tuple[str, str]
     return fallback[idx]
 
 # =========================================
-# Página
+# Page drawing
 # =========================================
 
-st.title("Resumo da Escala")
+inject_custom_css()
+
+st.title("Correção de Instrumentos")
 
 # 1) Recupera escalas respondidas na sessão
 data_key = "escalas_respondidas"
@@ -151,7 +157,7 @@ for slug, _ans in all_answers.items():
     display_options.append(label)
     slug_lookup[label] = slug
 
-sel_label = st.selectbox("Escolha a escala para gerar o resumo:", sorted(display_options))
+sel_label = st.selectbox("Selecione o instrumento", sorted(display_options))
 scale_key = slug_lookup[sel_label]
 
 answers_raw = all_answers.get(scale_key, {})
@@ -173,7 +179,7 @@ if not candidates:
     st.stop()
 
 labels = [lab for _, __, lab in candidates]
-idx_study = st.selectbox("Estudo normativo", options=list(range(len(labels))), format_func=lambda i: labels[i])
+idx_study = st.selectbox("Selecione o estudo normativo", options=list(range(len(labels))), format_func=lambda i: labels[i])
 selected_path, scale_ref, _ = candidates[idx_study]
 
 # 5) Grupo normativo (extraído do estudo)
@@ -393,15 +399,13 @@ if has_facets:
     )
 
     st.download_button(
-        label="Relatório Completo",
+        label="Download (Relatório Completo)",
         data=pdf_bytes,
         file_name=pdf_name,
         mime="application/pdf",
         use_container_width=True,
     )
 
-
-    
     # =========================================
     # Tabelão psicométrico
     # =========================================
@@ -411,7 +415,7 @@ if has_facets:
     st.session_state[show_key] = show_psy
 
     if show_psy:
-        st.markdown("### Tabela Psicométrica Completa")
+        st.markdown("### Dados psicométricos completos")
         df_big = (
             df_master[
                 ["faceta", "dominio", "classificacao", "z", "percentil", "bruta", "media_itens", "mean_ref", "sd_ref"]

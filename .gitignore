@@ -1,6 +1,7 @@
 # venv
+# .\.venv\Scripts\Activate.ps1 (Windows PowerShell)
 .venv/
-venv/
+venv/ 
 
 # caches
 __pycache__/

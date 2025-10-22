@@ -40,7 +40,7 @@ class PdfTable:
 
 @dataclass
 class PdfMeta:
-    app_title: str = "Academia Diagnóstica"
+    app_title: str = "Sistema de Correções Informatizadas"
     scale_display_name: str = ""           # ex.: "PID-5 | Autorrelato Completo"
     study_name: str = ""                   # ex.: "Markon et al. (2013)"
     study_version: str = ""                # ex.: "Versão X • Amostra Y"
@@ -65,7 +65,7 @@ class PdfPayload:
     summary_blocks: List[Mapping[str, Any]] = field(default_factory=list)
     tables: List[PdfTable] = field(default_factory=list)
     figures: List[PdfFigure] = field(default_factory=list)  # << novo
-    footer_left: str = "Academia Diagnóstica"
+    footer_left: str = "Clínica Guajará"
     footer_right: str = ""
     filename_hint: str = "resultado_escala"
 
@@ -166,7 +166,7 @@ def build_results_pdf(payload: PdfPayload) -> bytes:
         leftMargin=1.8 * cm, rightMargin=1.8 * cm,
         topMargin=1.7 * cm, bottomMargin=1.7 * cm,
         title=payload.meta.scale_display_name or payload.meta.app_title,
-        author="Academia Diagnóstica",
+        author="Clínica Guajará",
     )
     S = _styles()
 
@@ -376,7 +376,7 @@ def build_pdf_table_and_graphs(
 
     # -------- Meta / payload base
     meta = PdfMeta(
-        app_title="Academia Diagnóstica",
+        app_title="Sistema de Correções Informatizadas",
         scale_display_name=sel_label,
         study_name=study_name,
         study_version=study_ver,
@@ -391,7 +391,7 @@ def build_pdf_table_and_graphs(
         summary_blocks=[],
         tables=[],
         figures=[],
-        footer_left="Academia Diagnóstica",
+        footer_left="Clínica Guajará",
         footer_right="Relatório de resultados",
         filename_hint=filename_hint or f"resultado_{sel_label.replace(' ', '_').replace('|','')}",
     )

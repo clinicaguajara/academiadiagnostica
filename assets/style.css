@@ -1,4 +1,5 @@
-/* style.css */
+/* assets/style.css */
+
 /* === Reset seguro para a modebar do Plotly (evita herdar estilos globais) === */
 .js-plotly-plot .modebar {
   background: transparent !important;
@@ -20,31 +21,31 @@
   background: rgba(255,255,255,0.10) !important; /* ajuste conforme tema */
 }
 
-/* Hover agradável (opcional) */
+/* Hover */
 .js-plotly-plot .modebar-btn:hover {
   background: rgba(255,255,255,0.25) !important; /* claro/escuro: ajuste */
 }
 
-/* Ícones: tamanho fixo e sem “auto-resize” herdado de img/svg globais */
+/* Ícones */
 .js-plotly-plot .modebar-btn svg {
   width: 16px !important;
   height: 16px !important;
-  display: block !important;        /* evita baseline estranha */
+  display: block !important;       
   transform: none !important;
-  max-width: none !important;       /* neutraliza img, svg { max-width:100% } */
+  max-width: none !important;      
 }
 
 /* Se houver regras globais que mudam path/fill, fixe a cor aqui conforme o tema */
 .js-plotly-plot .modebar-btn svg path {
-  fill: #ffffff !important;         /* tema escuro; use #333 em tema claro */
+  fill: #ffffff !important; /* tema escuro; use #333 em tema claro */
 }
+
 /* GLOBAL CONFIG */
 body {
     background-color: #1D2B53;
     color: #FFFFFF;
     font-family: 'Segoe UI', sans-serif;
 }
-
 
 /* CUSTOM BUTTONS */
 button {
@@ -62,10 +63,7 @@ button:hover {
     transform: scale(1.02) !important;
 }
 
-/* ==========================================================
-   EXPANDER / BOTÕES
-   ========================================================== */
-
+/* EXPANDERS */
 [data-testid="stExpander"] button {
       background-color: #2196F3 !important;
       color: #FFFFFF !important;
@@ -76,7 +74,6 @@ button:hover {
       transition: background 0.3s ease;
   }
 
-/* HOVER */
 [data-testid="stExpander"] button:hover {   
       background-color: #3AB6FF  !important;
       transform: scale(1.02) !important;
