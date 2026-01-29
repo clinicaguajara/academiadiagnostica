@@ -1,4 +1,9 @@
 # modules/gauss_plot.py
+
+# =========================================
+# Necessary imports
+# =========================================
+
 from __future__ import annotations
 
 from dataclasses import dataclass

@@ -1,5 +1,9 @@
 # utils/global_variables.py
 
+# =========================================
+# Global variables
+# =========================================
+
 SCROLL_FLAG = "_scroll_to_top"
 
 SCALES_DIR = "scales"

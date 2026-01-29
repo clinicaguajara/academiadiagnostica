@@ -1,13 +1,14 @@
 {
-  "name": "PID-5 | Autorrelato Completo",
+  "name": "PID-5 | Inventário da Personalidade para o DSM-5",
+  "traduction": "Traduzido por Flávia de Lima Osório, Ana Maria Barchi-Ferreira, Albina Rodrigues Torres, André Luiz Moreno, Marcos Hortes Nisihara Chagas, Thiago Dornela Apolinário da Silva, Diogo Araújo de Sousa, Rafael Guimarães dos Santos, João Paulo Machado de Souza, Natália Mota de Sousa Chagas e Sonia Regina Loureiro.",
   "instructions": "Essa é uma lista de várias coisas que as pessoas podem dizer sobre si mesmas. Nós estamos interessados em saber como você se descreveria. Não existem respostas certas ou erradas. Dessa forma, você pode se descrever da maneira mais honesta possível, pois suas respostas serão mantidas em sigilo. Você pode levar o tempo que quiser; leia cada uma das afirmativas com cuidado, escolhendo a resposta que melhor descreve você.",
-  "respostas": [
+  "answer_options": [
     "Muito falso ou frequentemente falso",
     "Algumas vezes ou um pouco falso",
     "Algumas vezes ou pouco verdadeiro",
     "Muito verdadeiro ou frequentemente verdadeiro"
   ],
-  "itens_reversos": [7, 30, 35, 58, 87, 90, 96, 97, 98, 131, 142, 155, 164, 177, 210, 215],
+  "reverse_items": [7, 30, 35, 58, 87, 90, 96, 97, 98, 131, 142, 155, 164, 177, 210, 215],
   "items": [
     {
       "id": 1,

@@ -1,0 +1,214 @@
+{
+  "name": "AQ-50 | Coeficiente de Autismo",
+  "traduction": "Traduzido por Ana Osório, Beatriz Sanchez e Júlia Egito.",
+  "instructions": "Essa é uma lista de várias coisas que as pessoas podem dizer sobre si mesmas. Nós estamos interessados em saber como você se descreveria. Não existem respostas certas ou erradas. Dessa forma, você pode se descrever da maneira mais honesta possível, pois suas respostas serão mantidas em sigilo. Você pode levar o tempo que quiser; leia cada uma das afirmativas com cuidado, escolhendo a resposta que melhor descreve você.",
+  "answer_options": [
+    "Concordo totalmente",
+    "Concordo ligeiramente",
+    "Discordo ligeiramente",
+    "Discordo totalmente"
+  ],
+  "reverse_items": [1, 3, 8, 10, 11, 14, 15, 17, 24, 25, 27, 28, 29, 30, 31, 32, 34, 36, 37, 38, 40, 44, 47, 48, 50],
+  "items": [
+    {
+      "id": 1,
+      "text": "Prefiro fazer coisas com outras pessoas do que sozinho(a)."
+    },
+    {
+      "id": 2,
+      "text": "Prefiro fazer as coisas sempre da mesma maneira."
+    },
+    {
+      "id": 3,
+      "text": "Quando tento imaginar uma coisa, tenho muita facilidade em criar uma imagem na minha mente."
+    },
+    {
+      "id": 4,
+      "text": "Com frequência fico tão absorvido(a) com uma coisa que esqueço todo o resto."
+    },
+    {
+      "id": 5,
+      "text": "Frequentemente noto pequenos ruídos que outras pessoas não ouvem."
+    },
+    {
+      "id": 6,
+      "text": "Costumo prestar atenção aos números das placas dos automóveis ou a outras sequências de informação do mesmo tipo."
+    },
+    {
+      "id": 7,
+      "text": "As outras pessoas com frequência me dizem que falei algo indelicado, apesar de eu achar que fui delicado(a)."
+    },
+    {
+      "id": 8,
+      "text": "Quando leio uma história, consigo imaginar facilmente a aparência dos personagens."
+    },
+    {
+      "id": 9,
+      "text": "Sou fascinado por datas."
+    },
+    {
+      "id": 10,
+      "text": "Quando estou em grupo, tenho facilidade em seguir várias conversas ao mesmo tempo."
+    },
+    {
+      "id": 11,
+      "text": "Tenho facilidade em compreender situações sociais."
+    },
+    {
+      "id": 12,
+      "text": "Tenho tendência a notar detalhes que os outros não reparam."
+    },
+    {
+      "id": 13,
+      "text": "Prefiro ir a uma biblioteca do que a uma festa."
+    },
+    {
+      "id": 14,
+      "text": "Tenho facilidade em inventar histórias."
+    },
+    {
+      "id": 15,
+      "text": "Tenho maior tendência a me aproximar de pessoas do que de coisas."
+    },
+    {
+      "id": 16,
+      "text": "Tenho tendência a ter interesses fortes e fico incomodado(a) se não posso me dedicar a eles."
+    },
+    {
+      "id": 17,
+      "text": "Gosto de bater papo."
+    },
+    {
+      "id": 18,
+      "text": "Quando estou falando, as outras pessoas têm dificuldade em tomar a palavra."
+    },
+    {
+      "id": 19,
+      "text": "Os números me fascinam."
+    },
+    {
+      "id": 20,
+      "text": "Quando leio uma história, sinto dificuldade em entender as intenções dos personagens."
+    },
+    {
+      "id": 21,
+      "text": "Não aprecio ler livros de ficção."
+    },
+    {
+      "id": 22,
+      "text": "Tenho dificuldade em fazer novos amigos."
+    },
+    {
+      "id": 23,
+      "text": "Vejo constantemente padrões nas coisas que me rodeiam."
+    },
+    {
+      "id": 24,
+      "text": "Prefiro ir ao teatro do que ir a um museu."
+    },
+    {
+      "id": 25,
+      "text": "Não fico incomodado(a) se minha rotina diária for alterada."
+    },
+    {
+      "id": 26,
+      "text": "Com frequência sinto que não sei manter uma conversa."
+    },
+    {
+      "id": 27,
+      "text": "Tenho facilidade em “ler nas entrelinhas” quando falam comigo."
+    },
+    {
+      "id": 28,
+      "text": "Geralmente me concentro mais no todo do que nos detalhes."
+    },
+    {
+      "id": 29,
+      "text": "Não sou muito bom/boa em lembrar números de telefone."
+    },
+    {
+      "id": 30,
+      "text": "Geralmente não reparo nas pequenas mudanças de uma situação ou na aparência de uma pessoa."
+    },
+    {
+      "id": 31,
+      "text": "Consigo dizer quando a pessoa com quem estou conversando fica entediada."
+    },
+    {
+      "id": 32,
+      "text": "Consigo facilmente fazer mais do que uma coisa ao mesmo tempo."
+    },
+    {
+      "id": 33,
+      "text": "Quando falo no telefone, não tenho a certeza quando é a minha vez de falar."
+    },
+    {
+      "id": 34,
+      "text": "Gosto de fazer as coisas de forma espontânea."
+    },
+    {
+      "id": 35,
+      "text": "Com frequência sou o(a) último(a) que entende uma piada."
+    },
+    {
+      "id": 36,
+      "text": "Tenho facilidade em entender o que uma pessoa está pensando ou sentindo apenas olhando para o seu rosto."
+    },
+    {
+      "id": 37,
+      "text": "Se sou interrompido(a), consigo rapidamente voltar ao que estava fazendo."
+    },
+    {
+      "id": 38,
+      "text": "Sou bom/boa de papo."
+    },
+    {
+      "id": 39,
+      "text": "Os outros frequentemente me dizem que eu insisto muito nas mesmas coisas."
+    },
+    {
+      "id": 40,
+      "text": "Quando era criança, gostava de brincar de faz-de-conta com as outras crianças."
+    },
+    {
+      "id": 41,
+      "text": "Gosto de colecionar informação sobre categorias de coisas (p. ex., tipos de carros, de aves, de trens, de plantas, etc.)."
+    },
+    {
+      "id": 42,
+      "text": "Tenho dificuldade de me imaginar na pele de outra pessoa."
+    },
+    {
+      "id": 43,
+      "text": "Gosto de planejar com cuidado todas as atividades em que participo."
+    },
+    {
+      "id": 44,
+      "text": "Aprecio eventos sociais."
+    },
+    {
+      "id": 45,
+      "text": "Tenho dificuldade em entender as intenções das outras pessoas."
+    },
+    {
+      "id": 46,
+      "text": "Situações novas me deixam ansioso(a)."
+    },
+    {
+      "id": 47,
+      "text": "Gosto de conhecer pessoas novas."
+    },
+    {
+      "id": 48,
+      "text": "Tenho uma postura conciliadora em situações de interação social."
+    },
+    {
+      "id": 49,
+      "text": "Tenho dificuldade em lembrar o dia de aniversário dos outros."
+    },
+    {
+      "id": 50,
+      "text": "Tenho muita facilidade em brincar de faz-de-conta com as crianças."
+    }
+  ]
+}

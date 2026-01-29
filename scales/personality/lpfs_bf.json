@@ -1,0 +1,26 @@
+{
+  "name": "LPFS-BF 2.0 | Escala do Nível de Funcionamento da Personalidade, versão breve",
+  "traduction": "Transculturalmente adaptado por Oliveira, S. E. S. de ., Zimmermann, J., Krueger, R. F., & Hutsebaut, J. (2023). Brazilian Version of the Level of Personality Functioning Scale-Brief Form 2.0: Evidence of Reliability and Validity. Psicologia: Teoria & Pesquisa, 39.",
+  "instructions": "Marque em cada uma das afirmativas abaixo o quanto que elas se aplicam a você neste momento.",
+  "answer_options": [
+    "Muito falso ou frequentemente falso",
+    "Algumas vezes ou um pouco falso",
+    "Algumas vezes ou pouco verdadeiro",
+    "Muito verdadeiro ou frequentemente verdadeiro"
+  ],
+  "reverse_items": [],
+  "items": [
+    { "id": 1, "text": "Eu frequentemente não sei quem sou." },
+    { "id": 2, "text": "Eu frequentemente tenho pensamentos muito negativos sobre mim mesmo." },
+    { "id": 3, "text": "Minhas emoções mudam sem que eu tenha controle sobre elas." },
+    { "id": 4, "text": "Eu não tenho ideia de onde quero chegar em minha vida." },
+    { "id": 5, "text": "Eu frequentemente não entendo meus próprios pensamentos e sentimentos." },
+    { "id": 6, "text": "Eu frequentemente faço exigências irrealistas para mim mesmo." },
+    { "id": 7, "text": "Eu frequentemente tenho dificuldade de entender os pensamentos e sentimentos dos outros." },
+    { "id": 8, "text": "Eu frequentemente tenho dificuldade de tolerar quando os outros discordam de mim." },
+    { "id": 9, "text": "Eu frequentemente não entendo totalmente por que meu comportamento tem um determinado efeito sobre os outros." },
+    { "id": 10, "text": "Meus relacionamentos e amizades nunca duram por muito tempo." },
+    { "id": 11, "text": "Eu frequentemente me sinto inseguro quando minhas relações se tornam mais íntimas." },
+    { "id": 12, "text": "Eu frequentemente não consigo cooperar com os outros de modo que seja satisfatório tanto para mim quanto para os outros." }
+  ]
+}

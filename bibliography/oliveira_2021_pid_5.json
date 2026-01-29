@@ -1,5 +1,5 @@
 {
-  "scale": "PID-5 | Autorrelato Completo",
+  "scale": "PID-5 | Inventário da Personalidade para o DSM-5",
   "version": "Oliveira et al., 2021",
   "cite": "Oliveira, S. E. S. de ., Bandeira, D. R., Primi, R., & Krueger, R. F. (2021). Psychometric Properties of the Personality Inventory for DSM-5 (PID-5) in Brazilian Samples. Psico-usf, 26(spe), 109–124. DOI: 10.1590/1413-8271202126nesp11",
   "n_items": 220,
@@ -12,6 +12,11 @@
   },
   "norm_groups": ["total", "clinico", "comunitario"],
   "default_norm_group": "total",
+  "norm_group_descriptions": {
+    "total": "A amostra total foi composta por 1.210 participantes brasileiros, recrutados por conveniência por meio de coleta on-line, com idade média de 29,2 anos (DP = 10,2; variação de 15 a 73 anos). A maioria dos participantes era do sexo feminino (73,8%), possuía ensino superior completo ou em andamento (88,9%) e se autodeclarava branca (71,8%). Os participantes eram provenientes de todas as cinco regiões do Brasil, com maior concentração nas regiões Sudeste (39,7%) e Sul (39,0%).",
+    "clinico": "O grupo clínico incluiu 554 participantes, com idade média de 28,5 anos (DP = 9,6), sendo 75,8% mulheres. Os participantes foram classificados como clínicos quando apresentavam pelo menos um dos seguintes critérios: autorrelato de diagnóstico psiquiátrico, uso de medicação psicotrópica, escore igual ou superior a 8 no Self-Reporting Questionnaire (SRQ-20), ou escore igual ou superior a 6 no módulo de risco suicida da Mini International Neuropsychiatric Interview (MINI).",
+    "comunitario": "O grupo comunitário foi composto por 656 participantes, com idade média de 29,8 anos (DP = 10,7), sendo 72,1% mulheres. Esse grupo apresentou, de modo geral, menores indicadores de psicopatologia, não atendendo aos critérios estabelecidos para classificação clínica."
+  },
   "facets": {
     "Anedonia": {
       "items": [1, 23, 26, 30, 124, 155, 157, 189],

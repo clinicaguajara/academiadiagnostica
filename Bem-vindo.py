@@ -1,15 +1,15 @@
 # Bem-vindo.py
 
 # =========================================
-# Necessary imports and utilities
+# Necessary Imports
 # =========================================
 
 import streamlit as st
 
-from utils.design           import inject_custom_css
+from utils.design import inject_custom_css
 
 # =========================================
-# Page configuration
+# Page Configuration
 # =========================================
 
 st.set_page_config(
@@ -22,20 +22,20 @@ st.set_page_config(
 inject_custom_css()
 
 # =========================================
-# Page drawing
+# Page Rendering 
 # =========================================
 
 # Page title and description
-st.title("Bem-vindo(a)")
+st.title("Bem-vindo")
 
 st.markdown(
-    "<h3 style='color:#ffd000;'>Sistema de Correções Informatizadas</h3>",
+    "<h3 class='section-title-accent'>Sistema de Correções Informatizadas</h3>",
     unsafe_allow_html=True
 )
 
 st.markdown(
     """
-    <p style='text-align: justify;'>
+    <p class='text-justify'>
     O conteúdo e os resultados apresentados neste aplicativo têm finalidade exclusivamente informativa e educacional. 
     As interpretações geradas baseiam-se em dados psicométricos e modelos normativos, 
     não devendo ser utilizadas isoladamente para fins diagnósticos, clínicos ou jurídicos. 
@@ -49,7 +49,7 @@ st.divider()
 
 # Sub-section title
 st.markdown(
-    "<h4 style='color: white;'>Instrumentos disponíveis</h4>",
+    "<h4 class='section-title'>Instrumentos disponíveis</h4>",
     unsafe_allow_html=True
 )
 
@@ -62,3 +62,4 @@ with col2:
     if st.button("Autismo", use_container_width=True):
         st.switch_page("pages/2_Autismo.py")
 
+# python -m streamlit run Bem-vindo.py

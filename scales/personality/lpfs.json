@@ -1,0 +1,334 @@
+﻿{
+  "name": "LPFS-SR | Escala do Nível de Funcionamento da Personalidade",
+  "traduction": "Tradução oficial não disponível; versão brasileira por Pedro Henrique Ramos Pinto",
+  "instructions": "Para as questões a seguir, por favor indique em que medida as afirmações são verdadeiras para você.",
+  "answer_options": [
+    "Muito falso ou frequentemente falso",
+    "Algumas vezes ou um pouco falso",
+    "Algumas vezes ou pouco verdadeiro",
+    "Muito verdadeiro ou frequentemente verdadeiro"
+  ],
+  "reverse_items": [],
+  "items": [
+    {
+      "id": 1,
+      "text": "Em muitas situações diferentes, consigo me comportar de uma maneira adequada a cada situação."
+    },
+    {
+      "id": 2,
+      "text": "Tudo o que eu consigo realmente perceber sobre as outras pessoas são as suas fraquezas."
+    },
+    {
+      "id": 3,
+      "text": "Quase nenhum relacionamento próximo termina bem."
+    },
+    {
+      "id": 4,
+      "text": "Embora eu possa ter sentimentos diferentes em momentos diferentes, eu consigo lidar com todos eles muito bem."
+    },
+    {
+      "id": 5,
+      "text": "Embora eu tente, parece que não consigo manter relacionamentos bem-sucedidos e duradouros."
+    },
+    {
+      "id": 6,
+      "text": "Embora eu valorize relacionamentos próximos, às vezes emoções intensas atrapalham."
+    },
+    {
+      "id": 7,
+      "text": "Acontecimentos na minha vida podem realmente mudar se eu me sinto bem comigo mesmo(a) ou não."
+    },
+    {
+      "id": 8,
+      "text": "A opinião dos outros tem um papel determinante para eu saber o que é importante para mim."
+    },
+    {
+      "id": 9,
+      "text": "Me aproximar dos outros tem pouco interesse para mim."
+    },
+    {
+      "id": 10,
+      "text": "Ficar próximo(a) de outras pessoas só me deixa vulnerável e, de verdade, não vale o risco."
+    },
+    {
+      "id": 11,
+      "text": "Eu consigo apreciar o ponto de vista de outras pessoas mesmo quando discordo delas."
+    },
+    {
+      "id": 12,
+      "text": "Eu só consigo me aproximar de alguém que me entenda muito bem."
+    },
+    {
+      "id": 13,
+      "text": "Eu só consigo me aproximar de alguém que reconheça e atenda às minhas necessidades."
+    },
+    {
+      "id": 14,
+      "text": "Eu consigo dar um passo atrás e avaliar objetivamente como estou me sentindo em qualquer momento."
+    },
+    {
+      "id": 15,
+      "text": "Nem sempre consigo diferenciar o que é minha opinião do que é a forma como outras pessoas querem que eu pense."
+    },
+    {
+      "id": 16,
+      "text": "Eu nem consigo imaginar viver uma vida que eu consideraria satisfatória."
+    },
+    {
+      "id": 17,
+      "text": "Eu não suporto quando há grandes diferenças de opinião."
+    },
+    {
+      "id": 18,
+      "text": "Eu não tenho a menor ideia do porquê as outras pessoas fazem o que fazem."
+    },
+    {
+      "id": 19,
+      "text": "Eu não tenho muitas interações positivas com outras pessoas."
+    },
+    {
+      "id": 20,
+      "text": "Eu não presto muita atenção, nem me importo muito, com o efeito que eu tenho sobre outras pessoas."
+    },
+    {
+      "id": 21,
+      "text": "Eu não entendo de jeito nenhum o que motiva as outras pessoas."
+    },
+    {
+      "id": 22,
+      "text": "Eu não perco tempo pensando sobre minhas experiências, sentimentos e ações."
+    },
+    {
+      "id": 23,
+      "text": "Eu tenho uma forte necessidade de aprovação dos outros."
+    },
+    {
+      "id": 24,
+      "text": "Eu tenho dificuldade para estabelecer e concluir metas."
+    },
+    {
+      "id": 25,
+      "text": "Eu tenho pouca compreensão de como me sinto ou do que faço."
+    },
+    {
+      "id": 26,
+      "text": "Eu tenho muitos relacionamentos satisfatórios, tanto na vida pessoal quanto no trabalho."
+    },
+    {
+      "id": 27,
+      "text": "Eu tenho relacionamentos, mas não muitos que eu considere muito próximos."
+    },
+    {
+      "id": 28,
+      "text": "Eu tenho alguma dificuldade para estabelecer metas."
+    },
+    {
+      "id": 29,
+      "text": "Eu tenho dificuldade para decidir entre metas diferentes."
+    },
+    {
+      "id": 30,
+      "text": "Eu ajo principalmente no momento, em vez de me concentrar em metas de longo prazo."
+    },
+    {
+      "id": 31,
+      "text": "Eu presto atenção nas outras pessoas principalmente na medida em que elas provavelmente vão me afetar de alguma forma."
+    },
+    {
+      "id": 32,
+      "text": "Eu presto atenção nas pessoas principalmente com base no que elas podem fazer comigo ou por mim."
+    },
+    {
+      "id": 33,
+      "text": "Parece que eu nunca tenho muita esperança de que coisas boas vão acontecer comigo."
+    },
+    {
+      "id": 34,
+      "text": "Eu estabeleço padrões pessoais para mim que são muito difíceis de satisfazer."
+    },
+    {
+      "id": 35,
+      "text": "Eu tendo a me sentir ou muito bem ou muito mal comigo mesmo(a)."
+    },
+    {
+      "id": 36,
+      "text": "Eu tendo a deixar que os outros estabeleçam minhas metas, em vez de defini-las por conta própria."
+    },
+    {
+      "id": 37,
+      "text": "Eu me esforço para ser flexível e cooperativo(a) ao lidar com os outros."
+    },
+    {
+      "id": 38,
+      "text": "Em geral, eu entendo os sentimentos de outras pessoas melhor do que elas próprias."
+    },
+    {
+      "id": 39,
+      "text": "Eu cuido dos meus relacionamentos próximos, porque eles são importantes para mim."
+    },
+    {
+      "id": 40,
+      "text": "Eu tenho segurança sobre a diferença entre meus valores e aqueles que outras pessoas podem querer que eu tenha."
+    },
+    {
+      "id": 41,
+      "text": "Eu não sou bom(boa) em dar um passo atrás e olhar objetivamente para a minha vida."
+    },
+    {
+      "id": 42,
+      "text": "Eu não tenho certeza exatamente de quais padrões eu estabeleci para mim."
+    },
+    {
+      "id": 43,
+      "text": "Eu só me interesso por relacionamentos que possam me oferecer algum conforto."
+    },
+    {
+      "id": 44,
+      "text": "Eu estou muito ciente do impacto que estou tendo sobre outras pessoas."
+    },
+    {
+      "id": 45,
+      "text": "Em um relacionamento próximo, é como se eu não conseguisse viver sem a outra pessoa."
+    },
+    {
+      "id": 46,
+      "text": "Em relacionamentos próximos, eu tendo a ficar dividido(a) entre sentir medo e ser \"grudente\"."
+    },
+    {
+      "id": 47,
+      "text": "Em muitas situações, eu me sinto bem diferente do que os outros parecem esperar que eu sinta."
+    },
+    {
+      "id": 48,
+      "text": "Em momentos muito difíceis, às vezes eu perco de vista o que é importante para mim."
+    },
+    {
+      "id": 49,
+      "text": "Interagir com outras pessoas geralmente me deixa confuso(a)."
+    },
+    {
+      "id": 50,
+      "text": "Parece que a maioria das outras pessoas tem a vida mais organizada do que eu."
+    },
+    {
+      "id": 51,
+      "text": "Eu tenho metas que são razoáveis, considerando minhas capacidades."
+    },
+    {
+      "id": 52,
+      "text": "Eu tive relacionamentos duradouros, mas eles nem sempre foram muito satisfatórios."
+    },
+    {
+      "id": 53,
+      "text": "A vida é um lugar perigoso e com pouco significado."
+    },
+    {
+      "id": 54,
+      "text": "Muitas pessoas ao meu redor têm motivações muito destrutivas."
+    },
+    {
+      "id": 55,
+      "text": "A maioria das coisas que eu faço é uma reação ao que os outros fazem."
+    },
+    {
+      "id": 56,
+      "text": "Minhas emoções mudam rapidamente."
+    },
+    {
+      "id": 57,
+      "text": "Minha vida é basicamente controlada pelas ações dos outros."
+    },
+    {
+      "id": 58,
+      "text": "Minhas motivações são, em grande parte, impostas a mim, em vez de serem uma escolha pessoal."
+    },
+    {
+      "id": 59,
+      "text": "Meus padrões pessoais mudam bastante dependendo das circunstâncias."
+    },
+    {
+      "id": 60,
+      "text": "Outras pessoas frequentemente esperam demais de mim."
+    },
+    {
+      "id": 61,
+      "text": "As pessoas acham que eu sou muito bom(boa) em perceber os sentimentos e as motivações dos outros na maioria das situações."
+    },
+    {
+      "id": 62,
+      "text": "As pessoas acham que eu sou um(a) \"hater\", mas isso muitas vezes tem mais a ver com elas do que comigo."
+    },
+    {
+      "id": 63,
+      "text": "Relacionamentos são, principalmente, uma fonte de dor e sofrimento."
+    },
+    {
+      "id": 64,
+      "text": "Às vezes, tudo o que me importa são as minhas metas."
+    },
+    {
+      "id": 65,
+      "text": "Às vezes eu sou duro(a) demais comigo mesmo(a)."
+    },
+    {
+      "id": 66,
+      "text": "Às vezes eu sinto que certas pessoas são iguais a mim; em outras vezes eu acredito que elas não têm nada a ver comigo."
+    },
+    {
+      "id": 67,
+      "text": "Às vezes eu não sou muito cooperativo(a) porque as outras pessoas não correspondem aos meus padrões."
+    },
+    {
+      "id": 68,
+      "text": "Às vezes é fácil para mim ignorar o impacto que estou tendo sobre os outros."
+    },
+    {
+      "id": 69,
+      "text": "A chave para um relacionamento bem-sucedido é se as minhas necessidades estão sendo atendidas."
+    },
+    {
+      "id": 70,
+      "text": "Os padrões que eu estabeleço para mim muitas vezes parecem ser exigentes demais ou não exigentes o suficiente."
+    },
+    {
+      "id": 71,
+      "text": "A forma como os outros me percebem é totalmente diferente de como eu realmente sou."
+    },
+    {
+      "id": 72,
+      "text": "Há partes da minha personalidade que simplesmente não se encaixam muito bem entre si."
+    },
+    {
+      "id": 73,
+      "text": "Ao lidar com pessoas, eu presto atenção principalmente em como elas provavelmente vão me afetar."
+    },
+    {
+      "id": 74,
+      "text": "Quando os sentimentos ficam fortes demais, eu tento me desligar deles."
+    },
+    {
+      "id": 75,
+      "text": "Quando eu discordo dos outros, muitas vezes não adianta tentar ver as coisas pela perspectiva deles."
+    },
+    {
+      "id": 76,
+      "text": "Quando eu sinto que fiz algo bem, eu quase sempre estou certo(a)."
+    },
+    {
+      "id": 77,
+      "text": "Quando eu não estou indo bem em alguma coisa, eu posso ficar com muita raiva ou sentir vergonha das minhas capacidades."
+    },
+    {
+      "id": 78,
+      "text": "Quando eu tenho sucesso, eu tendo a me sentir como um(a) impostor(a)."
+    },
+    {
+      "id": 79,
+      "text": "Quando os outros desaprovam de mim, é difícil manter minhas emoções sob controle."
+    },
+    {
+      "id": 80,
+      "text": "Quando eu penso sobre mim mesmo(a), eu posso ficar bem estreito(a) no meu foco."
+    }
+  ]
+}

@@ -1,10 +1,9 @@
 # modules/scales_forms.py
 
 # =========================================
-# Necessary imports and utilities
+# Necessary imports
 # =========================================
 
-import json
 import streamlit as st
 
 from pathlib     import Path
@@ -12,24 +11,15 @@ from dataclasses import dataclass
 from typing      import Any, Dict, List, Optional, Sequence, Tuple
 
 from utils.global_variables  import SCROLL_FLAG
+from utils.data_management   import load_json
+from utils.normalize         import slugify
+from utils.scales_schema     import ScaleData, ScaleItem, scales_schema
 from streamlit_scroll_to_top import scroll_to_here
 
 
 # =========================================
 # Data models
 # =========================================
-
-@dataclass
-class ScaleItem:
-    id: str
-    text: str
-
-@dataclass
-class ScaleData:
-    name: str
-    answer_options: List[str]
-    items: List[ScaleItem]
-    instruction_html: Optional[str] = None
 
 @dataclass
 class ScaleConfig:
@@ -52,28 +42,6 @@ class ScaleKeys:
 # Public API
 # =========================================
 
-def _inject_styles_once() -> None:
-    key = "_styles_scales_forms"
-    if not st.session_state.get(key):
-        st.markdown("""
-        <style>
-        .item-badge{
-            display:inline-block;
-            background:#2196F3;
-            color:#fff;
-            border:1px solid #0b74d6;
-            border-radius:10px;
-            padding:2px 10px;
-            font-weight:700;
-            min-width:2.4rem;
-            text-align:center;
-        }
-        .item-row{ display:flex; align-items:flex-start; gap:.6rem; margin:.4rem 0 .2rem 0; }
-        .item-text{ flex:1; }
-        </style>
-        """, unsafe_allow_html=True)
-        st.session_state[key] = True
-
 def _scroll_to_top_if_needed() -> None:
     if st.session_state.get(SCROLL_FLAG):
         st.session_state[SCROLL_FLAG] = False
@@ -89,16 +57,10 @@ def render_scale_form(
 ) -> Tuple[bool, Dict[str, str]]:
     cfg = cfg or ScaleConfig()
 
-    raw = _load_scale(scale_ref)
-    data = _normalize_scale(raw)
+    raw = load_json(scale_ref)
+    data = scales_schema(raw)
 
     keys = _build_keys(data.name)
-
-    # (opcional) CSS global, se você tiver a função no arquivo
-    try:
-        _inject_styles_once()
-    except Exception:
-        pass
 
     signature = _compute_signature(cfg, data)
     _ensure_initial_state(cfg, keys, data.items, data.answer_options, signature)
@@ -128,269 +90,14 @@ def render_scale_form(
 # Internals
 # =========================
 
-def _load_scale(scale_ref: str | Path | Dict[str, Any]) -> Dict[str, Any]:
-    """
-    Load a scale definition from various input formats into a Python dictionary.
-
-    This helper accepts multiple types of references for flexibility when defining or 
-    previewing scales in Streamlit:
-
-    Parameters
-    ----------
-    scale_ref : str | Path | Dict[str, Any]
-        - If a `dict` is provided, it is assumed to already represent a parsed scale and is returned as-is.
-        - If a `Path` object is provided, the function reads the file (UTF-8 encoded) and parses it as JSON.
-        - If a `str` is provided, it can be either:
-            * a filesystem path to a JSON file, or
-            * a raw JSON string (the function automatically distinguishes between them).
-
-    Returns
-    -------
-    Dict[str, Any]
-        A Python dictionary representing the loaded scale data.
-
-    Behavior
-    --------
-    - The function first checks if the input is already a dictionary (in-memory object).
-    - Then, it tries to interpret it as a file path (using `Path.exists()`).
-    - If that fails, it finally assumes the input is a JSON string and attempts to parse it.
-    - If any step fails to parse valid JSON, a `json.JSONDecodeError` will propagate.
-
-    Notes
-    -----
-    This function is intentionally permissive: it is designed for flexible usage in 
-    dynamic interfaces (e.g., Streamlit forms) where the input might come from 
-    direct JSON text, local files, or preloaded data structures.
-    """
-    if isinstance(scale_ref, dict):
-        return scale_ref
-    if isinstance(scale_ref, Path):
-        text = scale_ref.read_text(encoding="utf-8")
-        return json.loads(text)
-    
-    # accept either a file path string or a JSON string
-    try:
-        p = Path(str(scale_ref))
-        if p.exists():
-            return json.loads(p.read_text(encoding="utf-8"))
-    except Exception:
-        pass
-    return json.loads(str(scale_ref))
-
-def _normalize_scale(obj: Dict[str, Any]) -> ScaleData:
-    """
-    Normalize heterogeneous raw scale data (loaded from JSON or dict) into a 
-    consistent internal representation (`ScaleData`).
-
-    This function standardizes various possible input formats — accounting for 
-    different field names, value types, and data shapes — so that downstream 
-    components (UI rendering, validation, scoring) can work with a uniform schema.
-
-    Parameters
-    ----------
-    obj : Dict[str, Any]
-        A raw dictionary describing a scale. It may come from different sources 
-        (e.g., user-defined JSON, localized formats, or legacy data), with fields 
-        named in Portuguese ("titulo", "itens", "respostas") or English 
-        ("name", "items", "answers").
-
-    Returns
-    -------
-    ScaleData
-        A structured dataclass instance containing:
-        - `name` (str): normalized title of the scale.
-        - `answer_options` (List[str]): list of response labels with a blank sentinel prepended.
-        - `items` (List[ScaleItem]): standardized items with `id` and `text` fields.
-        - `instruction_html` (Optional[str]): instructions in text or HTML format.
-
-    Normalization logic
-    -------------------
-    1. **Scale name**
-       - Extracted from "name" or "titulo"; defaults to "Escala" if missing.
-
-    2. **Answer options**
-       - Accepts multiple input shapes:
-         * Dictionary (e.g., `{"Nunca": 0, "Às vezes": 1}`) → use the keys as labels.
-         * Scalar (string/int/float) → wrap into a single-element list.
-         * Iterable → cast all elements to strings.
-       - Ensures a `"__BLANK__"` sentinel is added at the beginning so the UI can 
-         display an empty option by default.
-
-    3. **Items**
-       - Accepts a list of dictionaries **or** a list of plain strings.
-       - Each item dictionary can use any of the following keys:
-         * `"id"`, `"numero"`, or `"index"` → item identifier.
-         * `"text"`, `"texto"`, or `"label"` → display text.
-       - If the item is a simple string or number, it becomes the text, and the 
-         position index becomes its ID.
-       - Each normalized item becomes a `ScaleItem(id, text)`.
-
-    4. **UI metadata and instructions**
-       - If `"ui"` is present and a dictionary, it is preserved (for potential 
-         layout customization; not directly used here).
-       - `"instructions"` are cast to string and stored as `instruction_html`.
-
-    Example
-    -------
-    >>> raw = {
-    ...     "titulo": "Inventário de Ansiedade",
-    ...     "respostas": {"Nunca": 0, "Às vezes": 1, "Frequentemente": 2},
-    ...     "itens": ["Sente-se nervoso?", "Tem dificuldade para relaxar?"],
-    ...     "instructions": "Leia cada frase e selecione a opção que mais o descreve."
-    ... }
-    >>> _normalize_scale(raw)
-    ScaleData(
-        name='Inventário de Ansiedade',
-        answer_options=['__BLANK__', 'Nunca', 'Às vezes', 'Frequentemente'],
-        items=[
-            ScaleItem(id='1', text='Sente-se nervoso?'),
-            ScaleItem(id='2', text='Tem dificuldade para relaxar?')
-        ],
-        instruction_html='Leia cada frase e selecione a opção que mais o descreve.'
-    )
-
-    Notes
-    -----
-    - This function does not perform scoring or validation — it only cleans and 
-      unifies input structure.
-    - It tolerates missing or extra fields for forward compatibility.
-    - The blank sentinel ensures downstream UI components can easily detect 
-      unanswered items.
-    """
-    # Scale name (fallback to "Escala")
-    name = str(obj.get("name") or obj.get("titulo") or "Escala")
-
-    # Response options → ensure a list of strings
-    options = obj.get("respostas") or obj.get("answers") or []
-
-    if isinstance(options, dict):
-        # If provided as dict (e.g., {"Nunca": 0, "Às vezes": 1, ...}),
-        # preserve the natural order of the keys
-        options = list(options.keys())
-    elif isinstance(options, (str, int, float)):
-        options = [str(options)]
-    else:
-        options = [str(o) for o in options]
-
-    # Guarantee the blank sentinel at the start (to allow "no answer" later)
-    if options and options[0] != "__BLANK__":
-        options = ["__BLANK__"] + options
-
-    # Items: accept list of dicts or list of strings
-    items_raw = obj.get("items") or obj.get("itens") or []
-    items: List[ScaleItem] = []
-    for idx, it in enumerate(items_raw, start=1):
-        if isinstance(it, dict):
-            it_id = str(it.get("id") or it.get("numero") or it.get("index") or idx)
-            it_text = str(it.get("text") or it.get("texto") or it.get("label") or "")
-        else:
-            # String, number, etc. → becomes text; id = position
-            it_id = str(idx)
-            it_text = str(it)
-        items.append(ScaleItem(id=it_id, text=it_text))
-    
-    ui = obj.get("ui") if isinstance(obj.get("ui"), dict) else {}
-    instr = obj.get("instructions")
-    instruction_html = str(instr) if instr is not None else None
-
-    return ScaleData(name=name, answer_options=list(options), items=items, instruction_html=instruction_html)
-
-def _slugify(name: str) -> str:
-    """
-    Convert an arbitrary string into a simple, lowercase slug identifier.
-
-    This helper ensures that names (such as scale titles, facet labels, or item IDs)
-    are transformed into a standardized format suitable for file names, keys,
-    or URL fragments — removing accents, punctuation, and spacing inconsistencies.
-
-    Parameters
-    ----------
-    name : str
-        The input string to normalize (e.g., "Agressividade / Hostilidade").
-
-    Returns
-    -------
-    str
-        A lowercase string containing only alphanumeric characters and underscores.
-        Multiple consecutive underscores are collapsed into one, and leading/trailing
-        underscores are removed.
-
-    Behavior
-    --------
-    1. Replaces every non-alphanumeric character with an underscore ("_").
-    2. Collapses consecutive underscores and trims them from the edges.
-    3. Converts the result to lowercase.
-
-    Example
-    -------
-    >>> _slugify("Faceta: Ansiedade Geral")
-    'faceta_ansiedade_geral'
-
-    >>> _slugify("   Agressividade / Hostilidade!!  ")
-    'agressividade_hostilidade'
-
-    Notes
-    -----
-    - This function does not remove diacritics (accents). If accent-insensitive
-      normalization is required, additional Unicode normalization (e.g. `unicodedata.normalize`)
-      should be applied before calling `_slugify`.
-    - Useful for generating internal dictionary keys, file names, or state keys
-      in Streamlit where strict naming conventions are required.
-    """
-    s = "".join(ch if ch.isalnum() else "_" for ch in name.strip())
-    s = "_".join([t for t in s.split("_") if t])
-    return s.lower()
-
 def _build_keys(scale_name: str) -> ScaleKeys:
     """
     Build a consistent set of Streamlit session-state keys for a given scale.
 
-    This helper uses the scale name to generate a unique "slug" and then derives
-    related state keys (for page tracking, user answers, initialization flag,
-    and integrity signature). It ensures that multiple scales can coexist in the
-    same Streamlit session without key collisions.
-
-    Parameters
-    ----------
-    scale_name : str
-        The display name of the scale (e.g., "PID-5 | Versão do Informante").
-
-    Returns
-    -------
-    ScaleKeys
-        A dataclass containing:
-        - `slug`: a simplified identifier derived from the scale name.
-        - `page_key`: session-state key for the current page index.
-        - `answers_key`: key under which user answers are stored.
-        - `init_key`: flag indicating whether the scale has been initialized.
-        - `signature_key`: checksum key used to detect data changes or reloads.
-
-    Behavior
-    --------
-    1. Calls `_slugify(scale_name)` to produce a lowercase, underscore-separated
-       version of the scale name that is safe for use in session state.
-    2. Constructs five related keys by appending double-underscore suffixes
-       (`__page`, `__answers`, etc.).
-    3. Returns them packaged inside a `ScaleKeys` dataclass for convenient access.
-
-    Example
-    -------
-    >>> _build_keys("PID-5 | Versão do Informante")
-    ScaleKeys(
-        slug='pid_5_versao_do_informante',
-        page_key='pid_5_versao_do_informante__page',
-        answers_key='pid_5_versao_do_informante__answers',
-        init_key='pid_5_versao_do_informante__initialized',
-        signature_key='pid_5_versao_do_informante__signature'
-    )
-
-    Notes
-    -----
-    - Keeps all state keys grouped under the same prefix, avoiding accidental
-      overlap between multiple scales.
-    - The `slug` is also useful as a general identifier for file names or logs.
+    The returned keys are derived from a slugified version of the scale name so
+    multiple scales can coexist in the same session without collisions.
     """
-    slug = _slugify(scale_name)
+    slug = slugify(scale_name)
     return ScaleKeys(
         slug=slug,
         page_key=f"{slug}__page",
@@ -637,6 +344,8 @@ def _page_window(page: int, page_size: int, n_items: int) -> Tuple[int, int]:
 
 def _render_header(data: ScaleData, current_page: int, total_pages: int) -> None:
     st.markdown(f"### {data.name}")
+    if data.traduction:
+        st.caption(f"{data.traduction}")
     st.caption(f"Página {current_page} de {total_pages}")
     st.divider()
 
@@ -724,17 +433,14 @@ def _render_item_row(
 
     # Render item row with optional badge
     badge_html = (
-        f"<span class='item-badge' "
-        f"style='display:inline-block;background:#2196F3;color:#fff;border:1px solid #fff;"
-        f"border-radius:10px;padding:2px 10px;font-weight:700;min-width:2.4rem;text-align:center;'>"
-        f"#{it.id}</span>"
+        f"<span class='item-badge'>#{it.id}</span>"
     ) if cfg.show_id_badge else ""
 
     st.markdown(
         f"""
-        <div class="item-row" style="display:flex;align-items:flex-start;gap:.6rem;margin:.4rem 0 .4rem 0;">
+        <div class="item-row">
             {badge_html}
-            <div class="item-text" style="flex:1;">{it.text}</div>
+            <div class="item-text">{it.text}</div>
         </div>
         """,
         unsafe_allow_html=True,
@@ -823,6 +529,7 @@ def _validate_answers(
       helping the respondent locate unanswered questions before proceeding.
     - Does not modify session state; it only analyzes and reports missing data.
     """
+    
     # Even if allow_blank=True, we still require answers before page advancement
     # (blank_sentinel is treated as "missing" during validation).
     scope = scope_items if scope_items is not None else data.items
@@ -932,7 +639,7 @@ def _render_items_form(
 
     if instr_raw:
         st.markdown(
-            "<h4 style='color:#FFB300; margin:0 0 .25rem 0;'>Instruções</h4>",
+            "<h4 class='form-instructions-title'>Instruções</h4>",
             unsafe_allow_html=True
         )
 
@@ -944,13 +651,13 @@ def _render_items_form(
         txt = txt.replace("\n\n", "<br><br>").replace("\n", "<br>")
 
         st.markdown(
-            f"""<div style="text-align: justify; text-justify: inter-word; line-height: 1.45;">
+            f"""<div class="form-instructions-text">
                     {txt}
                 </div>""",
             unsafe_allow_html=True
         )
     
-        st.markdown("<div style='height: 1.5rem;'></div>", unsafe_allow_html=True)
+        st.markdown("<div class='form-instructions-spacer'></div>", unsafe_allow_html=True)
 
     with st.form(key=form_key, clear_on_submit=False):
 

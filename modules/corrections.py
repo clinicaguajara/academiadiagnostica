@@ -1,85 +1,177 @@
-#modules\correction.py
+# modules/corrections.py
 
-# =========================
+# =========================================
 # Necessary Imports
-# =========================
+# =========================================
 
-import json
-import pandas as pd
-import streamlit as st
+from math            import erf, sqrt
+from typing          import Dict, Any, List, Tuple, Optional
+from utils.normalize import norm_key
 
-from math import erf, sqrt
-from typing import Dict, Any, List, Tuple, Optional
+# =========================================
+# Helpers
+# =========================================
 
-# --- Carregamento ---
-
-def load_scale(json_path: str) -> Dict[str, Any]:
-    """<docstrings>
-    Carrega o dicionário da escala PID-5 a partir de um arquivo JSON.
-
-    Calls:
-        json.load(): Função para ler JSON | built-in.
-        open(): Função para abrir arquivo | built-in.
+def use_item_mean_for_z(scale_ref: Dict[str, Any]) -> bool:
     """
-    with open(json_path, "r", encoding="utf-8") as f:
-        return json.load(f)
+    Decide whether the z-score should be computed from item mean (default)
+    or from raw sum (useful for binary-scored instruments, e.g. AQ-50).
 
-# --- Utilidades ---
+    Reads, in order, the following optional fields from `scale_ref`:
+    - z_from
+    - z_metric
+    - norm_metric
+    """
+    raw = (
+        scale_ref.get("z_from")
+        or scale_ref.get("z_metric")
+        or scale_ref.get("norm_metric")
+        or ""
+    )
+    k = norm_key(raw)
+    if k in {"raw", "raw_sum", "sum", "bruta", "bruto"}:
+        return False
+    if k in {"mean", "mean_items", "media", "media_itens", "item_mean"}:
+        return True
+    return True
+
+def get_norm_group_options_from_facets(scale_ref: Dict[str, Any]) -> Tuple[List[str], List[str]]:
+    """
+    Collect available norm groups by scanning `facets.*.norms` and return:
+      (groups, labels)
+
+    - `groups` preserves the original keys as they appear in the JSON (case-sensitive).
+    - `labels` is a human-friendly version of each group key.
+    """
+    pretty = {
+        "clinico": "Clínico",
+        "clínico": "Clínico",
+        "comunitario": "Comunitário",
+        "comunitário": "Comunitário",
+        "total": "Total",
+        "alto risco": "Alto Risco",
+        "normativo": "Normativo",
+        "controle": "Controle",
+        "autistas": "Autistas",
+    }
+
+    groups: List[str] = []
+    seen: set[str] = set()
+    for f in (scale_ref.get("facets") or {}).values():
+        for g in (f.get("norms") or {}).keys():
+            raw = str(g).strip()
+            norm = norm_key(raw)
+            if norm not in seen:
+                seen.add(norm)
+                groups.append(raw)
+
+    order_pref = ["clinico", "comunitario", "total", "controle", "autistas"]
+    groups = sorted(
+        groups,
+        key=lambda g: (
+            order_pref.index(norm_key(g)) if norm_key(g) in order_pref else 99,
+            norm_key(g),
+        ),
+    )
+    labels = [pretty.get(norm_key(g), g) for g in groups]
+    return groups, labels
+
+
+def get_norm_group_description(scale_ref: Dict[str, Any], group: str) -> Optional[str]:
+    """
+    Return a human-readable description for a norm group (if provided in the study JSON).
+
+    Expected JSON field:
+        norm_group_descriptions: { "<group>": "<free text>" }
+
+    Matching is attempted by:
+    - exact key (case-sensitive)
+    - accent/case/whitespace-insensitive key via norm_key
+    """
+    raw_map = scale_ref.get("norm_group_descriptions") or {}
+    if not isinstance(raw_map, dict) or not raw_map:
+        return None
+
+    if group in raw_map:
+        txt = raw_map.get(group)
+        return str(txt).strip() if str(txt).strip() else None
+
+    target = norm_key(str(group))
+    for k, v in raw_map.items():
+        if norm_key(str(k)) == target:
+            txt = str(v).strip()
+            return txt if txt else None
+
+    return None
+
+def _get_norm_params(scale: Dict[str, Any], facet: str, group: str) -> Tuple[Optional[float], Optional[float]]:
+    """
+    Return (mean, sd) for a given facet and norm group, with practical fallbacks.
+
+    - First tries `facets[facet].norms[group]` (exact match).
+    - Then tries an accent/case/whitespace-insensitive match against available groups.
+    - Then falls back to `default_norm_group`, or any available group.
+    - Finally falls back to `facets[facet].mean` / `facets[facet].sd` if present.
+    """
+    fdata = scale["facets"][facet]
+    norms = fdata.get("norms")
+    if norms:
+        # Direct match first.
+        if group in norms:
+            return norms[group].get("mean"), norms[group].get("sd")
+
+        # Case/space/accent-insensitive match (e.g., "controle" -> "Controle")
+        target = norm_key(group)
+        for k, v in norms.items():
+            if norm_key(k) == target:
+                return v.get("mean"), v.get("sd")
+
+    # Fallbacks: default group -> any available group
+    if norms:
+        gdef = scale.get("default_norm_group")
+        if gdef:
+            if gdef in norms:
+                return norms[gdef].get("mean"), norms[gdef].get("sd")
+            target_def = norm_key(gdef)
+            for k, v in norms.items():
+                if norm_key(k) == target_def:
+                    return v.get("mean"), v.get("sd")
+        if len(norms) > 0:
+            any_group = next(iter(norms.values()))
+            return any_group.get("mean"), any_group.get("sd")
+
+    # Final fallback: mean/sd stored directly on the facet object.
+    return fdata.get("mean"), fdata.get("sd")
+
+
+# =========================================
+# Scoring
+# =========================================
 
 def _reverse_value(v: Optional[int], max_val: int = 3) -> Optional[int]:
-    """<docstrings>
-    Inverte a resposta Likert (0..max_val) quando necessário.
-
-    Calls:
-        int(): Função para conversão numérica | built-in.
-    """
+    """Reverse a scored value given the maximum possible value."""
     if v is None:
         return None
     return max_val - int(v)
 
 def _z_to_percentile(z: Optional[float]) -> Optional[float]:
+    """Convert a z-score to a percentile (0..100)."""
     if z is None:
         return None
     pct = 50.0 * (1.0 + erf(z / sqrt(2.0)))
-    # << clamp para evitar 100.0000001
+    # Clamp to avoid values like 100.0000001 due to floating point rounding.
     if pct < 0.0:
         pct = 0.0
     elif pct > 100.0:
         pct = 100.0
     return pct
 
-def _get_norm_params(scale: Dict[str, Any], facet: str, group: str) -> Tuple[Optional[float], Optional[float]]:
-    """<docstrings>
-    Recupera mean/sd da faceta conforme o grupo normativo.
-    Faz fallback para default_norm_group ou para qualquer grupo disponível.
-    """
-    fdata = scale["facets"][facet]
-    # Novo formato preferido
-    norms = fdata.get("norms")
-    if norms and group in norms:
-        return norms[group].get("mean"), norms[group].get("sd")
-
-    # Fallbacks: default -> algum -> antigo formato
-    if norms:
-        gdef = scale.get("default_norm_group")
-        if gdef and gdef in norms:
-            return norms[gdef].get("mean"), norms[gdef].get("sd")
-        if len(norms) > 0:
-            any_group = next(iter(norms.values()))
-            return any_group.get("mean"), any_group.get("sd")
-
-    # Antigo formato (mean/sd na raiz da faceta)
-    return fdata.get("mean"), fdata.get("sd")
-
 def _compute_z(x: Optional[float], mean: Optional[float], sd: Optional[float]) -> Optional[float]:
-    """<docstrings>
-    (x - mean)/sd com proteções básicas.
-    """
+    """Compute a z-score (x - mean) / sd with basic guards."""
     if x is None or mean is None or sd in (None, 0):
         return None
     return (x - mean) / sd
 
-# ---------- Resumo com normas ----------
 def summarize_with_norms(
     scale: Dict[str, Any],
     facet_stats: Dict[str, Dict[str, Any]],
@@ -87,9 +179,9 @@ def summarize_with_norms(
     *,
     use_item_mean_for_z: bool = True
 ) -> List[Dict[str, Any]]:
-    """<docstrings>
-    Para cada faceta, busca mean/sd do grupo, calcula z e percentil.
-    Retorna linhas para DataFrame final.
+    """
+    For each facet, retrieve (mean, sd) for the selected norm group, compute z and percentile,
+    and return rows suitable for building a results DataFrame.
     """
     rows: List[Dict[str, Any]] = []
     for facet, stats in facet_stats.items():
@@ -111,14 +203,15 @@ def summarize_with_norms(
         })
     return rows
 
-# ---------- Classificação separada ----------
 def build_classification_table(
     scale: Dict[str, Any],
     rows: List[Dict[str, Any]],
 ) -> List[Dict[str, Any]]:
-    """<docstrings>
-    Gera tabela de classificação baseada nos limites do JSON (campo 'classification').
-    Usa z de cada linha para escolher label_above/below.
+    """
+    Build a classification table based on JSON rules under `classification`.
+
+    Rules are evaluated in order based on `abs(z)` and choose `label_above` or `label_below`
+    depending on the sign of z.
     """
     classes = scale.get("classification", [])
     out = []
@@ -131,7 +224,7 @@ def build_classification_table(
             label_above = None
             label_below = None
 
-            # encontra a primeira regra aplicável
+            # Find the first applicable rule.
             chosen = None
             for rule in classes:
                 max_abs = rule.get("max_abs_z")
@@ -153,25 +246,24 @@ def build_classification_table(
         })
     return out
 
-# =========================
-# PID-5
-# =========================
-
-def score_pid5_facets(
+def score_scales(
     scale: Dict[str, Any],
     answers: Dict[int, Any],
     *,
     use_item_mean: bool = True,
 ) -> Dict[str, Dict[str, Any]]:
-    """<docstrings>
-    Calcula pontuação bruta e média por item para cada faceta.
-    - answers: dict mapeando número do item (1..N) -> resposta (0..3) ou string equivalente ao response_map.
-    - Respeita reverse_items da escala.
-    Calls:
-        dict.get(): Método do dict | instanciado por dict.
-        _reverse_value(): Função para inversão.
+    """
+    Score a faceted scale, producing per-facet raw sums and item means.
+
+    - `answers`: maps item id (1..N) -> either an int score or a response label present in `response_map`.
+    - `reverse_items`: items to reverse-score using the inferred `max_val`.
     """
     response_map = scale.get("response_map", {})
+    # Infer maximum response value from response_map (supports binary scoring like AQ-50).
+    try:
+        max_val = max(int(v) for v in response_map.values())
+    except Exception:
+        max_val = 3
     reverse_items = set(scale.get("reverse_items", []))
 
     out: Dict[str, Dict[str, Any]] = {}
@@ -183,7 +275,7 @@ def score_pid5_facets(
             raw = answers.get(item)
             if raw is None:
                 continue
-            # Converte strings do response_map para 0..3, se necessário
+            # Convert response labels to numeric scores via response_map when needed.
             if isinstance(raw, str):
                 if raw not in response_map:
                     continue
@@ -191,9 +283,9 @@ def score_pid5_facets(
             else:
                 val = int(raw)
 
-            # Aplica inversão se item estiver em reverse_items
+            # Reverse-score items when required.
             if item in reverse_items:
-                val = _reverse_value(val, max_val=3)
+                val = _reverse_value(val, max_val=max_val)
 
             scored.append(val)
 
@@ -211,100 +303,4 @@ def score_pid5_facets(
             "n_items": len(item_ids),
         }
     return out
-
-def render_pid5_results(
-    scale: Dict[str, Any],
-    answers: Dict[int, Any],
-    *,
-    norm_group: Optional[str] = None,        # <- novo: usa o grupo já escolhido fora
-    default_norm: Optional[str] = None,
-    use_item_mean_for_z: bool = True,
-    show_norm_selector: bool = True,         # <- opcional: permite ligar/desligar o radio interno
-) -> None:
-    """<docstrings>
-    Renderiza no Streamlit:
-    1) Tabela principal (faceta | média_itens | z | percentil | bruta)
-    2) Tabela de classificação separada
-    """
-
-    # grupos disponíveis
-    norm_groups = scale.get("norm_groups", ["total"])
-    fallback_default = scale.get("default_norm_group", norm_groups[0])
-
-    # Decide o grupo a usar:
-    # 1) se veio `norm_group`, usa ele e NÃO mostra radio
-    # 2) senão, se show_norm_selector=True, mostra radio interno
-    # 3) senão, usa default_norm (ou fallback)
-    if norm_group is not None:
-        chosen_group = norm_group
-    elif show_norm_selector:
-        # mostra o radio interno (com default coerente)
-        default_group = default_norm or fallback_default
-        try:
-            idx = norm_groups.index(default_group)
-        except ValueError:
-            idx = 0
-        chosen_group = st.radio(
-            "Norma para correção",
-            options=norm_groups,
-            index=idx,
-            horizontal=True,
-        )
-    else:
-        chosen_group = default_norm or fallback_default
-
-    # ---- Pontuação e resumo
-    facet_stats = score_pid5_facets(scale, answers, use_item_mean=True)
-    rows = summarize_with_norms(
-        scale, facet_stats, chosen_group, use_item_mean_for_z=use_item_mean_for_z
-    )
-
-    df = pd.DataFrame(
-        rows,
-        columns=["faceta", "media_itens", "z", "percentil", "bruta", "norma", "mean_ref", "sd_ref"]
-    )
-
-    st.subheader("Resultados por Faceta")
-    st.dataframe(
-        df[["faceta", "media_itens", "z", "percentil", "bruta"]],
-        use_container_width=True,
-        hide_index=True,
-        column_config={
-            "faceta": "Faceta",
-            "media_itens": st.column_config.NumberColumn(
-                "Média (itens)", format="%.3f", help="Média das respostas (0–3)"
-            ),
-            "z": st.column_config.NumberColumn(
-                "Z-score", format="%.3f", help="(valor - média de referência) / desvio-padrão"
-            ),
-            "percentil": st.column_config.NumberColumn(
-                "Percentil", format="%.1f", help="CDF da Normal padrão (em %)"
-            ),
-            "bruta": st.column_config.NumberColumn(
-                "Pontuação bruta", format="%.3f", help="Soma das respostas pós-reversão"
-            ),
-        }
-    )
-
-    # --- Classificação separada ---
-    class_rows = build_classification_table(scale, rows)
-    dfc = pd.DataFrame(class_rows, columns=["faceta", "z", "classificacao"])
-
-    # Formatação amigável
-    dfc["z"] = pd.Series(dfc["z"], dtype="Float64")
-    dfc_display = dfc.fillna(pd.NA)
-
-    st.subheader("Classificação")
-    st.dataframe(
-        dfc_display[["faceta", "z", "classificacao"]],
-        use_container_width=True,
-        hide_index=True,
-        column_config={
-            "faceta": "Faceta",
-            "z": st.column_config.NumberColumn("Z-score", format="%.3f"),
-            "classificacao": st.column_config.TextColumn("Classificação"),
-        },
-    )
-
-
 

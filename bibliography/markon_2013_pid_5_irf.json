@@ -1,5 +1,5 @@
 {
-  "scale": "PID-5 | Versão do Informante Completa",
+  "scale": "PID-5 | Inventário da Personalidade para o DSM-5, versão do informante",
   "version": "Markon et al., 2013",
   "cite": "Markon K.E., Quilty L. C., Bagby R. M. & Krueger R. F. (2013). The development and psychometric properties of an informant-report form of the personality inventory for DSM-5 (PID-5). Assessment. 2013 Jun;20(3):370-83. DOI: 10.1177/1073191113486513",
   "n_items": 218,
@@ -12,6 +12,10 @@
   },
   "norm_groups": ["normativo", "alto risco"],
   "default_norm_group": "alto risco",
+  "norm_group_descriptions": {
+    "normativo": "A amostra controle (normativa) foi composta por dois grupos representativos da população geral dos Estados Unidos. A amostra normativa principal incluiu 320 adultos, com 51,9% de mulheres, idade média de 50,36 anos (DP = 17,18), que responderam como informantes sobre um adulto conhecido. Os alvos avaliados eram 50,3% mulheres, e o tempo médio de convivência com o informante foi de 22,44 anos (DP = 15,55). As relações informante–alvo foram predominantemente amigos (38,1%), parceiros românticos (36,9%) e familiares (16,6%). Uma segunda amostra normativa incluiu 40 adultos, com 57,5% de mulheres, idade média de 51,13 anos (DP = 16,22), avaliando alvos majoritariamente parceiros ou familiares, com tempo médio de conhecimento de 28,98 anos (DP = 14,81). Essas amostras foram utilizadas como grupo controle, representando funcionamento típico da população geral.",
+    "alto risco": "A amostra de alto risco (community sample) foi composta por 221 adultos, recrutados por anúncios comunitários e registros clínicos, com foco em uma investigação sobre jogo patológico e personalidade. Os participantes apresentaram 45,2% de mulheres, idade média de 41,73 anos (DP = 12,76), e foram avaliados por informantes com idade média de 41,35 anos (DP = 14,03), que os conheciam há aproximadamente 13,93 anos (DP = 12,93). As relações informante–alvo incluíram principalmente amigos (52,5%), parceiros românticos (23,1%) e familiares (22,6%). Do total, 45,7% dos participantes apresentavam diagnóstico psiquiátrico do Eixo I, caracterizando esta amostra como clinicamente elevada (alto risco) para psicopatologia ."
+  },
   "facets": {
     "Anedonia": {
       "items": [1, 23, 26, 30, 124, 155, 157, 189],

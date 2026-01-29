@@ -1,0 +1,112 @@
+{
+  "scale": "LPFS-BF 2.0 | Escala do Nível de Funcionamento da Personalidade, versão breve",
+  "version": "Oliveira et al., 2023",
+  "cite": "Oliveira, S. E. S. D., Zimmermann, J., Krueger, R. F., & Hutsebaut, J. (2023). Brazilian version of the level of personality functioning scale-brief form 2.0: Evidence of reliability and validity. Psicologia: Teoria e Pesquisa, 39 (Special Issue).",
+  "n_items": 12,
+  "z_from": "mean_items",
+  "reverse_items": [],
+  "response_map": {
+    "Muito falso ou frequentemente falso": 0,
+    "Algumas vezes ou um pouco falso": 1,
+    "Algumas vezes ou pouco verdadeiro": 2,
+    "Muito verdadeiro ou frequentemente verdadeiro": 3
+  },
+  "norm_groups": [
+    "Amostra 2016 (sem diagnóstico psiquiátrico)",
+    "Amostra 2016 (com diagnóstico psiquiátrico)",
+    "Amostra 2020 (sem diagnóstico psiquiátrico)",
+    "Amostra 2020 (com diagnóstico psiquiátrico)"
+  ],
+  "default_norm_group": "Amostra 2020 (sem diagnóstico psiquiátrico)",
+  "norm_group_descriptions": {
+    "Amostra 2016 (sem diagnóstico psiquiátrico)": "Coleta 2016: subamostra sem diagnóstico psiquiátrico (N = 335; 12 a 86 anos).",
+    "Amostra 2016 (com diagnóstico psiquiátrico)": "Coleta 2016: subamostra com diagnóstico psiquiátrico (N = 80; 12 a 86 anos).",
+    "Amostra 2020 (sem diagnóstico psiquiátrico)": "Coleta 2020: subamostra sem diagnóstico psiquiátrico (N = 703; 13 a 67 anos).",
+    "Amostra 2020 (com diagnóstico psiquiátrico)": "Coleta 2020: subamostra com diagnóstico psiquiátrico (N = 308; 13 a 67 anos)."
+  },
+  "facets": {
+    "Funcionamento Intrapessoal": {
+      "items": [1, 2, 3, 4, 5, 6],
+      "norms": {
+        "Amostra 2016 (sem diagnóstico psiquiátrico)": { "mean": 1.97, "sd": 0.82 },
+        "Amostra 2016 (com diagnóstico psiquiátrico)": { "mean": 2.62, "sd": 0.77 },
+        "Amostra 2020 (sem diagnóstico psiquiátrico)": { "mean": 2.14, "sd": 0.81 },
+        "Amostra 2020 (com diagnóstico psiquiátrico)": { "mean": 2.84, "sd": 0.77 }
+      }
+    },
+    "Funcionamento Interpessoal": {
+      "items": [7, 8, 9, 10, 11, 12],
+      "norms": {
+        "Amostra 2016 (sem diagnóstico psiquiátrico)": { "mean": 1.70, "sd": 0.57 },
+        "Amostra 2016 (com diagnóstico psiquiátrico)": { "mean": 2.06, "sd": 0.62 },
+        "Amostra 2020 (sem diagnóstico psiquiátrico)": { "mean": 1.91, "sd": 0.62 },
+        "Amostra 2020 (com diagnóstico psiquiátrico)": { "mean": 2.23, "sd": 0.68 }
+      }
+    },
+    "Identidade": {
+      "items": [1, 2, 3],
+      "norms": {
+        "Amostra 2016 (sem diagnóstico psiquiátrico)": { "mean": 1.97, "sd": 0.89 },
+        "Amostra 2016 (com diagnóstico psiquiátrico)": { "mean": 2.65, "sd": 0.79 },
+        "Amostra 2020 (sem diagnóstico psiquiátrico)": { "mean": 2.10, "sd": 0.88 },
+        "Amostra 2020 (com diagnóstico psiquiátrico)": { "mean": 2.89, "sd": 0.84 }
+      }
+    },
+    "Autodirecionamento": {
+      "items": [4, 5, 6],
+      "norms": {
+        "Amostra 2016 (sem diagnóstico psiquiátrico)": { "mean": 1.98, "sd": 0.85 },
+        "Amostra 2016 (com diagnóstico psiquiátrico)": { "mean": 2.58, "sd": 0.87 },
+        "Amostra 2020 (sem diagnóstico psiquiátrico)": { "mean": 2.18, "sd": 0.86 },
+        "Amostra 2020 (com diagnóstico psiquiátrico)": { "mean": 2.80, "sd": 0.85 }
+      }
+    },
+    "Empatia": {
+      "items": [7, 8, 9],
+      "norms": {
+        "Amostra 2016 (sem diagnóstico psiquiátrico)": { "mean": 1.65, "sd": 0.61 },
+        "Amostra 2016 (com diagnóstico psiquiátrico)": { "mean": 1.88, "sd": 0.71 },
+        "Amostra 2020 (sem diagnóstico psiquiátrico)": { "mean": 2.09, "sd": 0.74 },
+        "Amostra 2020 (com diagnóstico psiquiátrico)": { "mean": 2.41, "sd": 0.77 }
+      }
+    },
+    "Intimidade": {
+      "items": [10, 11, 12],
+      "norms": {
+        "Amostra 2016 (sem diagnóstico psiquiátrico)": { "mean": 1.76, "sd": 0.74 },
+        "Amostra 2016 (com diagnóstico psiquiátrico)": { "mean": 2.23, "sd": 0.77 },
+        "Amostra 2020 (sem diagnóstico psiquiátrico)": { "mean": 1.73, "sd": 0.71 },
+        "Amostra 2020 (com diagnóstico psiquiátrico)": { "mean": 2.10, "sd": 0.83 }
+      }
+    },
+    "Pontuação Total": {
+      "items": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      "norms": {
+        "Amostra 2016 (sem diagnóstico psiquiátrico)": { "mean": 1.84, "sd": 0.64 },
+        "Amostra 2016 (com diagnóstico psiquiátrico)": { "mean": 2.34, "sd": 0.64 },
+        "Amostra 2020 (sem diagnóstico psiquiátrico)": { "mean": 2.03, "sd": 0.65 },
+        "Amostra 2020 (com diagnóstico psiquiátrico)": { "mean": 2.55, "sd": 0.65 }
+      }
+    }
+  },
+  "domains": {
+    "Funcionamento Intrapessoal": ["Funcionamento Intrapessoal", "Identidade", "Autodirecionamento"],
+    "Funcionamento Interpessoal": ["Funcionamento Interpessoal", "Empatia", "Intimidade"],
+    "Total": ["Pontuação Total"]
+  },
+  "facet_descriptions": {
+    "Funcionamento Intrapessoal": "Domínio intrapessoal (Self): média dos itens de Identidade e Autodirecionamento (6 itens).",
+    "Funcionamento Interpessoal": "Domínio interpessoal (Interpersonal): média dos itens de Empatia e Intimidade (6 itens).",
+    "Identidade": "Self: coerência/autoimagem/estabilidade interna (síntese do instrumento breve).",
+    "Autodirecionamento": "Self-direction: metas/planejamento/agência (síntese do instrumento breve).",
+    "Empatia": "Interpessoal: compreensão do outro/perspectiva social (síntese do instrumento breve).",
+    "Intimidade": "Interpessoal: vínculos próximos/confiança/estabilidade relacional (síntese do instrumento breve).",
+    "Pontuação Total": "Pontuação total do LPFS-BF (12 itens)."
+  },
+  "classification": [
+    { "max_abs_z": 1.0, "label_above": "dentro da média", "label_below": "dentro da média" },
+    { "max_abs_z": 2.0, "label_above": "acima da média", "label_below": "abaixo da média" },
+    { "max_abs_z": 3.0, "label_above": "muito acima da média", "label_below": "muito abaixo da média" },
+    { "max_abs_z": null, "label_above": "extremamente acima da média", "label_below": "extremamente abaixo da média" }
+  ]
+}
