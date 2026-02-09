@@ -1,0 +1,42 @@
+{
+  "scale": "EQ-60 | Coeficiente de Empatia",
+  "version": "Baron-Cohen & Wheelwright, 2004",
+  "cite": "Baron-Choen S & Wheelwright S. (2004). The empathy quotient: an investigation of adults with Asperger syndrome or high functioning autism, and normal sex differences. Journal of Autism and Developmental Disorders, v. 34, n. 2, p. 163-175.",
+  "n_items": 60,
+  "z_from": "raw_sum",
+  "response_map": {
+    "Concordo totalmente": 2,
+    "Concordo em parte": 1,
+    "Discordo em parte": 0,
+    "Discordo totalmente": 0
+  },
+  "reverse_items": [2, 4, 7, 8, 10, 11, 12, 14, 15, 16, 17, 18, 20, 21, 27, 29, 30, 31, 32, 33, 34, 35, 37, 38, 39, 40, 46, 47, 48, 49, 50, 51, 53],
+  "norm_groups": ["Grupo Comunitário", "Grupo Clínico (Despersonalização)"],
+  "default_norm_group": "Grupo Comunitário",
+  "norm_group_descriptions": {
+    "Grupo Comunitário": "A amostra não clínica (comunitária) foi composta por 110 adultos da população geral, sem diagnóstico psiquiátrico, recrutados por conveniência a partir de estudos prévios e novos convites. A distribuição por sexo foi relativamente equilibrada, com 79 homens (45,9%) e 93 mulheres (54,1%) quando considerada a amostra total combinada utilizada nas análises psicométricas. A idade média dos participantes situou-se em torno de 34 anos (DP ≈ 10 anos).",
+    "Grupo Clínico": "A amostra clínica foi constituída por 62 adultos com diagnóstico de Transtorno de Despersonalização (Depersonalization Disorder – DPD), recrutados por meio de um serviço especializado em neuropsiquiatria cognitiva. Esse grupo incluiu 32 homens (51,6%) e 30 mulheres (48,4%), com idade média de aproximadamente 34,6 anos (DP ≈ 10,8), não diferindo significativamente da amostra não clínica quanto à idade ou distribuição por sexo. O diagnóstico baseou-se em critérios do DSM-IV, complementado por avaliação clínica e aplicação de instrumentos padronizados, como a Dissociative Experiences Scale (DES)."
+  },
+   "facets": {
+    "Total": {
+      "items": [1, 4, 6, 8, 12, 14, 15, 19, 21, 22, 25, 26, 27, 28, 29, 32, 34, 35, 36, 37, 38, 39, 41, 42, 43, 44, 46, 47, 48, 49, 50, 52, 53, 54, 55, 56, 57, 58, 59, 60],
+      "norms": {
+        "Grupo Comunitário": { "mean": 45.6, "sd": 11.6 },
+        "Grupo Clínico": { "mean": 42.7, "sd": 11.9 }
+      }
+    }
+  },
+  "domains": {
+    "Coeficiente de Empatia": ["Total"]
+  },
+  "facet_descriptions": {
+    "Total": "O coeficiente de empatia corresponde ao escore total obtido na Empathy Quotient (EQ-60), um índice contínuo que reflete o nível global de empatia autorreferida do indivíduo, variando de 0 a 80 pontos. Esse coeficiente é utilizado para comparações normativas e análises de grupo, não constituindo um indicador diagnóstico isolado."
+  },
+  "classification": [
+    { "max_abs_z": 1.0, "label_above": "dentro da média", "label_below": "dentro da média" },
+    { "max_abs_z": 2.0, "label_above": "acima da média", "label_below": "abaixo da média" },
+    { "max_abs_z": 3.0, "label_above": "muito acima da média", "label_below": "muito abaixo da média" },
+    { "max_abs_z": null, "label_above": "extremamente acima da média", "label_below": "extremamente abaixo da média" }
+  ]
+}
+

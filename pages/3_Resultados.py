@@ -15,6 +15,7 @@ from typing         import Any, Dict, List, Tuple, Optional
 from utils.global_variables import BLANK
 from utils.design           import inject_custom_css
 from utils.data_management  import find_bibliography_candidates
+from utils.global_variables import DOWNLOAD_REPORT_SPINNER_TEXT
 from modules.corrections    import (
     score_scales,
     summarize_with_norms,
@@ -187,6 +188,48 @@ if has_facets:
     
 
     # =========================================
+    # Tabelão psicométrico
+    # =========================================
+    show_key = f"show_psy_table::{scale_key}::{norm_group}::{Path(selected_path).name}"
+    show_psy = st.session_state.get(show_key, False)
+    show_psy = st.toggle("📊 Mostrar tabela psicométrica completa", value=show_psy)
+    st.session_state[show_key] = show_psy
+
+    if show_psy:
+        st.markdown("### Dados psicomÃ©tricos completos")
+        df_big = (
+            df_master[
+                ["faceta", "dominio", "classificacao", "z", "percentil", "bruta", "media_itens", "mean_ref", "sd_ref"]
+            ]
+            .rename(columns={
+                "faceta": "Faceta",
+                "dominio": "DomÃ­nio",
+                "classificacao": "ClassificaÃ§Ã£o",
+                "z": "Z-score",
+                "percentil": "Percentil",
+                "bruta": "PontuaÃ§Ã£o bruta",
+                "media_itens": "MÃ©dia (itens)",
+                "mean_ref": "MÃ©dia ref. (norma)",
+                "sd_ref": "DP ref. (norma)",
+            })
+        )
+        df_big["Estudo"] = f"{study_name}{f' ({study_ver})' if study_ver else ''}"
+        df_big["Grupo"] = norm_label
+
+        st.dataframe(
+            df_big,
+            use_container_width=True,
+            hide_index=True,
+            column_config={
+                "Z-score": st.column_config.NumberColumn(format="%.3f"),
+                "Percentil": st.column_config.NumberColumn(format="%.1f"),
+                "PontuaÃ§Ã£o bruta": st.column_config.NumberColumn(format="%.3f"),
+                "MÃ©dia (itens)": st.column_config.NumberColumn(format="%.3f"),
+                "MÃ©dia ref. (norma)": st.column_config.NumberColumn(format="%.3f"),
+                "DP ref. (norma)": st.column_config.NumberColumn(format="%.3f"),
+            },
+        )
+
     # Graphs (moved to a dedicated page)
     # =========================================
 
@@ -209,18 +252,17 @@ if has_facets:
     # =========================================
     # Download
     # =========================================
-    st.divider()
-
     from utils.pdf_export import build_pdf_table_and_graphs
 
-    pdf_bytes, pdf_name = build_pdf_table_and_graphs(
-        sel_label=sel_label,
-        study_name=study_name,
-        study_ver=study_ver,
-        norm_label=norm_label,
-        df_master=df_master,
-        scale_ref=scale_ref,
-    )
+    with st.spinner(DOWNLOAD_REPORT_SPINNER_TEXT):
+        pdf_bytes, pdf_name = build_pdf_table_and_graphs(
+            sel_label=sel_label,
+            study_name=study_name,
+            study_ver=study_ver,
+            norm_label=norm_label,
+            df_master=df_master,
+            scale_ref=scale_ref,
+        )
 
     st.download_button(
         label="Download (Relatório Completo)",
@@ -229,50 +271,6 @@ if has_facets:
         mime="application/pdf",
         use_container_width=True,
     )
-
-    # =========================================
-    # Tabelão psicométrico
-    # =========================================
-    show_key = f"show_psy_table::{scale_key}::{norm_group}::{Path(selected_path).name}"
-    show_psy = st.session_state.get(show_key, False)
-    show_psy = st.toggle("📊 Mostrar tabela psicométrica completa", value=show_psy)
-    st.session_state[show_key] = show_psy
-
-    if show_psy:
-        st.markdown("### Dados psicométricos completos")
-        df_big = (
-            df_master[
-                ["faceta", "dominio", "classificacao", "z", "percentil", "bruta", "media_itens", "mean_ref", "sd_ref"]
-            ]
-            .rename(columns={
-                "faceta": "Faceta",
-                "dominio": "Domínio",
-                "classificacao": "Classificação",
-                "z": "Z-score",
-                "percentil": "Percentil",
-                "bruta": "Pontuação bruta",
-                "media_itens": "Média (itens)",
-                "mean_ref": "Média ref. (norma)",
-                "sd_ref": "DP ref. (norma)",
-            })
-        )
-        df_big["Estudo"] = f"{study_name}{f' ({study_ver})' if study_ver else ''}"
-        df_big["Grupo"] = norm_label
-
-        st.dataframe(
-            df_big,
-            use_container_width=True,
-            hide_index=True,
-            column_config={
-                "Z-score": st.column_config.NumberColumn(format="%.3f"),
-                "Percentil": st.column_config.NumberColumn(format="%.1f"),
-                "Pontuação bruta": st.column_config.NumberColumn(format="%.3f"),
-                "Média (itens)": st.column_config.NumberColumn(format="%.3f"),
-                "Média ref. (norma)": st.column_config.NumberColumn(format="%.3f"),
-                "DP ref. (norma)": st.column_config.NumberColumn(format="%.3f"),
-            },
-        )
-
 
 else:
     # Aqui é onde plugaríamos o pipeline de escalas **sem** facetas (ex.: AQ-50, BIS-11 etc.)

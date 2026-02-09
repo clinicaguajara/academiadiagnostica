@@ -1,0 +1,25 @@
+{
+  "name": "ESCALA DEMO | 10 Itens (TEMPLATE)",
+  "traduction": "Ex.: Traduzido/adaptado por <Autores> (<Ano>).",
+  "instructions": "Ex.: Leia cada afirmação e selecione a alternativa que melhor descreve você.",
+  "answer_options": [
+    "Muito falso ou frequentemente falso",
+    "Algumas vezes ou um pouco falso",
+    "Algumas vezes ou pouco verdadeiro",
+    "Muito verdadeiro ou frequentemente verdadeiro"
+  ],
+  "reverse_items": [2, 7],
+  "items": [
+    { "id": 1, "text": "Item 1 (exemplo) — texto do item aqui." },
+    { "id": 2, "text": "Item 2 (exemplo) — texto do item aqui." },
+    { "id": 3, "text": "Item 3 (exemplo) — texto do item aqui." },
+    { "id": 4, "text": "Item 4 (exemplo) — texto do item aqui." },
+    { "id": 5, "text": "Item 5 (exemplo) — texto do item aqui." },
+    { "id": 6, "text": "Item 6 (exemplo) — texto do item aqui." },
+    { "id": 7, "text": "Item 7 (exemplo) — texto do item aqui." },
+    { "id": 8, "text": "Item 8 (exemplo) — texto do item aqui." },
+    { "id": 9, "text": "Item 9 (exemplo) — texto do item aqui." },
+    { "id": 10, "text": "Item 10 (exemplo) — texto do item aqui." }
+  ]
+}
+

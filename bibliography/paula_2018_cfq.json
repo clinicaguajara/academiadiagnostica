@@ -1,0 +1,41 @@
+{
+  "scale": "CFQ | Questionário de Falhas Cognitivas",
+  "version": "Paula et al., 2018",
+  "cite": "Paula JJ, Costa DS, Miranda DM & Romano-Silva M. (2018). Brazilian version of the Cognitive Failures Questionnaire (CFQ): cross-cultural adaptation and evidence of validity and reliability. Brazilian Journal of Psychiatry, 40(3), 312–315.",
+  "n_items": 25,
+  "z_from": "raw_sum",
+  "response_map": {
+    "Nunca": 0,
+    "Raramente": 1,
+    "Ocasionalmente": 2,
+    "Frequentemente": 3,
+    "Quase sempre": 4
+  },
+  "reverse_items": [],
+  "norm_groups": ["Amostra única"],
+  "default_norm_group": "Amostra única",
+  "norm_group_descriptions": {
+    "Amostra única": "A amostra do estudo foi composta por 225 adultos brasileiros, recrutados por meio de uma plataforma online. A idade média dos participantes foi de 29,21 anos (DP = 10,54). A amostra foi predominantemente feminina (58%), composta majoritariamente por indivíduos brancos (52%), solteiros (68%) e com escolaridade até o ensino médio (52%). A maioria dos participantes havia estudado em escolas públicas (58%)."
+  },
+  "facets": {
+    "Total": {
+      "items": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25],
+      "norms": {
+        "Amostra única": { "mean": 35.58, "sd": 12.14 }
+      }
+    }
+  },
+  "domains": {
+    "Índice de Falhas Cognitivas": ["Total"]
+  },
+  "facet_descriptions": {
+    "Total": "Falhas cognitivas são erros simples e não intencionais que ocorrem em atividades rotineiras do dia a dia, refletindo lapsos momentâneos de atenção, memória, percepção ou controle executivo, mesmo na ausência de déficits cognitivos estruturais."
+  },
+  "classification": [
+    { "max_abs_z": 1.0, "label_above": "dentro da média", "label_below": "dentro da média" },
+    { "max_abs_z": 2.0, "label_above": "acima da média", "label_below": "abaixo da média" },
+    { "max_abs_z": 3.0, "label_above": "muito acima da média", "label_below": "muito abaixo da média" },
+    { "max_abs_z": null, "label_above": "extremamente acima da média", "label_below": "extremamente abaixo da média" }
+  ]
+}
+

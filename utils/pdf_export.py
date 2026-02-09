@@ -22,6 +22,7 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.enums import TA_JUSTIFY
 
 from modules.gauss_plot import NormSpec, render_gauss_curve_with_points
+from modules.corrections import get_facet_sum_range, use_item_mean_for_z
 from utils.global_variables import DISCLAIMER_TEXT
 
 # ============
@@ -428,15 +429,23 @@ def build_pdf_table_and_graphs(
         if pd.isna(mean_ref) or pd.isna(sd_ref) or float(sd_ref) == 0.0 or pd.isna(raw_sum):
             continue
 
-        metric = "mean_items" if (float(mean_ref) < 3 and float(sd_ref) < 3) else "raw_sum"
+        metric = "mean_items" if use_item_mean_for_z(scale_ref) else "raw_sum"
 
         fdef = (scale_ref.get("facets") or {}).get(str(fac), {})
         n_itens = int(fdef.get("n_items") or len(fdef.get("items") or []))
+        min_sum, max_sum = get_facet_sum_range(scale_ref, str(fac))
 
-        spec = NormSpec(mean_ref=float(mean_ref), sd_ref=float(sd_ref), metric=metric, n_items=n_itens)
+        spec = NormSpec(
+            mean_ref=float(mean_ref),
+            sd_ref=float(sd_ref),
+            metric=metric,
+            n_items=n_itens,
+            min_sum=float(min_sum),
+            max_sum=float(max_sum),
+        )
         fig, _ = render_gauss_curve_with_points(
             spec,
-            observed_raw_sum=int(float(raw_sum)),
+            observed_raw_sum=float(raw_sum),
             title=f"{dom} • {fac}",
         )
 

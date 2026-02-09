@@ -58,7 +58,9 @@ def humanize_folder(folder: str) -> str:
     """
     mapping = {
         "personality": "Personalidade",
-        "autism": "Autismo",
+        "development": "Desenvolvimento",
+        # Backward-compatibility (old category name)
+        "autism": "Desenvolvimento",
         "scale": "Escalas",
         "scales": "Escalas",
         "raiz": "Raiz",

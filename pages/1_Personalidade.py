@@ -49,7 +49,7 @@ st.markdown(
 st.info("""
 **📄 Referência:**
 
-American Psychiatric Association. (2022). Diagnostic and Statistical Manual of Mental Disorders (5th ed., text rev.). American Psychiatric Publishing.
+American Psychiatric Association. (2022). Diagnostic and Statistical Manual of Mental Disorders, 5th ed., text rev. American Psychiatric Publishing.
 
 """)
 

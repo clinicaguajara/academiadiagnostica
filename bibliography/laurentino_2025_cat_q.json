@@ -1,0 +1,69 @@
+{
+  "scale": "CAT-Q | Questionário de Camuflagem de Traços Autísticos",
+  "version": "Laurentino et al., 2025",
+  "cite": "Laurentino, L. C. R. (2025). Adaptação transcultural e validação do camouflaging autistic traits questionnaire (CAT-Q) para autistas adultos brasileiros [Dissertação de mestrado, Universidade Federal de Juiz de Fora]. Repositório Institucional da UFJF.",
+  "n_items": 25,
+  "z_from": "mean_items",
+  "reverse_items": [3, 12, 19, 22, 24],
+  "response_map": {
+    "Discordo totalmente": 1,
+    "Discordo": 2,
+    "Discordo um pouco": 3,
+    "Não concordo nem discordo": 4,
+    "Concordo um pouco": 5,
+    "Concordo": 6,
+    "Concordo totalmente": 7
+  },
+  "norm_groups": ["Não autistas", "Autistas"],
+  "default_norm_group": "Não autistas",
+  "norm_group_descriptions": {
+    "Autistas": "Normas do grupo autista (média e DP) para escores em média por item.",
+    "Não autistas": "Normas do grupo não autista (média e DP) para escores em média por item."
+  },
+  "facets": {
+    "Compensação": {
+      "items": [1, 4, 5, 8, 11, 14, 17, 20, 23],
+      "norms": {
+        "Autistas": { "mean": 4.42, "sd": 1.31 },
+        "Não autistas": { "mean": 2.89, "sd": 1.27 }
+      }
+    },
+    "Mascaramento": {
+      "items": [2, 6, 9, 12, 15, 18, 21, 24],
+      "norms": {
+        "Autistas": { "mean": 4.55, "sd": 1.35 },
+        "Não autistas": { "mean": 4.29, "sd": 1.1 }
+      }
+    },
+    "Assimilação": {
+      "items": [3, 7, 10, 13, 16, 19, 22, 25],
+      "norms": {
+        "Autistas": { "mean": 5.29, "sd": 1.15 },
+        "Não autistas": { "mean": 3.32, "sd": 1.27 }
+      }
+    },
+    "Total": {
+      "items": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25],
+      "norms": {
+        "Autistas": { "mean": 4.79, "sd": 0.99 },
+        "Não autistas": { "mean": 3.48, "sd": 1.04 }
+      }
+    }
+  },
+  "domains": {
+    "Camuflagem de Traços Autísticos": ["Compensação", "Mascaramento", "Assimilação", "Total"]
+  },
+  "facet_descriptions": {
+    "Compensação": "Estratégias ativas para compensar dificuldades sociais (ex.: roteiros, observação e aprendizagem explícita de regras sociais).",
+    "Mascaramento": "Estratégias para esconder traços percebidos como atípicos e parecer relaxado/engajado (monitoramento e ajuste de linguagem corporal e expressões).",
+    "Assimilação": "Estratégias para se misturar e evitar desconforto social, incluindo esforço, evitação e sensação de estar atuando.",
+    "Total": "Escore global de camuflagem (média dos 25 itens)."
+  },
+  "classification": [
+    { "max_abs_z": 1.0, "label_above": "dentro da média", "label_below": "dentro da média" },
+    { "max_abs_z": 2.0, "label_above": "acima da média", "label_below": "abaixo da média" },
+    { "max_abs_z": 3.0, "label_above": "muito acima da média", "label_below": "muito abaixo da média" },
+    { "max_abs_z": null, "label_above": "extremamente acima da média", "label_below": "extremamente abaixo da média" }
+  ]
+}
+

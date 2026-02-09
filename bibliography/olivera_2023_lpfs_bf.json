@@ -1,7 +1,7 @@
 {
-  "scale": "LPFS-BF 2.0 | Escala do Nível de Funcionamento da Personalidade, versão breve",
+  "scale": "LPFS-BF 2.0 | Escala do Nível de Funcionamento da Personalidade, Versão Abreviada",
   "version": "Oliveira et al., 2023",
-  "cite": "Oliveira, S. E. S. D., Zimmermann, J., Krueger, R. F., & Hutsebaut, J. (2023). Brazilian version of the level of personality functioning scale-brief form 2.0: Evidence of reliability and validity. Psicologia: Teoria e Pesquisa, 39 (Special Issue).",
+  "cite": "Oliveira SES, Zimmermann J, Krueger RF, & Hutsebaut J. (2023). Brazilian version of the level of personality functioning scale-brief form 2.0: Evidence of reliability and validity. Psicologia: Teoria e Pesquisa, 39 (Special Issue).",
   "n_items": 12,
   "z_from": "mean_items",
   "reverse_items": [],

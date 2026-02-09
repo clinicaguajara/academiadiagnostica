@@ -29,11 +29,89 @@ def use_item_mean_for_z(scale_ref: Dict[str, Any]) -> bool:
         or ""
     )
     k = norm_key(raw)
-    if k in {"raw", "raw_sum", "sum", "bruta", "bruto"}:
+    if k in {"raw", "raw_sum", "sum", "bruta", "bruto", "weighted_sum"}:
         return False
-    if k in {"mean", "mean_items", "media", "media_itens", "item_mean"}:
+    if k in {
+        "mean",
+        "mean_items",
+        "media",
+        "media_itens",
+        "item_mean",
+        "weighted_mean",
+        "weighted_items_mean",
+    }:
         return True
     return True
+
+
+def _response_range(scale: Dict[str, Any]) -> Tuple[float, float]:
+    response_map = scale.get("response_map", {}) or {}
+    vals: List[float] = []
+    for v in response_map.values():
+        try:
+            vals.append(float(v))
+        except Exception:
+            continue
+    if not vals:
+        return 0.0, 3.0
+    return float(min(vals)), float(max(vals))
+
+
+def get_facet_item_weights(scale: Dict[str, Any], facet: str) -> Dict[str, float]:
+    """
+    Return a per-item weight map for a given facet.
+
+    Weights can be provided either globally under `item_weights` or per facet under
+    `facets.<facet>.item_weights`. Keys are strings to match JSON conventions.
+
+    If a weight is missing or invalid, it is treated as 1.0 at scoring time.
+    """
+    f = (scale.get("facets") or {}).get(str(facet), {}) or {}
+    global_w = (scale.get("item_weights") or {}) if isinstance(scale.get("item_weights"), dict) else {}
+    facet_w = (f.get("item_weights") or {}) if isinstance(f.get("item_weights"), dict) else {}
+
+    out: Dict[str, float] = {}
+    for src in (global_w, facet_w):
+        for k, v in src.items():
+            try:
+                out[str(k)] = float(v)
+            except Exception:
+                continue
+    return out
+
+
+def get_facet_sum_range(scale: Dict[str, Any], facet: str) -> Tuple[float, float]:
+    """
+    Return the theoretical (min_sum, max_sum) for a facet raw sum.
+
+    Supports negative weights:
+      - if w >= 0: min uses min_response, max uses max_response
+      - if w < 0:  min uses max_response, max uses min_response
+    """
+    f = (scale.get("facets") or {}).get(str(facet), {}) or {}
+    items = f.get("items") or []
+    wmap = get_facet_item_weights(scale, facet)
+    vmin, vmax = _response_range(scale)
+
+    lo = 0.0
+    hi = 0.0
+    for item in items:
+        w = wmap.get(str(item), 1.0)
+        try:
+            wf = float(w)
+        except Exception:
+            wf = 1.0
+
+        if wf >= 0:
+            lo += vmin * wf
+            hi += vmax * wf
+        else:
+            lo += vmax * wf
+            hi += vmin * wf
+
+    if lo <= hi:
+        return float(lo), float(hi)
+    return float(hi), float(lo)
 
 def get_norm_group_options_from_facets(scale_ref: Dict[str, Any]) -> Tuple[List[str], List[str]]:
     """
@@ -265,11 +343,17 @@ def score_scales(
     except Exception:
         max_val = 3
     reverse_items = set(scale.get("reverse_items", []))
+    apply_weights = bool(scale.get("apply_item_weights", False))
+    global_weights = (scale.get("item_weights") or {}) if isinstance(scale.get("item_weights"), dict) else {}
 
     out: Dict[str, Dict[str, Any]] = {}
     for facet, fdata in scale["facets"].items():
         item_ids: List[int] = fdata["items"]
-        scored: List[int] = []
+        facet_weights = (fdata.get("item_weights") or {}) if isinstance(fdata.get("item_weights"), dict) else {}
+
+        scored_vals: List[int] = []
+        unweighted_sum = 0.0
+        weighted_sum = 0.0
 
         for item in item_ids:
             raw = answers.get(item)
@@ -287,20 +371,30 @@ def score_scales(
             if item in reverse_items:
                 val = _reverse_value(val, max_val=max_val)
 
-            scored.append(val)
+            scored_vals.append(val)
+            unweighted_sum += float(val)
 
-        if len(scored) == 0:
+            if apply_weights:
+                w = facet_weights.get(str(item), global_weights.get(str(item), 1.0))
+                try:
+                    wf = float(w)
+                except Exception:
+                    wf = 1.0
+                weighted_sum += float(val) * wf
+            else:
+                weighted_sum += float(val)
+
+        if len(scored_vals) == 0:
             raw_sum = None
             mean_items = None
         else:
-            raw_sum = float(sum(scored))
-            mean_items = (raw_sum / len(scored)) if use_item_mean else None
+            raw_sum = float(weighted_sum)
+            mean_items = (unweighted_sum / len(scored_vals)) if use_item_mean else None
 
         out[facet] = {
             "raw_sum": raw_sum,
             "mean_items": mean_items,
-            "n_answered": len(scored),
+            "n_answered": len(scored_vals),
             "n_items": len(item_ids),
         }
     return out
-

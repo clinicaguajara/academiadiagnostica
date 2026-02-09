@@ -1,4 +1,4 @@
-# pages/2_Autismo.py
+# pages/2_Desenvolvimento.py
 
 # =========================================
 # Necessary Imports
@@ -15,7 +15,7 @@ from utils.global_variables  import SCALES_DIR
 # =========================================
 
 st.set_page_config(
-    page_title="Autismo",
+    page_title="Desenvolvimento",
     page_icon="🧩",
     layout="centered",
 )
@@ -28,22 +28,24 @@ inject_custom_css()
 # =========================================
 
 # Page title and description
-st.title("Autismo")
+st.title("Desenvolvimento")
 
 st.markdown(
-    "<h3 class='section-title-accent'>Rastreamento de traços do espectro autista</h3>",
+    "<h3 class='section-title-accent'>Cognição e Comportamentos Autorrelatados</h3>",
     unsafe_allow_html=True,
 )
 
 st.markdown(
     """
     <p class='text-justify'>
-    Esta seção reúne instrumentos de autorrelato voltados ao rastreamento de características associadas ao Transtorno do Espectro Autista (TEA).
-    Os resultados têm finalidade informativa e devem ser interpretados no contexto clínico, considerando entrevista, história do desenvolvimento e outras fontes de conhecimento e atuação profissional.
+    Esta seção reúne instrumentos voltados ao rastreamento de características associadas ao neurodesenvolvimento
+    (ex.: TDAH, autismo, e outros perfis).
+    Os resultados têm finalidade informativa e devem ser interpretados no contexto clínico, considerando entrevista,
+    história do desenvolvimento e outras fontes de informação.
     </p>
     """,
     unsafe_allow_html=True,
 )
 
-# Render scale selector for autism instruments
-render_scale_selector(SCALES_DIR, category="autism")
+# Render scale selector for development instruments
+render_scale_selector(SCALES_DIR, category="development")

@@ -33,6 +33,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+# Sub-section title (h4)
 st.markdown(
     """
     <p class='text-justify'>
@@ -47,7 +48,7 @@ st.markdown(
 
 st.divider()
 
-# Sub-section title
+# Sub-section title (h4)
 st.markdown(
     "<h4 class='section-title'>Instrumentos disponíveis</h4>",
     unsafe_allow_html=True
@@ -59,7 +60,7 @@ with col1:
     if st.button("Personalidade", use_container_width=True):
         st.switch_page("pages/1_Personalidade.py")
 with col2:
-    if st.button("Autismo", use_container_width=True):
-        st.switch_page("pages/2_Autismo.py")
+    if st.button("Desenvolvimento", use_container_width=True):
+        st.switch_page("pages/2_Desenvolvimento.py")
 
 # python -m streamlit run Bem-vindo.py

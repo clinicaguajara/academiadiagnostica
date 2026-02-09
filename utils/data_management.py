@@ -125,7 +125,7 @@ def discover_scales(scales_root: str | Path) -> Dict[str, List[Tuple[str, Path]]
 
     Notes
     -----
-    - Category is the first-level folder under `scales_root` (e.g., "personality", "autism").
+    - Category is the first-level folder under `scales_root` (e.g., "personality", "development").
     - Files directly under `scales_root` are grouped under "Raiz".
     - The label is extracted from JSON ("name" or "titulo") when present; otherwise, file stem.
     """

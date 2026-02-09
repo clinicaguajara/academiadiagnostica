@@ -16,3 +16,6 @@ DISCLAIMER_TEXT = (
     "não devendo ser utilizadas isoladamente para fins diagnósticos, clínicos ou jurídicos. "
     "A análise diagnóstica adequada requer avaliação profissional conduzida por especialistas devidamente qualificados por área de atuação clínica."
 )
+
+# Download UX
+DOWNLOAD_REPORT_SPINNER_TEXT = "Preparando relatório para Download..."

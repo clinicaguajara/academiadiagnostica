@@ -27,7 +27,7 @@ def _resolve_category_key(user_cat: str, available: List[str]) -> Optional[str]:
     - Case-insensitive
     - Accent-insensitive
     - Whitespace-normalized
-    - Accepts both internal keys ("autism") and humanized labels ("Autismo")
+    - Accepts both internal keys ("development") and humanized labels ("Desenvolvimento")
 
     Parameters
     ----------
@@ -53,8 +53,11 @@ def _resolve_category_key(user_cat: str, available: List[str]) -> Optional[str]:
     aliases = {
         "personalidade": "personality",
         "personality": "personality",
-        "autismo": "autism",
-        "autism": "autism",
+        "desenvolvimento": "development",
+        "development": "development",
+        # Backward-compatibility (old category name)
+        "autismo": "development",
+        "autism": "development",
         "raiz": "raiz",
         "root": "raiz",
     }
@@ -105,7 +108,7 @@ def render_scale_selector(
     scales_dir:
         Root folder that contains category subfolders (e.g., "scales/").
     category:
-        Category key or label (e.g., "autism", "Autismo").
+        Category key or label (e.g., "development", "Desenvolvimento").
     """
     scales_by_cat = _discover_scales(scales_dir)
 
@@ -159,4 +162,3 @@ def render_scale_selector(
     st.session_state[key_data][norm_key_name] = answers
     st.session_state[key_names][norm_key_name] = chosen
     st.switch_page("pages/3_Resultados.py")
-

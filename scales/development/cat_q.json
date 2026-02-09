@@ -1,0 +1,43 @@
+{
+  "name": "CAT-Q | Questionário de Camuflagem de Traços Autísticos",
+  "traduction": "Transculturalmente adaptado por Laurentino, L. C. R. (2025). Adaptação transcultural e validação do camouflaging autistic traits questionnaire (CAT-Q) para autistas adultos brasileiros [Dissertação de mestrado, Universidade Federal de Juiz de Fora]. Repositório Institucional da UFJF.",
+  "instructions": "Por favor, leia cada afirmação abaixo e escolha a resposta que melhor se adapta às suas experiências durante as interações sociais.",
+  "answer_options": [
+    "Discordo totalmente",
+    "Discordo",
+    "Discordo um pouco",
+    "Não concordo nem discordo",
+    "Concordo um pouco",
+    "Concordo",
+    "Concordo totalmente"
+  ],
+  "reverse_items": [3, 12, 19, 22, 24],
+  "items": [
+    { "id": 1, "text": "Quando estou interagindo com alguém, copio deliberadamente sua linguagem corporal ou expressões faciais." },
+    { "id": 2, "text": "Eu monitoro minha linguagem corporal ou expressões faciais para parecer relaxado." },
+    { "id": 3, "text": "Raramente sinto a necessidade de fingir para passar por uma situação social." },
+    { "id": 4, "text": "Eu desenvolvi um roteiro para seguir em situações sociais." },
+    { "id": 5, "text": "Repito frases que ouvi outras pessoas dizerem exatamente da mesma maneira que as ouvi pela primeira vez." },
+    { "id": 6, "text": "Eu ajusto minha linguagem corporal ou expressões faciais para parecer interessado na pessoa com quem estou interagindo." },
+    { "id": 7, "text": "Em situações sociais, sinto que estou “atuando” em vez de ser eu mesmo." },
+    { "id": 8, "text": "Em minhas próprias interações sociais, uso comportamentos que aprendi ao observar outras pessoas interagindo." },
+    { "id": 9, "text": "Sempre penso na impressão que causo nas outras pessoas." },
+    { "id": 10, "text": "Preciso do apoio de outras pessoas para me socializar." },
+    { "id": 11, "text": "Pratico minhas expressões faciais e linguagem corporal para garantir que pareçam naturais." },
+    { "id": 12, "text": "Não sinto necessidade de fazer contato visual com outras pessoas." },
+    { "id": 13, "text": "Eu tenho que me forçar a interagir com as pessoas quando estou em situações sociais." },
+    { "id": 14, "text": "Tentei melhorar minha compreensão das habilidades sociais observando outras pessoas." },
+    { "id": 15, "text": "Eu monitoro minha linguagem corporal ou expressões faciais para parecer interessado na pessoa com quem estou interagindo." },
+    { "id": 16, "text": "Quando estou em situações sociais, tento encontrar maneiras de evitar interagir com outras pessoas." },
+    { "id": 17, "text": "Eu pesquisei as regras de interações sociais para melhorar minhas próprias habilidades sociais." },
+    { "id": 18, "text": "Estou sempre ciente da impressão que causo nas outras pessoas." },
+    { "id": 19, "text": "Eu me sinto livre para ser eu mesmo quando estou com outras pessoas." },
+    { "id": 20, "text": "Aprendo como as pessoas usam seus corpos e rostos para interagir assistindo televisão ou filmes, ou lendo ficção." },
+    { "id": 21, "text": "Eu ajusto minha linguagem corporal ou expressões faciais para parecer relaxado." },
+    { "id": 22, "text": "Ao falar com outras pessoas, sinto que a conversa flui naturalmente." },
+    { "id": 23, "text": "Passei um tempo aprendendo habilidades sociais em programas de televisão e filmes e tento usá-los em minhas interações." },
+    { "id": 24, "text": "Nas interações sociais, não presto atenção ao que meu rosto ou corpo estão fazendo." },
+    { "id": 25, "text": "Em situações sociais, sinto que estou fingindo ser “normal”." }
+  ]
+}
+

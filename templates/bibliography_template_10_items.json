@@ -1,0 +1,58 @@
+{
+  "scale": "ESCALA DEMO | 10 Itens (TEMPLATE)",
+  "version": "Autor et al., 20XX",
+  "cite": "Sobrenome, A. A., Sobrenome, B. B. (20XX). Título do artigo. Revista, volume(número), páginas. DOI: ...",
+  "n_items": 10,
+  "z_from": "mean_items",
+  "response_map": {
+    "Muito falso ou frequentemente falso": 0,
+    "Algumas vezes ou um pouco falso": 1,
+    "Algumas vezes ou pouco verdadeiro": 2,
+    "Muito verdadeiro ou frequentemente verdadeiro": 3
+  },
+  "reverse_items": [2, 7],
+  "norm_groups": ["Grupo Normativo A", "Grupo Normativo B"],
+  "default_norm_group": "Grupo Normativo A",
+  "norm_group_descriptions": {
+    "Grupo Normativo A": "Ex.: Amostra comunitária (N=XXX), idade média ..., país ..., critérios ...",
+    "Grupo Normativo B": "Ex.: Amostra clínica (N=YYY), diagnóstico/triagem ..., critérios ..."
+  },
+   "facets": {
+    "Faceta A (ex.: Aspecto 1)": {
+      "items": [1, 2, 3, 4, 5],
+      "norms": {
+        "Grupo Normativo A": { "mean": 1.20, "sd": 0.60 },
+        "Grupo Normativo B": { "mean": 1.80, "sd": 0.70 }
+      }
+    },
+    "Faceta B (ex.: Aspecto 2)": {
+      "items": [6, 7, 8, 9, 10],
+      "norms": {
+        "Grupo Normativo A": { "mean": 0.90, "sd": 0.50 },
+        "Grupo Normativo B": { "mean": 1.40, "sd": 0.60 }
+      }
+    },
+    "Total": {
+      "items": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      "norms": {
+        "Grupo Normativo A": { "mean": 1.05, "sd": 0.55 },
+        "Grupo Normativo B": { "mean": 1.60, "sd": 0.65 }
+      }
+    }
+  },
+  "domains": {
+    "Domínio Único (exemplo)": ["Faceta A (ex.: Aspecto 1)", "Faceta B (ex.: Aspecto 2)", "Total"]
+  },
+  "facet_descriptions": {
+    "Faceta A (ex.: Aspecto 1)": "Descrição curta do construto/faceta e como interpretar escores.",
+    "Faceta B (ex.: Aspecto 2)": "Descrição curta do construto/faceta e como interpretar escores.",
+    "Total": "Descrição do escore total (o que representa; direção; observações)."
+  },
+  "classification": [
+    { "max_abs_z": 1.0, "label_above": "dentro da média", "label_below": "dentro da média" },
+    { "max_abs_z": 2.0, "label_above": "acima da média", "label_below": "abaixo da média" },
+    { "max_abs_z": 3.0, "label_above": "muito acima da média", "label_below": "muito abaixo da média" },
+    { "max_abs_z": null, "label_above": "extremamente acima da média", "label_below": "extremamente abaixo da média" }
+  ]
+}
+

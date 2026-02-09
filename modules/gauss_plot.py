@@ -20,7 +20,8 @@ class NormSpec:
     sd_ref: float        # DP de referência (na MÉTRICA informada em `metric`)
     metric: str          # "mean_items" (0–3) ou "raw_sum"
     n_items: int         # número de itens da faceta
-    max_per_item: int = 3  # Likert máximo por item (default 3 → range bruto 0..3*n)
+    min_sum: float = 0.0  # mínimo teórico do escore bruto (na unidade de soma)
+    max_sum: float = 0.0  # máximo teórico do escore bruto (na unidade de soma)
 
 
 def _normal_pdf(x: np.ndarray, mu: float, sigma: float) -> np.ndarray:
@@ -34,47 +35,60 @@ def _normal_cdf(x: np.ndarray) -> np.ndarray:
     return 0.5 * (1.0 + (2.0 / math.sqrt(math.pi)) * np.vectorize(math.erf)(x / math.sqrt(2.0)))
 
 
-def _as_sum_units(norm: NormSpec) -> Tuple[float, float, int]:
+def _as_sum_units(norm: NormSpec) -> Tuple[float, float, float]:
     """
     Converte média/DP de referência para a escala de SOMA BRUTA (0..max_sum), que é o eixo do gráfico.
     - Se vierem em "mean_items", converte: μ_sum = μ_mean * n,  σ_sum = σ_mean * n.
     - Se vierem em "raw_sum", mantém.
     Retorna (mu_sum, sd_sum, max_sum).
     """
-    max_sum = norm.n_items * norm.max_per_item
     if norm.metric == "mean_items":
-        mu_sum = norm.mean_ref * norm.n_items
-        sd_sum = norm.sd_ref * norm.n_items
-        return mu_sum, sd_sum, max_sum
+        mu_sum = norm.mean_ref * float(norm.n_items)
+        sd_sum = norm.sd_ref * float(norm.n_items)
+        return mu_sum, sd_sum, float(norm.max_sum)
     elif norm.metric == "raw_sum":
-        return norm.mean_ref, norm.sd_ref, max_sum
+        return norm.mean_ref, norm.sd_ref, float(norm.max_sum)
     else:
         raise ValueError("metric deve ser 'mean_items' ou 'raw_sum'.")
 
 
-def compute_discrete_points(norm: NormSpec, *, observed_raw_sum: Optional[int] = None):
+def compute_discrete_points(norm: NormSpec, *, observed_raw_sum: Optional[float] = None):
     """
     Retorna um dicionário com:
       - points_df: np.ndarray com colunas [raw_sum, mean_items, z, percentile]
       - observed_percentile: Optional[float]
     """
     mu_sum, sd_sum, max_sum = _as_sum_units(norm)
+    min_sum = float(norm.min_sum)
+    if max_sum < min_sum:
+        max_sum, min_sum = min_sum, max_sum
 
-    raw_vals = np.arange(0, max_sum + 1, dtype=int)  # 0..max_sum inclusive
+    # Discretização:
+    # - Se o intervalo for inteiro e pequeno, enumera todos os pontos (útil para instrumentos soma simples).
+    # - Caso contrário (pesos, negativos, frações), amostra pontos para visualização.
+    eps = 1e-9
+    min_i = int(math.ceil(min_sum - eps))
+    max_i = int(math.floor(max_sum + eps))
+    is_int_like = abs(min_sum - round(min_sum)) < 1e-6 and abs(max_sum - round(max_sum)) < 1e-6
+    span = max_i - min_i
+    if is_int_like and span >= 0 and span <= 800:
+        raw_vals = np.arange(min_i, max_i + 1, dtype=float)
+    else:
+        raw_vals = np.linspace(min_sum, max_sum, 200, dtype=float)
     # z e percentil estimados na escala de soma bruta
     z = (raw_vals - mu_sum) / sd_sum if sd_sum not in (0, None) else np.full_like(raw_vals, np.nan, dtype=float)
     pct = _normal_cdf(z) * 100.0
     # << clamp vetor
     pct = np.clip(pct, 0.0, 100.0)
 
-    mean_items = raw_vals / norm.n_items if norm.n_items else np.zeros_like(raw_vals, dtype=float)
+    mean_items = (raw_vals / float(norm.n_items)) if norm.n_items else np.zeros_like(raw_vals, dtype=float)
 
     points_df = np.column_stack([raw_vals, mean_items, z, pct])  # shape: (N, 4)
 
     obs_pct = None
     if observed_raw_sum is not None:
         # clamp para [0, max_sum]
-        obs = max(0, min(int(observed_raw_sum), max_sum))
+        obs = max(min_sum, min(float(observed_raw_sum), float(max_sum)))
         z_obs = (obs - mu_sum) / sd_sum if sd_sum not in (0, None) else float("nan")
         obs_pct = float(_normal_cdf(np.array([z_obs]))[0] * 100.0)
         # << clamp escalar
@@ -86,13 +100,14 @@ def compute_discrete_points(norm: NormSpec, *, observed_raw_sum: Optional[int] =
         "mu_sum": mu_sum,
         "sd_sum": sd_sum,
         "max_sum": max_sum,
+        "min_sum": min_sum,
     }
 
 
 def render_gauss_curve_with_points(
     norm: NormSpec,
     *,
-    observed_raw_sum: Optional[int] = None,
+    observed_raw_sum: Optional[float] = None,
     title: Optional[str] = None,
 ):
     """
@@ -106,11 +121,12 @@ def render_gauss_curve_with_points(
     mu_sum = calc["mu_sum"]
     sd_sum = calc["sd_sum"]
     max_sum = calc["max_sum"]
+    min_sum = calc["min_sum"]
     points_df = calc["points_df"]
     obs_pct = calc["observed_percentile"]
 
     # domínio x (um pouco além para a curva “respirar”)
-    x_lo = -0.5
+    x_lo = min_sum - 0.5
     x_hi = max_sum + 0.5
     xs = np.linspace(x_lo, x_hi, 500)
     ys = _normal_pdf(xs, mu_sum, sd_sum)
@@ -126,13 +142,13 @@ def render_gauss_curve_with_points(
 
     # ==== NOVO: margens seguras nos eixos ====
     y_top = float(ys.max() if len(ys) else 1.0)
-    ax.set_xlim(0, max_sum)
+    ax.set_xlim(min_sum, max_sum)
     ax.set_ylim(0, y_top * 1.25)             # folga vertical p/ texto acima da curva
     ax.margins(x=0.02)                       # folga mínima no X
 
     # marcação da pontuação observada (com anotação “esperta”)
     if observed_raw_sum is not None:
-        obs = max(0, min(int(observed_raw_sum), max_sum))
+        obs = max(min_sum, min(float(observed_raw_sum), float(max_sum)))
         y_obs = _normal_pdf(np.array([obs]), mu_sum, sd_sum)[0]
 
         # posição relativa no eixo X para decidir o lado do rótulo

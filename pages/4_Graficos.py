@@ -18,6 +18,7 @@ from utils.global_variables import BLANK
 from utils.normalize import norm_key
 from modules.corrections import (
     build_classification_table,
+    get_facet_sum_range,
     get_norm_group_description,
     get_norm_group_options_from_facets,
     score_scales,
@@ -318,7 +319,7 @@ else:
     sel_fac = _opts.iloc[_opt_index]["faceta"]
 
     n_items = _facet_n_items(scale_ref, str(sel_fac))
-    max_per_item = _infer_max_per_item(scale_ref)
+    min_sum, max_sum = get_facet_sum_range(scale_ref, str(sel_fac))
 
     row_sel = df_master.loc[df_master["faceta"] == sel_fac].iloc[0]
     mean_ref = float(row_sel["mean_ref"]) if pd.notna(row_sel.get("mean_ref")) else None
@@ -335,17 +336,19 @@ else:
         sd_ref=sd_ref,
         metric=metric,
         n_items=int(max(1, n_items)),
-        max_per_item=int(max(1, max_per_item)),
+        min_sum=float(min_sum),
+        max_sum=float(max_sum),
     )
 
-    calc = compute_discrete_points(spec, observed_raw_sum=int(raw_sum))
+    calc = compute_discrete_points(spec, observed_raw_sum=float(raw_sum))
     mu_sum = calc["mu_sum"]
     sd_sum = calc["sd_sum"]
     max_sum = calc["max_sum"]
+    min_sum = calc["min_sum"]
     pts = calc["points_df"]  # columns: [raw_sum, mean_items, z, percentile]
     obs_pct = calc["observed_percentile"]
 
-    xs = np.linspace(0, max_sum, 500)
+    xs = np.linspace(min_sum, max_sum, 500)
     if sd_sum and sd_sum > 0:
         ys = (1.0 / (sd_sum * math.sqrt(2.0 * math.pi))) * np.exp(-0.5 * ((xs - mu_sum) / sd_sum) ** 2)
     else:
@@ -386,7 +389,7 @@ else:
         )
     )
 
-    obs = max(0, min(int(raw_sum), int(max_sum)))
+    obs = max(float(min_sum), min(float(raw_sum), float(max_sum)))
     fig.add_vline(x=obs, line_dash="dash", line_color="#FFFFFF", line_width=1)
     if obs_pct is not None:
         fig.add_annotation(
@@ -396,7 +399,7 @@ else:
             )
             if sd_sum and sd_sum > 0
             else 0,
-            text=f"{obs} • {obs_pct:.1f} pct",
+            text=f"{obs:.2f} • {obs_pct:.1f} pct",
             showarrow=False,
             yshift=14,
         )

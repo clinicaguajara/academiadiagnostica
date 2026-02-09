@@ -1,0 +1,41 @@
+{
+  "name": "CFQ | Questionário de Falhas Cognitivas",
+  "traduction": "Transculturalmente adaptado por de Paula JJ, Costa DS, Miranda DM & Romano-Silva M. (2018). Brazilian version of the Cognitive Failures Questionnaire (CFQ): cross-cultural adaptation and evidence of validity and reliability. Brazilian Journal of Psychiatry, 40(3), 312–315.",
+  "instructions": "Indique com que frequência cada uma das situações abaixo acontece com você no seu dia a dia.",
+  "answer_options": [
+    "Nunca",
+    "Raramente",
+    "Ocasionalmente",
+    "Frequentemente",
+    "Quase sempre"
+  ],
+  "reverse_items": [],
+  "items": [
+    { "id": 1, "text": "Você lê alguma coisa, percebe que não estava prestando atenção e precisa lê-la novamente?" },
+    { "id": 2, "text": "Você se esquece por que foi de um cômodo a outro dentro de casa?" },
+    { "id": 3, "text": "Você deixa de notar placas de sinalização ao dirigir?" },
+    { "id": 4, "text": "Você confunde esquerda e direita ao indicar o caminho a alguém?" },
+    { "id": 5, "text": "Você esbarra (“tromba”) em outras pessoas?" },
+    { "id": 6, "text": "Você esquece se apagou a luz, a chama do fogão ou se trancou a porta?" },
+    { "id": 7, "text": "Você não se atenta ao nome da pessoa quando ela está sendo apresentada a você?" },
+    { "id": 8, "text": "Você diz alguma coisa e depois percebe que isso pode ter sido interpretado como um insulto?" },
+    { "id": 9, "text": "Você tem dificuldade em escutar as pessoas falando com você quando está fazendo outra coisa?" },
+    { "id": 10, "text": "Você perde a calma e se arrepende?" },
+    { "id": 11, "text": "Você deixa cartas, mensagens ou e-mails importantes sem resposta por dias?" },
+    { "id": 12, "text": "Você esquece aonde virar em um caminho que conhece bem, mas usa pouco?" },
+    { "id": 13, "text": "Você tem dificuldades em achar o que você quer no supermercado, embora o produto esteja por lá?" },
+    { "id": 14, "text": "Você se encontra subitamente pensando se usou uma palavra de forma correta?" },
+    { "id": 15, "text": "Você tem problemas em se decidir?" },
+    { "id": 16, "text": "Você esquece os seus compromissos?" },
+    { "id": 17, "text": "Você esquece onde colocou alguma coisa, como o jornal, o celular ou suas chaves?" },
+    { "id": 18, "text": "Você acidentalmente joga fora algo que queria guardar e fica com aquilo que queria descartar (por exemplo, joga fora uma bala e guarda seu papel no bolso)?" },
+    { "id": 19, "text": "Você “viaja” ou fica “no mundo da lua” quando deveria estar ouvindo alguma coisa?" },
+    { "id": 20, "text": "Você esquece o nome das pessoas?" },
+    { "id": 21, "text": "Você começa a fazer alguma coisa em casa e se distrai fazendo algo diferente (sem querer)?" },
+    { "id": 22, "text": "Você não consegue se lembrar de alguma coisa, mesmo que esteja “na ponta da língua”?" },
+    { "id": 23, "text": "Você se esquece do que saiu para comprar?" },
+    { "id": 24, "text": "Você deixa as coisas caírem (as derruba)?" },
+    { "id": 25, "text": "Você não consegue pensar em nada para dizer?" }
+  ]
+}
+
