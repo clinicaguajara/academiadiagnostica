@@ -38,14 +38,6 @@ def _facet_n_items(scale_ref: Dict[str, Any], facet: str) -> int:
     return int(len(items))
 
 
-def _infer_max_per_item(scale_ref: Dict[str, Any]) -> int:
-    response_map = scale_ref.get("response_map", {}) or {}
-    try:
-        return int(max(int(v) for v in response_map.values()))
-    except Exception:
-        return 3
-
-
 def _is_total_label(label: object) -> bool:
     k = norm_key(str(label or ""))
     return k in {
@@ -218,7 +210,7 @@ if {"dominio", "faceta"} <= set(df_master.columns):
     domains_ok = [
         str(r.dominio)
         for r in dom_counts.itertuples(index=False)
-        if str(r.dominio).strip() not in {"—", "-", ""} and int(r.n_facetas) > 2
+        if str(r.dominio).strip() not in {"—", "-", ""} and int(r.n_facetas) >= 2
     ]
 
 mode_options = ["Facetas (distribuição)"]
@@ -255,8 +247,8 @@ if mode == "Domínios (facetas)":
         ],
         ignore_index=True,
     )
-    if df["faceta"].nunique() <= 2:
-        st.info("Este domínio não possui mais de duas facetas com z-score disponível.")
+    if df["faceta"].nunique() <= 1:
+        st.info("Este domínio não possui mais de uma faceta com z-score disponível.")
         st.stop()
 
     y_order = df["faceta"].astype(str).tolist()

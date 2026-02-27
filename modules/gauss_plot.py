@@ -16,10 +16,10 @@ import matplotlib.pyplot as plt
 
 @dataclass
 class NormSpec:
-    mean_ref: float      # média de referência (na MÉTRICA informada em `metric`)
-    sd_ref: float        # DP de referência (na MÉTRICA informada em `metric`)
-    metric: str          # "mean_items" (0–3) ou "raw_sum"
-    n_items: int         # número de itens da faceta
+    mean_ref: float       # média de referência (na MÉTRICA informada em `metric`)
+    sd_ref: float         # DP de referência (na MÉTRICA informada em `metric`)
+    metric: str           # "mean_items" (0–3) ou "raw_sum"
+    n_items: int          # número de itens da faceta
     min_sum: float = 0.0  # mínimo teórico do escore bruto (na unidade de soma)
     max_sum: float = 0.0  # máximo teórico do escore bruto (na unidade de soma)
 

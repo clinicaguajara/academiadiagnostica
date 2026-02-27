@@ -1,7 +1,7 @@
 # modules/scales_selector.py
 
 # =========================================
-# Necessary imports
+# Necessary Imports
 # =========================================
 
 from __future__ import annotations
@@ -147,7 +147,7 @@ def render_scale_selector(
         allow_blank=True,
         blank_sentinel="__BLANK__",
         show_id_badge=True,
-        test_prefill=False,
+        test_prefill=True,
     )
 
     submitted, answers = render_scale_form(lookup[chosen], cfg=cfg)

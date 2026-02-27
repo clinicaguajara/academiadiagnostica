@@ -6,6 +6,7 @@ from typing import List, Sequence, Mapping, Any, Optional
 from io import BytesIO
 
 import matplotlib.pyplot as plt
+import pandas as pd
 
 from datetime import datetime
 
@@ -23,7 +24,8 @@ from reportlab.lib.enums import TA_JUSTIFY
 
 from modules.gauss_plot import NormSpec, render_gauss_curve_with_points
 from modules.corrections import get_facet_sum_range, use_item_mean_for_z
-from utils.global_variables import DISCLAIMER_TEXT
+from utils.global_variables import DISCLAIMER_TEXT, BLANK
+from utils.normalize import norm_key
 
 # ============
 # Data models
@@ -37,6 +39,8 @@ class PdfTable:
     note: Optional[str] = None
     # Caso queira quebrar a tabela em múltiplas páginas automaticamente:
     repeat_header: bool = True
+    # Se True, rende a tabela no final do relatório (após figuras)
+    tail: bool = False
 
 
 @dataclass
@@ -66,6 +70,7 @@ class PdfPayload:
     summary_blocks: List[Mapping[str, Any]] = field(default_factory=list)
     tables: List[PdfTable] = field(default_factory=list)
     figures: List[PdfFigure] = field(default_factory=list)  # << novo
+    ordered_blocks: List[Mapping[str, Any]] = field(default_factory=list)
     footer_left: str = "Clínica Guajará"
     footer_right: str = ""
     filename_hint: str = "resultado_escala"
@@ -209,12 +214,10 @@ def build_results_pdf(payload: PdfPayload) -> bytes:
             story.append(Paragraph(ln, S["BodySmall"]))
         story.append(Spacer(1, 6))
 
-    # Tabelas
-    for idx, t in enumerate(payload.tables):
+    def _render_table_block(t: PdfTable) -> None:
         story.append(Spacer(1, 6))
         story.append(Paragraph(t.title, S["H3"]))
 
-        # Header e células como Paragraph (com quebra)
         head = [Paragraph(str(h), S["TableHead"]) for h in t.columns]
         body = [[_as_para(c, S["TableCell"]) for c in row] for row in t.rows]
         data = [head] + body
@@ -227,27 +230,20 @@ def build_results_pdf(payload: PdfPayload) -> bytes:
                 [[str(x) for x in t.columns]] + [[_fmt_cell(c) for c in row] for row in t.rows],
                 max_width=A4[0] - (doc.leftMargin + doc.rightMargin),
             ),
-            splitByRow=1,  # quebra a tabela entre páginas sem “comer” linhas
+            splitByRow=1,
         )
 
         table.setStyle(TableStyle([
-            # header
             ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#F5F5F5")),
             ("TEXTCOLOR",  (0, 0), (-1, 0), colors.black),
             ("ALIGN",      (0, 0), (-1, 0), "CENTER"),
             ("BOTTOMPADDING", (0, 0), (-1, 0), 8),
-
-            # corpo
             ("VALIGN",     (0, 1), (-1, -1), "MIDDLE"),
             ("GRID",       (0, 0), (-1, -1), 0.25, colors.HexColor("#CCCCCC")),
-
-            # paddings generosos para evitar “colagem” visual
             ("LEFTPADDING",  (0, 0), (-1, -1), 6),
             ("RIGHTPADDING", (0, 0), (-1, -1), 6),
             ("TOPPADDING",   (0, 0), (-1, -1), 4),
             ("BOTTOMPADDING",(0, 0), (-1, -1), 4),
-
-            # se quiser forçar quebra em palavras muito longas sem espaço:
             ("WORDWRAP", (0, 0), (-1, -1), "CJK"),
         ]))
         story.append(table)
@@ -256,24 +252,41 @@ def build_results_pdf(payload: PdfPayload) -> bytes:
             story.append(Spacer(1, 4))
             story.append(Paragraph(t.note, S["Tiny"]))
 
-        if idx < len(payload.tables) - 1:
-            story.append(PageBreak())
-
-    # --- build_results_pdf(): loop das figuras ---
-    for fig in (payload.figures or []):
+    def _render_figure_block(fig: PdfFigure) -> None:
         if fig.title:
             story.append(Paragraph(fig.title, S["H3"]))
-        # 1) gráfico primeiro
         story.append(Image(BytesIO(fig.img_bytes), width=fig.width_cm * cm, height=fig.height_cm * cm))
         story.append(Spacer(1, 6))
-        # 2) descrição logo abaixo do gráfico
         if getattr(fig, "caption", None):
             story.append(Paragraph(fig.caption, S["BodySmall"]))
             story.append(Spacer(1, 2))
-        # 3) classificação + norma (média/DP) na linha seguinte
         if getattr(fig, "meta_text", None):
             story.append(Paragraph(fig.meta_text, S["Tiny"]))
             story.append(Spacer(1, 10))
+
+    if payload.ordered_blocks:
+        for block in payload.ordered_blocks:
+            btype = block.get("type")
+            if btype == "table":
+                _render_table_block(block["data"])
+            elif btype == "figure":
+                _render_figure_block(block["data"])
+    else:
+        tables_main = [t for t in payload.tables if not getattr(t, "tail", False)]
+        tables_tail = [t for t in payload.tables if getattr(t, "tail", False)]
+
+        for idx, t in enumerate(tables_main):
+            _render_table_block(t)
+            if idx < len(tables_main) - 1:
+                story.append(PageBreak())
+
+        for fig in (payload.figures or []):
+            _render_figure_block(fig)
+
+        for idx, t in enumerate(tables_tail):
+            _render_table_block(t)
+            if idx < len(tables_tail) - 1:
+                story.append(PageBreak())
 
     story.append(Spacer(1, 12))
     story.append(Paragraph(DISCLAIMER_TEXT, S["Disclaimer"]))
@@ -359,6 +372,60 @@ def _auto_col_widths(data, max_width: float) -> Optional[List[float]]:
     return [w * k for w in widths]
 
 
+def _is_total_label(label: object) -> bool:
+    k = norm_key(str(label or ""))
+    return k in {
+        "total",
+        "pontuacao total",
+        "pontuacao_total",
+        "funcionamento intrapessoal",
+        "funcionamento interpessoal",
+    }
+
+
+def _render_domain_bar_chart(df_dom, *, title: str) -> Optional[bytes]:
+    """
+    Render a horizontal bar chart (z-scores) for a single domain.
+    Returns PNG bytes or None if not enough data.
+    """
+    if df_dom is None or df_dom.empty:
+        return None
+    if "z" not in df_dom.columns or "faceta" not in df_dom.columns:
+        return None
+
+    df = df_dom.dropna(subset=["faceta", "z"]).copy()
+    if df["faceta"].nunique() < 2:
+        return None
+
+    df["_is_total"] = df["faceta"].map(_is_total_label)
+    df = pd.concat(
+        [
+            df.loc[~df["_is_total"]].sort_values("z", ascending=False, kind="stable"),
+            df.loc[df["_is_total"]].sort_values("z", ascending=False, kind="stable"),
+        ],
+        ignore_index=True,
+    )
+
+    labels = df["faceta"].astype(str).tolist()
+    values = df["z"].astype(float).tolist()
+
+    height = max(2.8, 0.5 * len(labels))
+    fig, ax = plt.subplots(figsize=(6.8, height), dpi=120)
+    ax.barh(labels, values, color="#5DADE2")
+    ax.axvline(0, color="#444444", linewidth=0.8, linestyle="--")
+    ax.set_xlabel("Z-score")
+    ax.set_title(title)
+    ax.invert_yaxis()
+    ax.grid(axis="x", alpha=0.25, linestyle=":")
+    fig.tight_layout()
+
+    buf = BytesIO()
+    fig.savefig(buf, format="png", dpi=120, bbox_inches="tight", pad_inches=0.15)
+    plt.close(fig)
+    buf.seek(0)
+    return buf.getvalue()
+
+
 # =====================
 # Montagem
 # =====================
@@ -371,6 +438,8 @@ def build_pdf_table_and_graphs(
     norm_label: str,
     df_master: Any,   # precisa ter colunas: faceta, dominio, z, percentil, media_itens, mean_ref, sd_ref, bruta
     scale_ref: dict,
+    answers_raw: Optional[Mapping[str, Any]] = None,
+    scale_items: Optional[Sequence[Mapping[str, Any]]] = None,
     filename_hint: Optional[str] = None,
 ) -> tuple[bytes, str]:
     import pandas as pd
@@ -392,83 +461,149 @@ def build_pdf_table_and_graphs(
         summary_blocks=[],
         tables=[],
         figures=[],
+        ordered_blocks=[],
         footer_left="Clínica Guajará",
         footer_right="Relatório de resultados",
         filename_hint=filename_hint or f"resultado_{sel_label.replace(' ', '_').replace('|','')}",
     )
 
-    # -------- Tabela principal
+    # -------- Respostas do paciente (itens + respostas)
+    if answers_raw and scale_items:
+        resp_rows: List[List[Any]] = []
+        for it in scale_items:
+            if not isinstance(it, Mapping):
+                continue
+            item_id = it.get("id")
+            text = it.get("text")
+            if item_id is None:
+                continue
+            key = str(item_id)
+            raw_val = answers_raw.get(key)
+            if raw_val in (None, "", BLANK, "__BLANK__"):
+                answer = "—"
+            else:
+                answer = str(raw_val)
+            resp_rows.append([item_id, text, answer])
+
+        if resp_rows:
+            payload.ordered_blocks.append({
+                "type": "table",
+                "data": PdfTable(
+                    title="Respostas do paciente",
+                    columns=["Item", "Pergunta", "Resposta"],
+                    rows=resp_rows,
+                    note="Respostas conforme registradas no aplicativo.",
+                ),
+            })
+
+    desc_map = (scale_ref.get("facet_descriptions") or {})
+
+    # -------- Blocos por domínio (tabela + gráfico de domínio + curvas de faceta)
     header_map = {
         "faceta": "Faceta",
-        "dominio": "Domínio",
         "z": "Z-score",
         "percentil": "Percentil",
         "media_itens": "Média",
         "bruta": "Escore",
     }
-    wanted = ["faceta", "dominio", "z", "percentil", "media_itens", "bruta"]  # << sem mean_ref/sd_ref
-    cols_src = [c for c in wanted if c in df_master.columns]
+    wanted = ["faceta", "z", "percentil", "media_itens", "bruta"]
 
-    table = PdfTable(
-        title="Resultados psicométricos",
-        columns=[header_map[c] for c in cols_src],
-        rows=df_master[cols_src].values.tolist(),
-        note="Z-score: (valor − média de referência) / DP de referência.",
-    )
-    payload.tables.append(table)
+    # Para garantir que a tabela de respostas venha ao final, coletamos e anexamos depois
+    tail_blocks = payload.ordered_blocks[:]
+    payload.ordered_blocks = []
 
-    desc_map = (scale_ref.get("facet_descriptions") or {}) 
-    
-    # -------- Gráficos — um por faceta
-    for _, row in df_master.iterrows():
-        fac = row.get("faceta")
-        dom = row.get("dominio")
-        mean_ref, sd_ref, raw_sum = row.get("mean_ref"), row.get("sd_ref"), row.get("bruta")
+    if "dominio" in df_master.columns:
+        domains = df_master["dominio"].dropna().unique().tolist()
+    else:
+        domains = [""]
 
-        # pula facetas sem dados suficientes
-        if pd.isna(mean_ref) or pd.isna(sd_ref) or float(sd_ref) == 0.0 or pd.isna(raw_sum):
-            continue
+    for dom in domains:
+        df_dom = df_master.loc[df_master["dominio"] == dom].copy() if "dominio" in df_master.columns else df_master
 
-        metric = "mean_items" if use_item_mean_for_z(scale_ref) else "raw_sum"
+        # Tabela do domínio (sem coluna "dominio")
+        cols_src = [c for c in wanted if c in df_dom.columns]
+        if cols_src:
+            payload.ordered_blocks.append({
+                "type": "table",
+                "data": PdfTable(
+                    title=f"Resultados psicométricos — {dom}" if dom else "Resultados psicométricos",
+                    columns=[header_map[c] for c in cols_src],
+                    rows=df_dom[cols_src].values.tolist(),
+                    note="Z-score: (valor − média de referência) / DP de referência.",
+                ),
+            })
 
-        fdef = (scale_ref.get("facets") or {}).get(str(fac), {})
-        n_itens = int(fdef.get("n_items") or len(fdef.get("items") or []))
-        min_sum, max_sum = get_facet_sum_range(scale_ref, str(fac))
-
-        spec = NormSpec(
-            mean_ref=float(mean_ref),
-            sd_ref=float(sd_ref),
-            metric=metric,
-            n_items=n_itens,
-            min_sum=float(min_sum),
-            max_sum=float(max_sum),
-        )
-        fig, _ = render_gauss_curve_with_points(
-            spec,
-            observed_raw_sum=float(raw_sum),
-            title=f"{dom} • {fac}",
-        )
-
-        buf = BytesIO()
-        fig.savefig(buf, format="png", dpi=110, bbox_inches="tight", pad_inches=0.2)
-        plt.close(fig)
-        buf.seek(0)
-
-        caption = desc_map.get(str(fac))  # descrição curta da faceta
-        classif = row.get("classificacao") or "—"
-        # formata média/DP da norma (3 casas)
-        meta_text = f"Classificação: {classif} · Norma: média = {float(mean_ref):.3f}, DP = {float(sd_ref):.3f}"
-
-        payload.figures.append(
-            PdfFigure(
-                title=f"{dom} • {fac}",
-                img_bytes=buf.getvalue(),
-                width_cm=14.0,
-                height_cm=6.0,
-                caption=caption,
-                meta_text=meta_text,   # << exibido sob a descrição
+        # 1) Gráfico de domínio (barras) — apenas se houver >= 2 facetas com z
+        if {"faceta", "z"} <= set(df_dom.columns):
+            fig_bytes = _render_domain_bar_chart(
+                df_dom[["faceta", "z"]].copy(),
+                title=f"{dom} — facetas (z-score)" if dom else "Facetas (z-score)",
             )
-        )
+            if fig_bytes:
+                payload.ordered_blocks.append({
+                    "type": "figure",
+                    "data": PdfFigure(
+                        title=f"{dom} — facetas (z-score)" if dom else "Facetas (z-score)",
+                        img_bytes=fig_bytes,
+                        width_cm=14.0,
+                        height_cm=6.0,
+                        caption=None,
+                        meta_text=None,
+                    ),
+                })
+
+        # 2) Gráficos de faceta (curva normal), em seguida
+        for _, row in df_dom.iterrows():
+            fac = row.get("faceta")
+            mean_ref, sd_ref, raw_sum = row.get("mean_ref"), row.get("sd_ref"), row.get("bruta")
+
+            # pula facetas sem dados suficientes
+            if pd.isna(mean_ref) or pd.isna(sd_ref) or float(sd_ref) == 0.0 or pd.isna(raw_sum):
+                continue
+
+            metric = "mean_items" if use_item_mean_for_z(scale_ref) else "raw_sum"
+
+            fdef = (scale_ref.get("facets") or {}).get(str(fac), {})
+            n_itens = int(fdef.get("n_items") or len(fdef.get("items") or []))
+            min_sum, max_sum = get_facet_sum_range(scale_ref, str(fac))
+
+            spec = NormSpec(
+                mean_ref=float(mean_ref),
+                sd_ref=float(sd_ref),
+                metric=metric,
+                n_items=n_itens,
+                min_sum=float(min_sum),
+                max_sum=float(max_sum),
+            )
+            fig, _ = render_gauss_curve_with_points(
+                spec,
+                observed_raw_sum=float(raw_sum),
+                title=f"{dom} • {fac}",
+            )
+
+            buf = BytesIO()
+            fig.savefig(buf, format="png", dpi=110, bbox_inches="tight", pad_inches=0.2)
+            plt.close(fig)
+            buf.seek(0)
+
+            caption = desc_map.get(str(fac))
+            classif = row.get("classificacao") or "—"
+            meta_text = f"Classificação: {classif} · Norma: média = {float(mean_ref):.3f}, DP = {float(sd_ref):.3f}"
+
+            payload.ordered_blocks.append({
+                "type": "figure",
+                "data": PdfFigure(
+                    title=f"{dom} • {fac}",
+                    img_bytes=buf.getvalue(),
+                    width_cm=14.0,
+                    height_cm=6.0,
+                    caption=caption,
+                    meta_text=meta_text,
+                ),
+            })
+
+    # anexa os blocos finais (ex.: respostas)
+    payload.ordered_blocks.extend(tail_blocks)
 
     # -------- Render final
     pdf_bytes = build_results_pdf(payload)

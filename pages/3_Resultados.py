@@ -14,7 +14,7 @@ from typing         import Any, Dict, List, Tuple, Optional
 
 from utils.global_variables import BLANK
 from utils.design           import inject_custom_css
-from utils.data_management  import find_bibliography_candidates
+from utils.data_management  import find_bibliography_candidates, find_scale_definition
 from utils.global_variables import DOWNLOAD_REPORT_SPINNER_TEXT
 from modules.corrections    import (
     score_scales,
@@ -255,6 +255,13 @@ if has_facets:
     from utils.pdf_export import build_pdf_table_and_graphs
 
     with st.spinner(DOWNLOAD_REPORT_SPINNER_TEXT):
+        scale_def = find_scale_definition(sel_label)
+        scale_items = None
+        if isinstance(scale_def, dict):
+            items = scale_def.get("items")
+            if isinstance(items, list):
+                scale_items = items
+
         pdf_bytes, pdf_name = build_pdf_table_and_graphs(
             sel_label=sel_label,
             study_name=study_name,
@@ -262,6 +269,8 @@ if has_facets:
             norm_label=norm_label,
             df_master=df_master,
             scale_ref=scale_ref,
+            answers_raw=answers_raw,
+            scale_items=scale_items,
         )
 
     st.download_button(

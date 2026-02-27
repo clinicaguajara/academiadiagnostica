@@ -170,3 +170,41 @@ def discover_scales(scales_root: str | Path) -> Dict[str, List[Tuple[str, Path]]
         arr.sort(key=lambda t: t[0].lower())
 
     return dict(found)
+
+
+def find_scale_definition(
+    display_label: str,
+    search_dirs: Optional[List[str | Path]] = None,
+) -> Optional[Dict[str, Any]]:
+    """
+    Find a scale JSON definition that matches a display label and return its data.
+
+    Matching rules (same as bibliography):
+    - "name" or "titulo"
+    - filename stem (fallback)
+    """
+    project_root = Path(__file__).resolve().parents[1]
+    candidates_dirs = search_dirs or [project_root / "scales"]
+    target = norm_key(display_label)
+
+    for d in candidates_dirs:
+        base = Path(d)
+        if not base.exists():
+            if not base.is_absolute():
+                base = project_root / base
+        if not base.exists():
+            continue
+
+        for p in base.rglob("*.json"):
+            try:
+                data = load_json(p)
+            except Exception:
+                continue
+
+            cand_name_raw = data.get("name") or data.get("titulo") or p.stem
+            if norm_key(cand_name_raw) != target:
+                continue
+
+            return data
+
+    return None
