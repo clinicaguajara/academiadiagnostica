@@ -147,7 +147,7 @@ def render_scale_selector(
         allow_blank=True,
         blank_sentinel="__BLANK__",
         show_id_badge=True,
-        test_prefill=True,
+        test_prefill=False,
     )
 
     submitted, answers = render_scale_form(lookup[chosen], cfg=cfg)
