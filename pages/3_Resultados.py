@@ -40,6 +40,20 @@ def _normalize_answers(answers_raw: Dict[Any, Any]) -> Dict[int, Any]:
         answers_norm[ik] = None if v in (None, "", BLANK) else v
     return answers_norm
 
+def _fix_mojibake(val: Any) -> Any:
+    """
+    Repair common UTF-8 -> Latin-1 mojibake sequences (Ã, Â, â€¦).
+    No-op for non-strings or already-correct text.
+    """
+    if not isinstance(val, str):
+        return val
+    if any(ch in val for ch in ("Ã", "Â", "â")):
+        try:
+            return val.encode("latin-1").decode("utf-8")
+        except Exception:
+            return val
+    return val
+
 def _use_item_mean_for_z(scale_ref: Dict[str, Any]) -> bool:
     return use_item_mean_for_z(scale_ref)
 
@@ -215,6 +229,10 @@ if has_facets:
         )
         df_big["Estudo"] = f"{study_name}{f' ({study_ver})' if study_ver else ''}"
         df_big["Grupo"] = norm_label
+        df_big.columns = [_fix_mojibake(c) for c in df_big.columns]
+        for col in df_big.columns:
+            if df_big[col].dtype == object:
+                df_big[col] = df_big[col].map(_fix_mojibake)
 
         st.dataframe(
             df_big,

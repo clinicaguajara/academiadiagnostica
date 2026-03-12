@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import List, Sequence, Mapping, Any, Optional
+from typing import List, Sequence, Mapping, Any, Optional, Dict
 from io import BytesIO
 
 import matplotlib.pyplot as plt
@@ -125,7 +125,8 @@ def _styles():
         parent=styles["BodyText"],
         fontSize=9,
         leading=11,
-        wordWrap="CJK",   # força quebra mesmo em palavras longas
+        wordWrap="LTR",   # evita quebra no meio de palavras
+        splitLongWords=0,
     ))
     styles.add(ParagraphStyle(
         name="Disclaimer",
@@ -244,7 +245,7 @@ def build_results_pdf(payload: PdfPayload) -> bytes:
             ("RIGHTPADDING", (0, 0), (-1, -1), 6),
             ("TOPPADDING",   (0, 0), (-1, -1), 4),
             ("BOTTOMPADDING",(0, 0), (-1, -1), 4),
-            ("WORDWRAP", (0, 0), (-1, -1), "CJK"),
+            ("WORDWRAP", (0, 0), (-1, -1), "LTR"),
         ]))
         story.append(table)
 
@@ -325,6 +326,59 @@ def _fmt_cell(v: Any) -> str:
         # formatação simples; ajuste conforme a coluna se quiser
         return f"{v:.3f}".rstrip("0").rstrip(".")
     return str(v)
+
+def _coerce_item_score(raw_val: Any, response_map: Mapping[str, Any]) -> Optional[float]:
+    if raw_val in (None, "", BLANK, "__BLANK__"):
+        return None
+    if isinstance(raw_val, str):
+        if raw_val in response_map:
+            raw_val = response_map[raw_val]
+        else:
+            try:
+                raw_val = int(raw_val)
+            except Exception:
+                try:
+                    raw_val = float(raw_val)
+                except Exception:
+                    return None
+    try:
+        return float(raw_val)
+    except Exception:
+        return None
+
+
+def _infer_max_val(response_map: Mapping[str, Any]) -> int:
+    try:
+        return max(int(v) for v in response_map.values())
+    except Exception:
+        return 3
+
+
+def _build_item_weight_map(scale_ref: Mapping[str, Any]) -> Dict[str, float]:
+    """
+    Build a per-item weight map. Global item_weights override facet-specific ones.
+    """
+    out: Dict[str, float] = {}
+    facets = scale_ref.get("facets") or {}
+    for fdata in facets.values():
+        f_w = fdata.get("item_weights") if isinstance(fdata, Mapping) else None
+        if isinstance(f_w, Mapping):
+            for k, v in f_w.items():
+                if str(k) in out:
+                    continue
+                try:
+                    out[str(k)] = float(v)
+                except Exception:
+                    continue
+
+    global_w = scale_ref.get("item_weights")
+    if isinstance(global_w, Mapping):
+        for k, v in global_w.items():
+            try:
+                out[str(k)] = float(v)
+            except Exception:
+                continue
+    return out
 
 def _auto_col_widths(data, max_width: float) -> Optional[List[float]]:
     """
@@ -469,6 +523,12 @@ def build_pdf_table_and_graphs(
 
     # -------- Respostas do paciente (itens + respostas)
     if answers_raw and scale_items:
+        response_map = scale_ref.get("response_map", {}) or {}
+        reverse_items = set(scale_ref.get("reverse_items", []) or [])
+        apply_weights = bool(scale_ref.get("apply_item_weights", False))
+        weight_map = _build_item_weight_map(scale_ref) if apply_weights else {}
+        max_val = _infer_max_val(response_map)
+
         resp_rows: List[List[Any]] = []
         for it in scale_items:
             if not isinstance(it, Mapping):
@@ -483,16 +543,30 @@ def build_pdf_table_and_graphs(
                 answer = "—"
             else:
                 answer = str(raw_val)
-            resp_rows.append([item_id, text, answer])
+            score_val = _coerce_item_score(raw_val, response_map)
+            try:
+                item_int = int(str(item_id))
+            except Exception:
+                item_int = None
+            if score_val is not None and item_int is not None and item_int in reverse_items:
+                score_val = float(max_val) - int(score_val)
+            if score_val is not None and apply_weights:
+                w = weight_map.get(str(item_id), 1.0)
+                try:
+                    score_val = float(score_val) * float(w)
+                except Exception:
+                    pass
+
+            resp_rows.append([item_id, text, answer, score_val])
 
         if resp_rows:
             payload.ordered_blocks.append({
                 "type": "table",
                 "data": PdfTable(
                     title="Respostas do paciente",
-                    columns=["Item", "Pergunta", "Resposta"],
+                    columns=["Item", "Pergunta", "Resposta", "Score"],
                     rows=resp_rows,
-                    note="Respostas conforme registradas no aplicativo.",
+                    note="Pontuação por item (com inversão e/ou pesos quando aplicável). Respostas conforme registradas no aplicativo.",
                 ),
             })
 
@@ -608,5 +682,4 @@ def build_pdf_table_and_graphs(
     # -------- Render final
     pdf_bytes = build_results_pdf(payload)
     return pdf_bytes, f"{payload.filename_hint}.pdf"
-
 

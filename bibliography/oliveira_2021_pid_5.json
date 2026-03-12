@@ -220,11 +220,11 @@
     }
   },
     "domains": {
-      "Afetividade Negativa": ["Ansiedade", "Labilidade Emocional", "Insegurança de Separação", "Submissão", "Perseverança", "Tendência à Depressão"
+      "Afetividade Negativa": ["Ansiedade", "Labilidade Emocional", "Insegurança de Separação", "Submissão", "Perseverança", "Hostilidade", "Afetividade Restrita"
       ],
-      "Distanciamento": ["Retraimento", "Anedonia", "Evitação de Intimidade", "Afetividade Restrita", "Desconfiança"
+      "Distanciamento": ["Retraimento", "Anedonia", "Evitação de Intimidade", "Desconfiança", "Tendência à Depressão"
       ],
-      "Antagonismo": ["Manipulação", "Desonestidade", "Grandiosidade", "Insensibilidade", "Busca de Atenção", "Hostilidade"
+      "Antagonismo": ["Manipulação", "Desonestidade", "Grandiosidade", "Insensibilidade", "Busca de Atenção"
       ],
       "Desinibição": ["Irresponsabilidade", "Impulsividade", "Distraibilidade", "Exposição a Riscos", "Perfeccionismo Rígido"
       ],
@@ -238,7 +238,7 @@
         "Afetividade Restrita": "Pouca reação a situações emocionalmente estimulantes; experiência e expressão emocionais restritas; indiferença e distanciamento em situações normalmente atraentes.",
         "Busca de Atenção": "Envolvimento em comportamento concebido para atrair a atenção e tornar-se o foco da atenção e admiração dos outros.",
         "Crenças e Experiências Incomuns": "Crença de ter habilidades incomuns, tais como leitura da mente, telecinesia, fusão de pensamento-ação, experiências incomuns de realidade, incluindo experiências semelhantes a alucinação.",
-        "Desconfiança": "Expectativas de – e sensibilidade a – sinais de más intenções ou dano interpessoal; dúvidas quanto à lealdade e à fidelidade dos outros; sentimentos de ser maltratado, usado e/ou perseguido pelos outros.",
+        "Desconfiança": "Expectativas de, e sensibilidade a, sinais de más intenções ou dano interpessoal; dúvidas quanto à lealdade e à fidelidade dos outros; sentimentos de ser maltratado, usado e/ou perseguido pelos outros.",
         "Desonestidade": "Desonestidade e fraudulência; representação deturpada de si mesmo; embelezamento ou invenção no relato de acontecimentos.",
         "Desregulação Cognitiva e Perceptiva": "Processos de pensamento e experiências estranhos ou incomuns, incluindo despersonalização, desrealização e experiências dissociativas; experiências em um estado misto de sono-vigília; experiências de controle do pensamento.",
         "Distraibilidade": "Dificuldade de concentração e de foco nas tarefas; a atenção é facilmente desviada por estímulos externos; dificuldade na manutenção de comportamento focado nos objetivos, incluindo o planejamento e a conclusão das tarefas.",
@@ -248,7 +248,7 @@
         "Grandiosidade": "Acreditar que é superior aos outros e merece tratamento especial; egocentrismo; sentimentos de ter direitos; condescendência em relação aos outros.",
         "Hostilidade": "Sentimentos persistentes ou frequentes de raiva; raiva ou irritabilidade em resposta a desprezo e insultos mínimos; comportamento maldoso, grosseiro ou vingativo.",
         "Impulsividade": "Ação sob o impulso do momento em resposta a estímulos imediatos; agir momentaneamente sem um plano ou consideração dos resultados; dificuldade no estabelecimento e seguimento de planos; senso de urgência e comportamento de autoagressão sob angústia emocional.",
-        "Insegurança de Separação": "Medo de rejeição por – e/ou separação de – outras pessoas significativas, associado a temor de dependência excessiva e completa perda da autonomia.",
+        "Insegurança de Separação": "Medo de rejeição por, e/ou separação de, outras pessoas significativas, associado a temor de dependência excessiva e completa perda da autonomia.",
         "Insensibilidade": "Ausência de preocupação pelos sentimentos ou problemas dos outros; ausência de culpa ou remorso quanto aos efeitos negativos ou prejudiciais das próprias ações sobre os outros",
         "Irresponsabilidade": "Negligência com, ou falha em honrar, obrigações e compromissos; falta de respeito por, e falta de cumprimento de, combinados e promessas; negligência com a propriedade dos outros.",
         "Labilidade Emocional": "Experiências emocionais instáveis e frequentes alterações do humor; as emoções são facilmente provocadas, intensas e/ ou desproporcionais aos fatos e circunstâncias.",

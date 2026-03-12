@@ -27,7 +27,7 @@ class ScaleConfig:
     allow_blank: bool = True
     blank_sentinel: str = "__BLANK__"
     show_id_badge: bool = True
-    test_prefill: bool = True # for development/demo
+    test_prefill: bool = False # for development/demo
     form_instruction_html: Optional[str] = None
 
 @dataclass
